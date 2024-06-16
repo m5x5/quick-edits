@@ -1,0 +1,40 @@
+{
+  "name": "m5x5-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo --port 3020",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.4.0-pre.7",
+    "@splinetool/react-spline": "^3.0.3",
+    "@splinetool/runtime": "^1.4.2",
+    "@tabler/icons-react": "^3.5.0",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-487cb0e-20240529",
+    "gray-matter": "^4.0.3",
+    "i18next": "^23.8.2",
+    "next": "^15.0.0-rc.0",
+    "next-i18next": "^15.2.0",
+    "next-themes": "^0.2.1",
+    "react": "^19.0.0-rc-6f23540c7d-20240528",
+    "react-dom": "^19.0.0-rc-6f23540c7d-20240528",
+    "react-i18next": "^14.0.5",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "critters": "^0.0.20",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}

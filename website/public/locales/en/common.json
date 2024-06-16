@@ -1,0 +1,31 @@
+{
+  "outline": "Outline",
+  "navigation": {
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact",
+    "blog": "Blog"
+  },
+  "home": {
+  },
+  "skills": {
+    "badge": "Skills",
+    "title": "Skills",
+    "description": "I have experience with a variety of technologies and tools. Here are some of the skills I've developed over the years."
+  },
+  "projects": {
+    "title": "My recent projects",
+    "description": "Here you'll find a selection of my recent projects."
+  },
+  "blog": {
+    "title": "Welcome to my blog",
+    "description": "I'm a web developer with a passion for optimization and automation. I enjoy creating clean and efficient solutions.",
+    "cta": "Open most recent post"
+  },
+  "contact": {
+    "title": "Let's connect",
+    "description": "Are you interested in working with me? I'm always open to new opportunities and collaborations.",
+    "placeholder": "Your email address",
+    "cta": "Contact"
+  }
+}

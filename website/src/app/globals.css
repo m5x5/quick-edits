@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    @apply dark:text-white text-black dark:bg-black bg-white;
+}
+
+.header a {
+    transition: all 0.4s ease-in-out;
+}
+
+.header:hover a:not(:hover) {
+    filter: blur(1px);
+}
+
+.gradient-highlight {
+    background: linear-gradient(to right,
+            white,
+            rgba(0, 0, 0, 0.4) 50%,
+            white 100%);
+    height: 1px;
+    width: 100%;
+}
+
+.hover-grid {
+    background-image: url(/box.svg);
+    background-size: calc((100%) / ((12 + 2) * 2));
+    background-repeat: repeat;
+    z-index: -10 !important;
+}
+
+.hover-grid--dark {
+    background-image: url(/box-dark.svg);
+    background-size: calc((100%) / ((12 + 2) * 2));
+    background-repeat: repeat;
+    z-index: -10 !important;
+}
+
+#light {
+    z-index: -20;
+    height: 50rem;
+    width: 50rem;
+    position: fixed;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.4s ease-in-out;
+    background-image: radial-gradient(circle at 50% 50%,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0) 37%,
+            transparent 50%);
+}
+
+#light.faded-out {
+    transform: translate(-50%, -50%) scale(0);
+}
+
+::selection {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+article h2 {
+    @apply text-2xl font-bold text-left pb-4;
+}
+
+article p {
+    @apply text-left dark:text-gray-300 text-gray-700 pb-6 lg:pb-12 leading-7
+}
+
+.menu label {
+    background-color: transparent;
+    display: block;
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+    max-width: 150px;
+    max-height: 150px;
+}
+
+@media (min-aspect-ratio: 1/1) {
+    .menu label {
+        width: 4rem;
+        height: 4rem;
+    }
+}
+
+.menu input {
+    display: none;
+}
+
+.menu label {
+    bottom: 0;
+    right: 0;
+}
+
+.menu path {
+    fill: none;
+    stroke: #000000;
+    stroke-width: 4;
+    --length: 35;
+    --offset: -33;
+    stroke-dasharray: var(--length) var(--total-length);
+    stroke-dashoffset: var(--offset);
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.cross svg.checked .line--1,
+.cross svg.checked .line--3 {
+    --length: 29.627416998;
+}
+
+.cross svg.checked .line--2 {
+    --length: 0;
+}
+
+.back svg.checked .line--1,
+.back svg.checked .line--3 {
+    --length: 8.602325267;
+}
+
+.menu .line--1,
+.menu .line--3 {
+    --total-length: 47.22813415527344;
+    --offset: -45;
+}
+
+.menu .line--2 {
+    --total-length: 40;
+}
+
+.menu svg.checked path {
+    @apply translate-x-[25px]
+}
+
+.menu svg.checked .line--1,
+.menu svg.checked .line--3 {
+    --offset: -13.9705627485;
+}
+
+.menu svg.checked .line--2 {
+    --offset: -20;
+}
+
+.navigation--mobile.active {
+    background-position-y: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    ::selection {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    #light {
+        background-image: radial-gradient(circle at 50% 50%,
+                rgba(255, 255, 255, 0.2),
+                rgba(255, 255, 255, 0) 37%,
+                transparent 50%);
+    }
+
+    .gradient-highlight {
+        background: linear-gradient(to right,
+                black,
+                rgba(255, 255, 255, 0.5) 50%,
+                black 100%);
+    }
+
+    .menu path {
+        @apply stroke-white;
+    }
+}

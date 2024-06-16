@@ -1,0 +1,35 @@
+{
+  "outline": "Inhaltsverzeichnis",
+  "navigation": {
+    "skills": "Fähigkeiten",
+    "projects": "Projekte",
+    "contact": "Kontakt",
+    "blog": "Blog"
+  },
+  "home": {
+    "title": "Hallo, ich bin Michael Peters",
+    "description": "Ich bin ein Web Entwickler und fasziniere mich für Optimierung und Automatisierung. Ich habe Spaß an einer sauberen und guten Umsetzung.",
+    "cta": "Erkunde meine Projekte",
+    "cta2": "Lese meinen Blog"
+  },
+  "skills": {
+    "badge": "Fähigkeiten",
+    "title": "Meine technischen Fähigkeiten",
+    "description": "Während meiner Zeit in der Web Entwicklung bin ich mit den verschiedensten Technologien in Berührung gekommen."
+  },
+  "projects": {
+    "title": "Meine letzten Projekte",
+    "description": "Hier finden Sie eine Auswahl meiner letzten Projekte."
+  },
+  "blog": {
+    "title": "Willkommen auf meinem Blog",
+    "description": "Ich bin ein Web Entwickler und fasziniere mich für Optimierung und Automatisierung. Ich habe Spaß an einer sauberen und guten Umsetzung.",
+    "cta": "Öffne den letzten Artikel"
+  },
+  "contact": {
+    "title": "Kontakt aufnehmen",
+    "description": "Sind Sie an einer Zusammenarbeit interessiert? Kontaktieren Sie mich gerne.",
+    "placeholder": "Geben Sie Ihre E-Mail ein",
+    "cta": "Kontaktieren"
+  }
+}
