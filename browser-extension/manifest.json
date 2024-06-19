@@ -31,7 +31,8 @@
   "permissions": [
     "storage",
     "nativeMessaging",
-    "activeTab"
+    "activeTab",
+    "webNavigation"
   ],
   "web_accessible_resources": [
     {

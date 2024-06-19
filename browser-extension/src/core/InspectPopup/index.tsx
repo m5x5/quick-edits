@@ -1,6 +1,6 @@
 import { flip, platform, useFloating } from "@floating-ui/react-dom";
 import { hotkeyKeyUX, startKeyUX } from "keyux";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import AstroButton from "./AstroButton";
 import SelectBox from "./SelectBox";
@@ -60,11 +60,7 @@ export default function InspectPopup({
     ],
     strategy: "absolute",
   });
-
-  useEffect(() => {
-    refs.setReference(target);
-  }, [target, refs]);
-
+  refs.setReference(target);
 
   return (
     <ShadowDom parentElement={document.body}>

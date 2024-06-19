@@ -4,7 +4,8 @@ export default function AstroButton({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
-      className="bg-black rounded-md p-1 flex text-white items-center gap-1 px-2"
+      className="bg-black rounded-md p-1 flex text-white items-center gap-1 px-2 cursor-pointer"
+      onMouseDown={(e) => e.preventDefault()}
       onClick={onClick}
       aria-keyshortcuts="meta+enter"
     >

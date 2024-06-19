@@ -37,7 +37,7 @@ export default function ProjectMappingConfiguration() {
         className={"rounded-[4px] text-xs border-gray-300 py-[0.05rem] px-[0.2rem] placeholder:text-gray-400 dark:text-white"}
         value={data?.searchFolder || ""}
         onChange={async (e) => mutation.mutate({
-          pattern: data?.pattern || "",
+          pattern: data?.pattern || await getActiveTabUrl() || "",
           searchFolder: e.target.value
         })}
       />
