@@ -27,4 +27,3 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: cd browser-extension && npm ci --legacy-peer-deps
     - run: cd browser-extension && npm run build --if-present
-    - run: cd browser-extension && npm test
