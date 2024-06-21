@@ -15,16 +15,16 @@ const getCurrentBreakpoint = () => {
   if (width >= breakpoints['2xl']) {
     return '2xl';
   }
-  if (width >= breakpoints['xl']) {
+  if (width >= breakpoints.xl) {
     return 'xl';
   }
-  if (width >= breakpoints['lg']) {
+  if (width >= breakpoints.lg) {
     return 'lg';
   }
-  if (width >= breakpoints['md']) {
+  if (width >= breakpoints.md) {
     return 'md';
   }
-  if (width >= breakpoints['sm']) {
+  if (width >= breakpoints.sm) {
     return 'sm';
   }
   return 'default';

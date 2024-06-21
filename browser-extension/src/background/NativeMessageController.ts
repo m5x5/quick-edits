@@ -1,4 +1,4 @@
-interface PerformSearchData {
+export interface PerformSearchData {
   folder: string;
   classes: string;
   textContent: string;
@@ -11,15 +11,15 @@ interface OpenEditorData {
   editor: 'vscode' | 'phpstorm' | 'zed';
 }
 
-type ActionType = "perform_search" | "open_editor";
+export type ActionType = "perform_search" | "open_editor";
 
-type ActionData<T extends ActionType> = T extends "perform_search"
+export type ActionData<T extends ActionType> = T extends "perform_search"
   ? PerformSearchData
   : T extends "open_editor"
   ? OpenEditorData
   : never;
 
-type NativeResponse<T extends ActionType> = {
+export type NativeResponse<T extends ActionType> = {
   success: boolean;
   message: string;
 } & T extends "perform_search"

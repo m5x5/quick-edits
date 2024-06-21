@@ -7,6 +7,9 @@ export default defineConfig({
   server: {
     hmr: false,
   },
+  build: {
+    sourcemap: "inline",
+  },
   plugins: [
     tailwindcss(),
     webExtension({

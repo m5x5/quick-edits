@@ -5,10 +5,11 @@ import { compile } from 'tailwindcss';
 // @ts-ignore
 import defaultTheme from 'tailwindcss/theme.css?inline';
 
-const parseInput = (input: string) => {
-  const css = `${defaultTheme} @tailwind base;@tailwind components;@tailwind utilities;`
+const css = `${defaultTheme} @tailwind base;@tailwind components;@tailwind utilities;`
+const compiled = compile(css);
 
-  return compile(css).build([...input.split(' ')]);
+const parseInput = (input: string) => {
+  return compiled.build([...input.split(' ')]);
 }
 
 export default function InspectPopupClassListInput({ onChangeClasses }: { onChangeClasses: (classNames: string) => void }) {
@@ -33,7 +34,7 @@ export default function InspectPopupClassListInput({ onChangeClasses }: { onChan
   }
 
   useEffect(() => {
-    updateCSS(debouncedInput);
+    if (debouncedInput) updateCSS(debouncedInput);
   }, [debouncedInput, updateCSS]);
 
 

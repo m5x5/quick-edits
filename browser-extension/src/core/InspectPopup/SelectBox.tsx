@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import { ShadowDom } from "../ShadowDom";
-import styles from "../../../dist/popup.css?inline";
 
 export default function SelectBox({ target, classes }: {
   target: HTMLElement | SVGElement;
@@ -16,8 +14,8 @@ export default function SelectBox({ target, classes }: {
 
 
   useEffect(() => {
-    updateSelectBox();
-  }, []);
+    if (target) updateSelectBox();
+  }, [target]);
 
   useEffect(() => {
     window.addEventListener("resize", updateSelectBox);
@@ -103,8 +101,13 @@ export default function SelectBox({ target, classes }: {
   }
 
   return (
-    <ShadowDom parentElement={document.body}>
-      <style>{styles}</style>
+    <>
+      <style>{`
+        .bg-blue-500 { background-color: #3b82f6; }
+        .bg-orange-500 { background-color: #f97316; }
+        .bg-green-500 { background-color: #22c55e; }
+        .opacity-30 { opacity: 0.3; }
+        `}</style>
       <div className={"opacity-30 bg-blue-500"} ref={blueBoxRef} />
       <div className={"opacity-30 bg-orange-500"} ref={upperMarginBoxRef} />
       <div className={"opacity-30 bg-orange-500"} ref={lowerMarginBoxRef} />
@@ -112,6 +115,6 @@ export default function SelectBox({ target, classes }: {
       <div className={"opacity-30 bg-green-500"} ref={leftPaddingBoxRef} />
       <div className={"opacity-30 bg-green-500"} ref={rightPaddingBoxRef} />
       <div className={"opacity-30 bg-green-500"} ref={upperPaddingBoxRef} />
-    </ShadowDom>
+    </>
   )
 }
