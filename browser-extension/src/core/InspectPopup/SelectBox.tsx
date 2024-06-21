@@ -34,8 +34,8 @@ export default function SelectBox({ target, classes }: {
     if (blueBoxRef.current) {
       blueBoxRef.current.style.position = "fixed";
       blueBoxRef.current.style.top = `calc(${targetRect.top}px + ${targetStyle.paddingTop})`;
-      blueBoxRef.current.style.left = `${targetRect.left}px`;
-      blueBoxRef.current.style.width = `${targetRect.width}px`;
+      blueBoxRef.current.style.left = `${targetRect.left + parseInt(targetStyle.paddingLeft)}px`;
+      blueBoxRef.current.style.width = `${targetRect.width - parseInt(targetStyle.paddingRight) - parseInt(targetStyle.paddingLeft)}px`;
       blueBoxRef.current.style.height = `calc(${targetRect.height}px - ${targetStyle.paddingBottom} - ${targetStyle.paddingTop})`;
       blueBoxRef.current.style.zIndex = "999999";
       blueBoxRef.current.style.pointerEvents = "none";

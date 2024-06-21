@@ -18,7 +18,7 @@ export default function InspectPopupResults({ target, ...props }: { target: HTML
 
   if (mapping?.searchFolder && results.length > 0) {
     for (const result of results) {
-      result.path = result.path.replace(mapping.searchFolder, '');
+      result.shortenedPath = result.path.replace(mapping.searchFolder, '');
     }
   }
 
@@ -47,7 +47,7 @@ export default function InspectPopupResults({ target, ...props }: { target: HTML
             );
           }}
         >
-          {`${result.path}:${result.lineNumber}:${result.charNumber}`}
+          {`${result.shortenedPath}:${result.lineNumber}:${result.charNumber}`}
         </button>
       ))}
     </div>
