@@ -17,14 +17,14 @@ export default function useSelectedTarget() {
       const noOtherKeyPressed = !e.ctrlKey && !e.shiftKey && !e.metaKey;
       if (e.altKey && noOtherKeyPressed) {
         setTargetSelectionActive(true);
-      }
-
-      if (e.ctrlKey && e.metaKey && e.shiftKey && e.key === "L") {
+      } else if (e.ctrlKey && e.metaKey && e.shiftKey && e.key === "L") {
         setTargetSelectionActive(true);
         const newTarget =
           (document.body?.children[0] as HTMLElement) ||
           (document.body as HTMLElement);
         setTarget(newTarget);
+      } else {
+        return;
       }
 
       if (e.key === "l" || e.key === "C") {

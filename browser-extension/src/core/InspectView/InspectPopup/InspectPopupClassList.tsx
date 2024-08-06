@@ -65,10 +65,10 @@ const getUtilityClassesForGroup = (group: string) => {
 // Usage example
 console.log(getCurrentBreakpoint()); // This will log the current Tailwind breakpoint based on window width
 
-export default function InspectPopupClassList({ target, classes, setClasses, setAdditionalClasses, additionalClasses }: { target: HTMLElement | SVGElement, classes: string, setClasses: Function, setAdditionalClasses: (classNames: string) => void, additionalClasses: string }) {
+export default function InspectPopupClassList({ target, classes = "", setClasses, setAdditionalClasses, additionalClasses }: { target: HTMLElement | SVGElement, classes: string, setClasses: Function, setAdditionalClasses: (classNames: string) => void, additionalClasses: string }) {
   useEffect(() => {
     if (!additionalClasses) return;
-    console.log({ additionalClasses });
+
     target.classList.remove(...target.classList.values());
     target.classList.add(...additionalClasses.split(' ').filter(className => className));
     target.classList.add(...classes.split(' ').filter(className => className));

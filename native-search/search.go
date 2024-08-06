@@ -25,6 +25,10 @@ func PerformSearch(message Message) Response {
 		}
 	}
 
+	if isNextJSProject(message.Data.Folder) {
+		nextJSHeuristicSorting(message.Data, search)
+	}
+
 	return Response{
 		Success: true,
 		Data:    search,

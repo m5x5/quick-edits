@@ -12,8 +12,7 @@ func TestSearch(t *testing.T) {
 			OpenEditorData
 		}{
 			PerformSearchData: PerformSearchData{
-				Folder:  "/Users/michael/Software/private/chrome-extension-typescript-starter/",
-				Keyword: "chrome",
+				Folder: "/Users/michael/Software/private/chrome-extension-typescript-starter/",
 			},
 		},
 	}

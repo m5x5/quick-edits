@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
@@ -10,6 +11,7 @@ import (
 )
 
 type PerformSearchData struct {
+	BrowserURL  string `json:"browserURL"`
 	Folder      string `json:"folder"`
 	Classes     string `json:"classes"`
 	TextContent string `json:"textContent"`
@@ -58,10 +60,12 @@ func main() {
 
 	defer log.Close()
 
+	reader := bufio.NewReader(os.Stdin)
+
 	for {
 		// Read the length of the incoming message
 		var length uint32
-		err := binary.Read(os.Stdin, binary.LittleEndian, &length)
+		err := binary.Read(reader, binary.LittleEndian, &length)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error reading length:", err)
 			continue
@@ -75,7 +79,7 @@ func main() {
 
 		// Read the message itself
 		messageBytes := make([]byte, length)
-		_, err = os.Stdin.Read(messageBytes)
+		_, err = reader.Read(messageBytes)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error reading message:", err)
 			continue
@@ -93,6 +97,7 @@ func main() {
 		log.Log("Data.Folder: " + message.Data.Folder)
 		log.Log("Data.Classes: " + message.Data.Classes)
 		log.Log("Data.TextContent: " + message.Data.TextContent)
+		log.Log("Data.BrowserURL: " + message.Data.BrowserURL)
 		log.Log("Data.CharNumber: " + fmt.Sprint(message.Data.CharNumber))
 		log.Log("Data.Path: " + fmt.Sprint(message.Data.Path))
 		if message.Action == "perform_search" {
