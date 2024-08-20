@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { performSearch } from "../../content_script/performSearch";
-import type { NativeResponse } from "../../background/NativeMessageController";
-import useMapping from "./hooks/useMapping";
+import { performSearch } from "../../../content_script/performSearch";
+import useMapping from "../hooks/useMapping";
+import { NativeResponse } from "../../../background/NativeMessageController";
 
 export default function InspectPopupResults({ target, ...props }: { target: HTMLElement, astroResult?: boolean }) {
   const [results, setResults] = useState<{ path: string, lineNumber: number, charNumber: number }[]>([]);
@@ -11,6 +11,7 @@ export default function InspectPopupResults({ target, ...props }: { target: HTML
     performSearch({
       classes: target.className,
       textContent: target.textContent || "",
+      browserUrl: window.location.href,
     }).then((results) => {
       setResults(results);
     });
@@ -28,7 +29,7 @@ export default function InspectPopupResults({ target, ...props }: { target: HTML
         <button
           type="button"
           key={result.path + result.charNumber + result.lineNumber}
-          className="text-[#666] cursor-pointer hover:text-[#000] block hover:bg-gray-100"
+          className="text-[#666] cursor-pointer hover:text-[#000] block hover:bg-gray-100 text-left"
           aria-keyshortcuts={!props.astroResult && i === 0 ? "meta+enter" : undefined}
           onMouseDown={async () => {
             chrome.runtime.sendMessage(

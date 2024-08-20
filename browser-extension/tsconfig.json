@@ -10,6 +10,7 @@
         "outDir": "dist/js",
         "noEmitOnError": true,
         "jsx": "react",
+        "jsxImportSource": "react",
         "typeRoots": [ "node_modules/@types" ],
         "allowJs": true,
         "composite": true,

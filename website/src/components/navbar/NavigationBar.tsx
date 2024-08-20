@@ -29,14 +29,13 @@ export default function NavigationBar() {
   };
 
   return (
-    <header className="py-1 border-b border-gray-200 dark:border-gray-800 sticky top-0 dark:bg-black bg-white grid grid-cols-full">
-      <div className="flex items-center justify-between col-start-2 col-span-12 mx">
+    <header className="py-1 sticky top-0 bg-white grid grid-cols-full col-start-1 z-20">
+      <div className="flex items-center justify-between col-start-2 col-span-12">
         <div className="flex gap-5 items-center">
           <Link href="/" aria-label={"Homepage öffnen"}>
             <Logo />
           </Link>
         </div>
-        <div className="gradient-highlight absolute bottom-0 left-0"></div>
         <NavigationLinks />
         <dialog
           ref={ref}
@@ -46,7 +45,7 @@ export default function NavigationBar() {
         >
           <div
             className={
-              "flex flex-col w-full top-14 fixed dark:bg-gradient-dark bg-gradient-light inset-0 navigation--mobile " +
+              "flex flex-col w-full top-14 fixed bg-gradient-light inset-0 navigation--mobile " +
               (open ? "active" : "")
             }
           >
@@ -55,7 +54,8 @@ export default function NavigationBar() {
         </dialog>
 
         <button
-          className="menu cross md:hidden col-span-2 col-start-10"
+          type="button"
+          className="menu cross hidden col-span-2 col-start-10"
           aria-label={open ? "Close Menu" : "Open Menu"}
           aria-expanded={open}
           aria-haspopup={"true"}
@@ -63,7 +63,7 @@ export default function NavigationBar() {
           onClick={handleClick}
         >
           <label>
-            <svg viewBox="10 15 70 70" xmlns="http://www.w3.org/2000/svg" className={open? "checked": ""}>
+            <svg viewBox="10 15 70 70" xmlns="http://www.w3.org/2000/svg" className={open ? "checked" : ""}>
               <path className="line--1" d="M0 70l28-28c2-2 2-2 7-2h64" />
               <path className="line--2" d="M0 50h99" />
               <path className="line--3" d="M0 30l28 28c2 2 2 2 7 2h64" />

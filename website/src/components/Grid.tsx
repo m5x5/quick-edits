@@ -22,8 +22,8 @@ export default function Grid() {
 
   return (
     <>
-      <div className="m-w-[1200px] fixed left-0 right-0 h-full -z-10 hover-grid flex dark:hidden"></div>
-      <div className="m-w-[1200px] fixed left-0 right-0 h-full -z-10 hover-grid--dark hidden dark:flex"></div>
+      <div className="m-w-[1200px] fixed left-0 right-0 h-full -z-10 hover-grid flex"></div>
+      <div className="m-w-[1200px] fixed left-0 right-0 h-full -z-10 hover-grid--dark hidden"></div>
       <div id="light" ref={ref} className="faded-out"></div>
     </>
   );

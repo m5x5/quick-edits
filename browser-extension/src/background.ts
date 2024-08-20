@@ -18,6 +18,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
         folder: data.folder || "",
         classes: data.classes || "",
         textContent: data.textContent,
+        browserUrl: data.browserUrl,
       });
       return false;
     }
@@ -26,6 +27,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
         folder: data.folder,
         classes: data.classes,
         textContent: data.textContent,
+        browserUrl: data.browserUrl,
       })
       .then((response) => {
         sendResponse(response);

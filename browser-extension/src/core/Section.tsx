@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 export default function Section({ children, className }: { children: React.ReactNode | React.ReactNode[], className?: string }) {
   return (
@@ -8,9 +8,9 @@ export default function Section({ children, className }: { children: React.React
   )
 }
 
-export function SectionBody({ children }: { children: React.ReactNode | React.ReactNode[] }) {
+export function SectionBody({ children, className }: { children: React.ReactNode | React.ReactNode[], className?: string }) {
   return (
-    <div className="py-2 px-3 text-blue-700 flex flex-col gap-4">
+    <div className={`${className} py-2 px-3 text-blue-700 flex flex-col gap-4`}>
       {children}
     </div>
   )

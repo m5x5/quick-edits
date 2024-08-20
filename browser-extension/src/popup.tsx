@@ -30,39 +30,8 @@ export const Popup = () => {
         <Section>Editor</Section>
         <EditorSelection />
 
-        <Section>Extension Settings</Section>
-        <SectionBody>
-          <div className="flex items-center gap-2 mb-0">
-            <input
-              className="form-checkbox h-3 w-3 text-orange-600 ml-2"
-              id="setting1"
-              name="setting1"
-              type="checkbox"
-            />
-            <label
-              className="dark:text-gray-300 text-blue-700"
-              htmlFor="setting1"
-            >
-              Enable Auto-Run
-            </label>
-          </div>
-          <div className="flex items-center gap-2 mb-0">
-            <input
-              className="form-checkbox h-3 w-3 text-orange-600 ml-2"
-              id="setting2"
-              name="setting2"
-              type="checkbox"
-            />
-            <label
-              className="dark:text-gray-300 text-blue-700"
-              htmlFor="setting2"
-            >
-              Show Notifications
-            </label>
-          </div>
-        </SectionBody>
-        <Section>Enhance extension</Section>
-        <SectionBody>
+        <Section className="hidden">Enhance extension</Section>
+        <SectionBody className="hidden">
           <Button onMouseDown={() => openExtensionInEditor()}>
             Improve in Editor!
           </Button>

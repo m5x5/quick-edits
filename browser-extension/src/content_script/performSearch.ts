@@ -9,6 +9,7 @@ export const performSearch = async (searchData: Omit<PerformSearchData, "folder"
     // TODO: handle multiple mappings with filter
 
     if (!mapping) return resolve([]);
+    console.log(searchData.browserUrl, mapping.searchFolder);
 
     chrome.runtime.sendMessage(
       {
@@ -17,6 +18,7 @@ export const performSearch = async (searchData: Omit<PerformSearchData, "folder"
           folder: mapping.searchFolder,
           classes: searchData.classes,
           textContent: searchData.textContent,
+          browserUrl: searchData.browserUrl,
         },
       },
       (response: NativeResponse<"perform_search">) => {

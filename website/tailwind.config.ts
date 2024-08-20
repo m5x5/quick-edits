@@ -8,9 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        heading: ["Manrope", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+      },
       // grid
       gridTemplateColumns: {
-        full: "repeat(14, 1fr)",
+        full: "var(--columns)",
         "1-2": "1fr 2fr",
       },
       backgroundImage: {

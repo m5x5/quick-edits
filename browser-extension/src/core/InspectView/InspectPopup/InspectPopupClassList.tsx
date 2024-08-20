@@ -127,7 +127,7 @@ export default function InspectPopupClassList({ target, classes = "", setClasses
   return (
     <span className="text-[#2211AA] font-bold pt-[0.25rem]">
       {
-        classes.trim().split(' ').map((elementClass: string) => {
+        (classes?.trim?.() || "").split(' ').map((elementClass: string) => {
           const isNotGray = isUtilityClassForLargerBreakpoint(elementClass);
 
           return (
@@ -151,5 +151,4 @@ const ClassItem = ({ addArrowSwitch, elementClass, isGray }: { addArrowSwitch: R
     </button>
   </>
   )
-
 }

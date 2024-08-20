@@ -1,0 +1,20 @@
+{
+  "linter": {
+    "rules": {
+      "nursery": {
+        "useSortedClasses": {
+          "options": {
+            "attributes": [
+              "className"
+            ],
+            "functions": [
+              "clsx",
+              "cva",
+              "tw"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

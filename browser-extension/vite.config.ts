@@ -17,7 +17,7 @@ export default defineConfig({
       transformManifest: (manifest) => {
         manifest.version = manifest.version.replace(/\.\d+$/, `.${new Date().getMilliseconds()}`);
         return manifest;
-      }
+      },
     }),
   ],
   resolve: {

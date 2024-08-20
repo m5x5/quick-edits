@@ -2,6 +2,7 @@ export interface PerformSearchData {
   folder: string;
   classes: string;
   textContent: string;
+  browserUrl: string;
 }
 
 interface OpenEditorData {
@@ -30,7 +31,7 @@ export type NativeResponse<T extends ActionType> = {
 
 export default class NativeMessageController {
   port: chrome.runtime.Port = chrome.runtime.connectNative(
-    "com.my_company.my_application"
+    "com.quick_edits.native_search"
   );
   promises: Map<string, (msg: NativeResponse<ActionType>) => void> = new Map();
 

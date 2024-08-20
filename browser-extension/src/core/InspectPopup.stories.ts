@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import InspectPopup from "./InspectPopup";
+import InspectView from "./InspectView";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Elements/InspectPopup",
-  component: InspectPopup,
+  title: "Elements/InspectView",
+  component: InspectView,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -17,7 +17,7 @@ const meta = {
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   // args: { onClick: fn() },
-} satisfies Meta<typeof InspectPopup>;
+} satisfies Meta<typeof InspectView>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -27,15 +27,6 @@ export const Primary: Story = {
   args: {
     tagName: "div",
     classes: "grid w-full grid-cols-1 gap-12 md:grid-cols-2 lg:gap-6",
-    target: document.createElement("div"),
-    results: [
-      {
-        shortenedPath: "path/to/file",
-        path: "path/to/file",
-        lineNumber: 1,
-        charNumber: 2,
-      },
-    ],
   },
 };
 
@@ -43,15 +34,6 @@ export const WithAstro: Story = {
   args: {
     tagName: "button",
     classes: "secondary",
-    target: document.createElement("button"),
-    results: [
-      {
-        shortenedPath: "path/to/file",
-        path: "path/to/file",
-        lineNumber: 1,
-        charNumber: 2,
-      },
-    ],
     astroResult: {
       file: "path/to/astro/file",
       loc: "1:2",

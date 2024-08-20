@@ -9,7 +9,7 @@ const nextConfig = {
   },
   i18n,
   async redirects() {
-    let redirects = [];
+    const redirects = [];
 
     fs.readdirSync("./src/components/posts").forEach((file) => {
       if (file.endsWith(".mdx") || file.endsWith(".md")) {

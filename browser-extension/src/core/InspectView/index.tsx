@@ -1,27 +1,21 @@
 import { hotkeyKeyUX, startKeyUX } from "keyux";
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import AstroButton from "./AstroButton";
 import SelectBox from "./SelectBox";
 import styles from "../../../dist/popup.css?inline";
 import { ShadowDom } from "../ShadowDom";
-import InspectPopupClassList from "./InspectPopupClassList";
 import useSelectedTarget from "./hooks/useSelectedTarget";
-import InspectPopupContainer from "./InspectPopupContainer";
-import InspectPopupResults from "./InspectPopupResults";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PopupPositioning from "./PopupPositioning";
+import InspectPopup from "./InspectPopup";
+import InspectPopupAstroSection from "./InspectPopup/InspectPopupAstroSection";
+import InspectPopupClassList from "./InspectPopup/InspectPopupClassList";
+import InspectPopupResults from "./InspectPopup/InspectPopupResults";
 
 startKeyUX(window, [hotkeyKeyUX()]);
 const queryClient = new QueryClient();
 
-export default function InspectPopup(props: {
-  tagName?: string;
-  classes?: string;
-  astroResult?: {
-    file: string;
-    loc: string;
-  };
-}) {
+export default function InspectView() {
   const { target, targetSelectionActive } = useSelectedTarget();
   const [classes, setClasses] = useState<string>('');
   const [additionalClasses, setAdditionalClasses] = useState<string>("");
@@ -35,35 +29,14 @@ export default function InspectPopup(props: {
   return (
     <QueryClientProvider client={queryClient}>
       <SelectBox target={target} classes={`${classes} ${additionalClasses}`} />
-      <style>{styles}</style>
-      <InspectPopupContainer target={target} targetSelectionActive={targetSelectionActive}>
-        <span className="text-[#77006e] font-bold">{target?.tagName?.toLowerCase()}</span>
-        <InspectPopupClassList target={target} classes={classes} setClasses={setClasses} additionalClasses={additionalClasses} setAdditionalClasses={setAdditionalClasses} />
-        <div>
-          <InspectPopupResults target={target} />
-          {props.astroResult && (
-            <div className="mt-2">
-              <span className="text-[11px] text-gray-700">ASTRO COMPONENT</span>
-              <br />
-              <AstroButton
-                onClick={() => {
-                  chrome.runtime.sendMessage(
-                    {
-                      action: "open_editor",
-                      data: {
-                        path: props.astroResult?.file,
-                        lineNumber: +props.astroResult?.loc.split(":")[0],
-                        charNumber: +props.astroResult?.loc.split(":")[1],
-                      },
-                    }
-                  );
-                }}
-              />
-            </div>
-          )}
-        </div>
-      </InspectPopupContainer>
-      <SelectBox target={target} classes={`${classes} ${additionalClasses}`} />
+      <PopupPositioning target={target}>
+        <InspectPopup targetSelectionActive={targetSelectionActive} tagName={target.tagName}>
+          <InspectPopupClassList target={target} classes={classes} setClasses={setClasses}
+                                 additionalClasses={additionalClasses} setAdditionalClasses={setAdditionalClasses}/>
+          <InspectPopupAstroSection target={target} />
+          <InspectPopupResults target={target}/>
+        </InspectPopup>
+      </PopupPositioning>
     </QueryClientProvider>
   );
 }
@@ -82,8 +55,9 @@ export const initPopup = () => {
 
   root.render(
     <ShadowDom parentElement={document.body}>
-      <InspectPopup />
-    </ShadowDom >
+      <style>{styles}</style>
+      <InspectView/>
+    </ShadowDom>
   );
 
   return popup;

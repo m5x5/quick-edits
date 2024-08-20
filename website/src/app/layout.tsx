@@ -14,6 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
+      <head>
+        <meta name="theme-color" content="#ffffff" />
+      </head>
       <body>{children}</body>
     </html>
   );
