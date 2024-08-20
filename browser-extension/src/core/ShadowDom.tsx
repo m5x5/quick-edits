@@ -1,32 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-export function ShadowDom({parentElement, position = "beforebegin", children}: {
-  parentElement: Element;
-  position?: InsertPosition;
-  children: React.ReactNode;
+export function ShadowDom({
+	parentElement,
+	position = "beforebegin",
+	children,
+}: {
+	parentElement: Element;
+	position?: InsertPosition;
+	children: React.ReactNode;
 }) {
-  const [shadowHost] = React.useState(() =>
-    document.createElement("my-shadow-host")
-  );
+	const [shadowHost] = React.useState(() =>
+		document.createElement("my-shadow-host"),
+	);
 
-  const [shadowRoot] = React.useState(() =>
-    shadowHost.attachShadow({mode: "closed"})
-  );
+	const [shadowRoot] = React.useState(() =>
+		shadowHost.attachShadow({ mode: "closed" }),
+	);
 
-  React.useLayoutEffect(() => {
-    if (shadowHost) {
-      shadowHost.dataset.wsDeveloperTools = "true";
-    }
+	React.useLayoutEffect(() => {
+		if (shadowHost) {
+			shadowHost.dataset.wsDeveloperTools = "true";
+		}
 
-    if (parentElement) {
-      parentElement.insertAdjacentElement(position, shadowHost);
-    }
+		if (parentElement) {
+			parentElement.insertAdjacentElement(position, shadowHost);
+		}
 
-    return () => {
-      shadowHost.remove();
-    };
-  }, [parentElement, shadowHost, position]);
+		return () => {
+			shadowHost.remove();
+		};
+	}, [parentElement, shadowHost, position]);
 
-  return ReactDOM.createPortal(children, shadowRoot);
+	return ReactDOM.createPortal(children, shadowRoot);
 }
