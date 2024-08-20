@@ -82,7 +82,7 @@ const Options = () => {
 								className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 								aria-label="im neuen Tab in Twitter öffnen"
 								target="_blank"
-								href="https://twitter.com/m5x5p"
+								href="https://twitter.com/m5x5p" rel="noreferrer"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@ const Options = () => {
 								className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 								aria-label="im neuen Tab in GitHub öffnen"
 								target="_blank"
-								href="https://github.com/m5x5"
+								href="https://github.com/m5x5" rel="noreferrer"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +127,7 @@ const Options = () => {
 								className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 								aria-label="im neuen Tab in Linkedin öffnen"
 								target="_blank"
-								href="https://www.linkedin.com/in/michael-peters-3985a0223/"
+								href="https://www.linkedin.com/in/michael-peters-3985a0223/" rel="noreferrer"
 							>
 								<svg
 									className="h-6 w-6"
@@ -142,8 +142,8 @@ const Options = () => {
 									strokeLinejoin="round"
 								>
 									<title>LinkedIn</title>
-									<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-									<rect width="4" height="12" x="2" y="9"></rect>
+									<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+									<rect width="4" height="12" x="2" y="9" />
 									<circle cx="4" cy="4" r="2" />
 								</svg>
 							</a>
@@ -151,7 +151,7 @@ const Options = () => {
 								className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 								aria-label="im neuen Tab in Xing öffnen"
 								target="_blank"
-								href="https://www.xing.com/profile/Michael_Peters339"
+								href="https://www.xing.com/profile/Michael_Peters339" rel="noreferrer"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
