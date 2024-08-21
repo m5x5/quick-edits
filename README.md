@@ -4,7 +4,17 @@
 Quickly locates the code you need to edit. Optimizes the frontend development workflow.
 
 ## Usage
+
+### Popup
+Provides a quick way to test TailwindCSS classes and jump to the code you need to edit.
+
 <img src="./docs/how-to-use-popup.gif">
+
+
+### Extension Settings
+Offers a few settings to configure the project code folder that includes the code you want to search through and an editor select box.
+
+<img src="./docs/extension-settings-popup.png">
 
 ## Installation
 
