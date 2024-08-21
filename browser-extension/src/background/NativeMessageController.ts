@@ -69,7 +69,7 @@ export default class NativeMessageController {
 		const id = this.generateMessageId();
 		this.port.postMessage({ id, action, data });
 
-		return new Promise<NativeResponse<T>>((resolve, reject) => {
+		return new Promise<NativeResponse<T>>((resolve, _) => {
 			this.promises.set(id, (msg) => {
 				this.promises.delete(id);
 				resolve(msg as NativeResponse<T>);

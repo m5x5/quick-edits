@@ -1,4 +1,5 @@
-import type React from "react";
+// biome-ignore lint/style/useImportType: <explanation>
+import React from "react";
 
 export default function Section({
 	children,

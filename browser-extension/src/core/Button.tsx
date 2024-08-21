@@ -1,6 +1,6 @@
-import React from "react";
+import type React from "react";
 
-function Button(props: JSX.IntrinsicElements["button"]) {
+function Button(props: React.JSX.IntrinsicElements["button"]) {
 	return (
 		<button
 			type="button"
