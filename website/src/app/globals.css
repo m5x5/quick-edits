@@ -45,14 +45,6 @@ body {
     @apply text-black bg-white;
 }
 
-.header a {
-    transition: all 0.4s ease-in-out;
-}
-
-.header:hover a:not(:hover) {
-    filter: blur(1px);
-}
-
 article h2 {
     @apply text-2xl font-bold text-left pb-4;
 }
