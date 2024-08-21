@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import type { ChangeEventHandler } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { compile } from "tailwindcss";
-// @ts-ignore
 import defaultTheme from "tailwindcss/theme.css?inline";
 
 const css = `${defaultTheme} @tailwind base;@tailwind components;@tailwind utilities;`;
@@ -16,44 +15,37 @@ export default function InspectPopupClassListInput({
 	onChangeClasses,
 }: { onChangeClasses: (classNames: string) => void }) {
 	const [input, setInput] = useState("");
-	const [debouncedInput] = useDebounce(input, 300);
-
-	/**
-	 * Parse the input and update the css
-	 * @param debouncedInput
-	 */
-	const updateCSS = (debouncedInput: string) => {
-		let element = document.querySelector(
-			"[data-inspect-popup-class-style-list]",
-		) as HTMLElement;
-		onChangeClasses(debouncedInput);
-		const parsed = parseInput(debouncedInput);
-
-		if (!element) {
-			element = document.createElement("style");
-			element.setAttribute("data-inspect-popup-class-style-list", "");
-			document.head.appendChild(element);
-		}
-		element.innerHTML = parsed;
-	};
+	const [debouncedInput] = useDebounce(input, 100);
 
 	useEffect(() => {
-		if (debouncedInput) updateCSS(debouncedInput);
-	}, [debouncedInput, updateCSS]);
+		/**
+		 * Parse input and update the css snippet
+		 * @param debouncedInput
+		 */
+		const updateCSS = (debouncedInput: string) => {
+			let element = document.querySelector(
+				"[data-inspect-popup-class-style-list]",
+			) as HTMLElement;
+			onChangeClasses(debouncedInput);
+			const parsed = parseInput(debouncedInput);
 
-	const setText: ChangeEventHandler<HTMLInputElement> = (e) => {
-		const value = e.target.value;
-		setInput(value);
-	};
+			if (!element) {
+				element = document.createElement("style");
+				element.setAttribute("data-inspect-popup-class-style-list", "");
+				document.head.appendChild(element);
+			}
+			element.innerHTML = parsed;
+		};
 
-	const copy = () => {
-		return navigator.clipboard.writeText(debouncedInput);
-	};
+		updateCSS(debouncedInput);
+	}, [debouncedInput, onChangeClasses]);
+
+	const copy = () => navigator.clipboard.writeText(debouncedInput);
 
 	return (
 		<div className={"flex gap-1 py-1"}>
 			<input
-				onChange={setText}
+				onChange={(e) => setInput(e.target.value)}
 				onClick={(e) => {
 					e.preventDefault();
 					e.stopPropagation();
