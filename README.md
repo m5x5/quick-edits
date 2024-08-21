@@ -8,7 +8,10 @@ Quickly locates the code you need to edit. Optimizes the frontend development wo
 
 ## Installation
 
-### Chrome Extension
+Follow the docs here to follow the quick install guide: https://quick-edits-extension.vercel.app/docs
+
+### Manual Installation
+## Chrome Extension
 Install and build Chrome Extension.
 
 ```bash
@@ -17,14 +20,14 @@ Install and build Chrome Extension.
   npm run build
 ```
 
-### Native Code Search Module
+## Native Code Search Module
 ```bash
   cd native-module
   go install
   go build
 ```
 
-#### MacOS Config
+### MacOS Config
 ```bash
   cd /Library/Google/Chrome/NativeMessagingHosts
   sudo touch com.my_company.my_application.json
