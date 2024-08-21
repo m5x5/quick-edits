@@ -3,6 +3,9 @@
 
 Quickly locates the code you need to edit. Optimizes the frontend development workflow.
 
+## Usage
+<img src="./docs/how-to-use-popup.gif">
+
 ## Installation
 
 ### Chrome Extension
