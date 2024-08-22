@@ -1,18 +1,18 @@
+import Footer from "@/components/Footer";
 import Grid from "@/components/Grid";
 import LinkedinIcon from "@/components/LinkedinIcon";
 import Technologies from "@/components/Technologies";
 import TwitterIcon from "@/components/TwitterIcon";
 import NavigationBar from "@/components/navbar/NavigationBar";
-import Projects from "@/components/sections/Projects";
+import { IconBrandGithub } from "@tabler/icons-react";
+import type { Metadata } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Footer from "@/components/Footer";
-import type { Metadata } from "next";
-import { IconBrandGithub } from "@tabler/icons-react";
 
 export const metadata: Metadata = {
   title: "Quick Edits - A Developer Utility",
-  description: "Quickly locates the code you need to edit. Optimizes the frontend development workflow.",
+  description:
+    "Quickly locates the code you need to edit. Optimizes the frontend development workflow.",
 };
 
 export default function Home() {
@@ -22,7 +22,9 @@ export default function Home() {
         <title>Quick Edits - Privacy</title>
         <meta
           name="description"
-          content={"Quickly locates the code you need to edit. Optimizes the frontend development workflow."}
+          content={
+            "Quickly locates the code you need to edit. Optimizes the frontend development workflow."
+          }
         />
       </Head>
       <Grid />
@@ -54,16 +56,23 @@ export default function Home() {
       <div className="flex flex-col min-h-screen relative z-10">
         <NavigationBar />
         <main className="flex-1">
-          <section className="w-full py-12 md:pt-24 md:pb-24 lg:py-32 mx-auto grid grid-cols-full grid-flow-col" aria-label={"Hero Sektion"}>
+          <section
+            className="w-full py-12 md:pt-24 md:pb-24 lg:py-32 mx-auto grid grid-cols-full grid-flow-col"
+            aria-label={"Hero Sektion"}
+          >
             <div className="col-span-12 col-start-2">
               <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px] w-full">
                 <div className="flex flex-col justify-center space-y-4">
                   <div className="space-y-2">
                     <h1 className="pt-1 text-4xl font-semibold tracking-tight sm:text-5xl xl:text-4xl/none pb-5">
-                      This extension does not collect any personal data and will not do so in the foreseeable future.
+                      This extension does not collect any personal data and will
+                      not do so in the foreseeable future.
                     </h1>
                     <p className="!mt-0 max-w-[600px] text-gray-500 md:text-base pb-3">
-                      If you clone the repository from GitHub to install the &quot;native search module&quot; be sure to read the privacy policy of GitHub. We are going to let you know if we change our privacy policy.
+                      If you clone the repository from GitHub to install the
+                      &quot;native search module&quot; be sure to read the
+                      privacy policy of GitHub. We are going to let you know if
+                      we change our privacy policy.
                     </p>
                   </div>
                   <div className="flex flex-col gap-2 min-[400px]:flex-row flex-wrap">
@@ -80,8 +89,11 @@ export default function Home() {
             </div>
           </section>
           <Technologies />
-          <Projects />
-          <section className="w-full py-12 md:py-24 lg:py-32" id="contact" aria-label={"Sektion zu Kontaktmöglichkeiten"}>
+          <section
+            className="w-full py-12 md:py-24 lg:py-32"
+            id="contact"
+            aria-label={"Sektion zu Kontaktmöglichkeiten"}
+          >
             <div className="container px-4 md:px-6 mx-auto">
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
                 <div className="space-y-2">
@@ -89,7 +101,8 @@ export default function Home() {
                     Contact
                   </h2>
                   <p className="max-w-[900px] text-gray-500 lg:text-base/relaxed">
-                    Feel free to contact me if you have any questions or feedback.
+                    Feel free to contact me if you have any questions or
+                    feedback.
                   </p>
                 </div>
                 <div className="mt-6 flex space-x-4">

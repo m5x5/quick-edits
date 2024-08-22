@@ -61,7 +61,7 @@ export default function Home() {
       <div className="relative z-10 flex min-h-screen flex-col">
         <NavigationBar />
         <main className="flex-1 grid-cols-full pb-10 container mx-auto px-4 sm:px-6 lg:px-8">
-          <section className="col-span-12 col-start-2 pt-28">
+          <section className="col-span-12 col-start-2 pt-10">
             <h1 className="pb-12 font-heading font-semibold text-3xl tracking-[-0.04] sm:font-medium sm:text-5xl">
               Setup Quick Edits
             </h1>
