@@ -16,7 +16,6 @@ export const performSearch = async (
 		// TODO: handle multiple mappings with filter
 
 		if (!mapping) return resolve([]);
-		console.log(searchData.browserUrl, mapping.searchFolder);
 
 		chrome.runtime.sendMessage(
 			{
