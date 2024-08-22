@@ -142,7 +142,7 @@ export default function Home() {
                 &quot;description&quot;: &quot;Quick Edits&quot;,
                 <br />
                 &quot;path&quot;:
-                &quot;/absolute/path/to/built/go/module/m&quot;,
+                &quot;/absolute/path/to/built/go/module/native-search&quot;,
                 <br />
                 &quot;type&quot;: &quot;stdio&quot;,
                 <br />
