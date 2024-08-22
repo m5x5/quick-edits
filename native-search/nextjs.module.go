@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"sort"
@@ -32,7 +31,6 @@ func nextJSHeuristicSorting(performSearchData struct {
 	}
 
 	lastRoute := browserUrl[strings.LastIndex(browserUrl, "/")+1:]
-	fmt.Println(lastRoute)
 
 	sort.SliceStable(matches, func(i, j int) bool {
 		// Example heuristic: prioritize files in `pages` directory, then by line number

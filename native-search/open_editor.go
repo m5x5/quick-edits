@@ -29,6 +29,8 @@ func OpenEditor(match Match, editor string) Response {
 		err = launchZedIfPathIsAdequate(match)
 	} else if editor == "vscode" {
 		err = launchVSCodeIfPathIsAdequate(match)
+	} else if editor == "cursor" {
+		err = launchCursorIfPathIsAdequate(match)
 	} else {
 		err = fmt.Errorf("Editor not supported: " + editor)
 	}
@@ -81,5 +83,15 @@ func launchZedIfPathIsAdequate(match Match) error {
 	return exec.Command(
 		"/usr/local/bin/zed",
 		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
+	).Run()
+}
+
+func launchCursorIfPathIsAdequate(match Match) error {
+	return exec.Command(
+		"/usr/local/bin/cursor",
+		"--line", fmt.Sprintf("%d", match.LineNumber),
+		"--column",
+		fmt.Sprintf("%d", match.CharNumber-1),
+		match.Path,
 	).Run()
 }
