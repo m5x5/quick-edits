@@ -91,5 +91,6 @@ func launchCursorIfPathIsAdequate(match Match) error {
 		"/usr/local/bin/cursor",
 		"-g",
 		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
+		"-r",
 	).Run()
 }
