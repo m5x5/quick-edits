@@ -83,18 +83,18 @@ export default function Technologies() {
       </div>
       <div
         className={
-          "!col-start-2 relative col-span-12 grid grid-cols-subgrid gap-4 py-12 container mx-auto px-4 sm:px-6 lg:px-8"
+          "relative col-span-full gap-4 py-12 container mx-auto px-4 sm:px-6 lg:px-8"
         }
       >
         <div className="-top-14 absolute" id="process" />
 
-        <h2 className="col-span-12 pb-4 text-center font-bold font-heading text-4xl">
+        <h2 className="col-span-12 pb-8 text-center font-bold font-heading text-4xl">
           The Process
         </h2>
 
         <div
           className={
-            "relative col-span-12 pb-2 text-center lg:col-span-5 lg:col-start-2"
+            "relative col-span-12 pb-4 text-center lg:col-span-5 lg:col-start-2"
           }
         >
           <IconPointer className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
@@ -118,7 +118,7 @@ export default function Technologies() {
             />
           </div>
         </div>
-        <div className={"relative col-span-12 pb-2 text-center lg:col-span-5"}>
+        <div className={"relative col-span-12 pb-8 text-center lg:col-span-5"}>
           <IconCursorText className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
           <h3 className="font-heading font-medium text-xl">
             Pick the right class
@@ -143,7 +143,7 @@ export default function Technologies() {
         </div>
         <div
           className={
-            "relative col-span-12 pb-2 text-center lg:col-span-5 lg:col-start-2"
+            "relative col-span-12 pb-8 text-center lg:col-span-5 lg:col-start-2"
           }
         >
           <IconCode className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
