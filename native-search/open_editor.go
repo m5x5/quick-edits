@@ -89,9 +89,7 @@ func launchZedIfPathIsAdequate(match Match) error {
 func launchCursorIfPathIsAdequate(match Match) error {
 	return exec.Command(
 		"/usr/local/bin/cursor",
-		"--line", fmt.Sprintf("%d", match.LineNumber),
-		"--column",
-		fmt.Sprintf("%d", match.CharNumber-1),
-		match.Path,
+		"-g",
+		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
 	).Run()
 }

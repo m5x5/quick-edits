@@ -71,6 +71,40 @@ export default function Home() {
             </section>
           </div>
           <Technologies />
+          <section className="w-full container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="pb-8 text-center font-bold font-heading text-4xl">
+              Integrates with your favorite editor
+            </h2>
+            <p className="text-center pb-14">
+              Quick Edits currently supports VSCode, PHPStorm, Cursor and Zed.
+            </p>
+            <ul className="flex justify-center gap-8 pb-24">
+              <li>
+                <Image
+                  src="/editors/vscode.png"
+                  alt="VSCode"
+                  width={50}
+                  height={50}
+                />
+              </li>
+              <li>
+                <Image
+                  src="/editors/zed.png"
+                  alt="VSCode"
+                  width={50}
+                  height={50}
+                />
+              </li>
+              <li>
+                <Image
+                  src="/editors/phpstorm.png"
+                  alt="VSCode"
+                  width={50}
+                  height={50}
+                />
+              </li>
+            </ul>
+          </section>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <svg
               aria-hidden="true"
@@ -98,9 +132,9 @@ export default function Home() {
                       Thanks for visiting! 👋
                     </h2>
                     <p className="max-w-[900px] text-gray-500 lg:text-base/relaxed">
-                      Quick Edits is still in its early stages but I'm always
-                      open for a chat. Feel free to reach out to me on X or
-                      LinkedIn.
+                      Quick Edits is still in its early stages but I&apos;m
+                      always open for a chat. Feel free to reach out to me on X
+                      or LinkedIn.
                     </p>
                   </div>
                   <div className="mt-6 flex space-x-4">

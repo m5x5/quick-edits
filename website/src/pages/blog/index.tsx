@@ -1,12 +1,11 @@
+import Footer from "@/components/Footer";
 import NavigationBar from "@/components/navbar/NavigationBar";
-import Projects from "@/components/sections/Projects";
 import type { Metadata } from "next";
 import Link from "next/link";
 import GithubIcon from "../../components/GithubIcon";
 import Grid from "../../components/Grid";
 import LinkedinIcon from "../../components/LinkedinIcon";
 import TwitterIcon from "../../components/TwitterIcon";
-import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Blog",
@@ -46,7 +45,11 @@ export default function Home() {
       <div className="fixed inset-0 grid grid-cols-full z-20 pointer-events-none">
         <div className="col-start-[13] flex justify-end">
           <div className="flex flex-col justify-end items-end pb-24 [&>*]:pointer-events-auto">
-            <button className="hidden border border-dark-700 p-3 bg-black rounded-md translate-x-1/2">
+            <button
+              type="button"
+              title="Open Menu"
+              className="hidden border border-dark-700 p-3 bg-black rounded-md translate-x-1/2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -58,6 +61,7 @@ export default function Home() {
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                aria-hidden="true"
               >
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M8 9h8" />
@@ -96,7 +100,6 @@ export default function Home() {
               </div>
             </div>
           </section>
-          <Projects />
           <section className="w-full py-12 md:py-24 lg:py-32" id="contact">
             <div className="container px-4 md:px-6 mx-auto">
               <div className="flex flex-col items-center justify-center space-y-4 text-center">

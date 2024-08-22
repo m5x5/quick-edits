@@ -21,7 +21,7 @@ export default function NavigationBar() {
     setOpen(!open);
   };
 
-  const closeDialog = (e: any) => {
+  const closeDialog = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
     if (target.tagName === "DIALOG" || target.tagName === "A") {
       setOpen(false);
@@ -43,6 +43,11 @@ export default function NavigationBar() {
             className="inset-0 fixed z-10 w-full backdrop:cursor-pointer backdrop:opacity-0"
             onClick={closeDialog}
             onClose={() => setOpen(false)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setOpen(false);
+              }
+            }}
           >
             <div
               className={`flex flex-col w-full top-14 fixed bg-gradient-light inset-0 navigation--mobile ${
@@ -58,7 +63,7 @@ export default function NavigationBar() {
             className="menu cross hidden col-span-2 col-start-10"
             aria-label={open ? "Close Menu" : "Open Menu"}
             aria-expanded={open}
-            aria-haspopup={"true"}
+            aria-haspopup="true"
             onMouseDown={handleClick}
             onClick={handleClick}
           >
@@ -68,6 +73,7 @@ export default function NavigationBar() {
                 xmlns="http://www.w3.org/2000/svg"
                 className={open ? "checked" : ""}
               >
+                <title>Open Menu</title>
                 <path className="line--1" d="M0 70l28-28c2-2 2-2 7-2h64" />
                 <path className="line--2" d="M0 50h99" />
                 <path className="line--3" d="M0 30l28 28c2 2 2 2 7 2h64" />
@@ -76,7 +82,7 @@ export default function NavigationBar() {
           </button>
         </div>
       </header>
-      <div className="h-16"></div>
+      <div className="h-16" />
     </>
   );
 }

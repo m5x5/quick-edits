@@ -66,7 +66,10 @@ export default function Home() {
               <b className="inline-block py-2">Near Future</b>
               <ul className="list-disc pb-2 pl-5">
                 <li>
-                  Optimize <Link href="/setup">Onboarding Experience</Link>
+                  Optimize{" "}
+                  <Link href="/docs" className="text-blue-600 underline">
+                    Onboarding Experience
+                  </Link>
                 </li>
                 <li>Stabilize</li>
                 <li>Improve Code Search Algorithm</li>
