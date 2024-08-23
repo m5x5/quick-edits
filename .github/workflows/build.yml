@@ -31,7 +31,7 @@ jobs:
       uses: MobileFirstLLC/cws-publish@2.1.1
       with:
         # Desired action, one of: upload, publish, testers
-        action: upload
+        action: publish
         # Webstore API client id parameter
         client_id: ${{ secrets.CHROME_EXTENSION_CLIENT_ID }}
         # Webstore API client secret parameter
