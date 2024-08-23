@@ -33,11 +33,11 @@ jobs:
         # Desired action, one of: upload, publish, testers
         action: upload
         # Webstore API client id parameter
-        client_id: $CHROME_EXTENSION_CLIENT_ID
+        client_id: $secrets.CHROME_EXTENSION_CLIENT_ID
         # Webstore API client secret parameter
-        client_secret: $CHROME_EXTENSION_CLIENT_SECRET
+        client_secret: $secrets.CHROME_EXTENSION_CLIENT_SECRET
         # Webstore API refresh token
-        refresh_token: $CHROME_EXTENSION_REFRESH_TOKEN
+        refresh_token: $secrets.CHROME_EXTENSION_REFRESH_TOKEN
         # Path to extension .zip file
         # zip_file: 
         # Unique identifier of the Chrome extension
