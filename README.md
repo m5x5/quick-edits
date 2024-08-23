@@ -1,4 +1,3 @@
-
 # Quick Edits
 
 Quickly locates the code you need to edit. Optimizes the frontend development workflow.
