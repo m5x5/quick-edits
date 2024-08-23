@@ -101,7 +101,7 @@ export default function Home() {
           <section className="col-span-12 col-start-2">
             <ArticleHeader2>
               2. Setup Native Search Module{" "}
-              <span className="bg-blue-100 rounded-xl inline-flex p-1">
+              <span className="bg-blue-100 rounded-lg inline-flex p-1">
                 <IconBrandApple className="inline-block text-blue-600" />
               </span>
             </ArticleHeader2>
