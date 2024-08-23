@@ -27,3 +27,20 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: cd browser-extension && npm ci --legacy-peer-deps
     - run: cd browser-extension && npm run build --if-present
+    - name: Publish Chrome extension to Chrome Web Store
+      uses: MobileFirstLLC/cws-publish@2.1.1
+      with:
+        # Desired action, one of: upload, publish, testers
+        action: upload
+        # Webstore API client id parameter
+        client_id: $secrets.CHROME_EXTENSION_CLIENT_ID
+        # Webstore API client secret parameter
+        client_secret: $secrets.CHROME_EXTENSION_CLIENT_SECRET
+        # Webstore API refresh token
+        refresh_token: $secrets.CHROME_EXTENSION_REFRESH_TOKEN
+        # Path to extension .zip file
+        # zip_file: 
+        # Unique identifier of the Chrome extension
+        extension_id: bfcjldhcnibiijidbbeddopkpljkahja
+              
+                
