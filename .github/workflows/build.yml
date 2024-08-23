@@ -37,7 +37,7 @@ jobs:
         # Webstore API client secret parameter
         client_secret: $CHROME_EXTENSION_CLIENT_SECRET
         # Webstore API refresh token
-        # refresh_token: 
+        refresh_token: $CHROME_EXTENSION_REFRESH_TOKEN
         # Path to extension .zip file
         # zip_file: 
         # Unique identifier of the Chrome extension
