@@ -1,7 +1,8 @@
-import { defineConfig } from "vite";
-import { resolve } from "node:path";
-import webExtension from "vite-plugin-web-extension";
 import tailwindcss from "@tailwindcss/vite";
+import { resolve } from "node:path";
+import { defineConfig } from "vite";
+import webExtension from "vite-plugin-web-extension";
+import packageJSON from "./package.json";
 
 export default defineConfig({
 	server: {
@@ -15,10 +16,16 @@ export default defineConfig({
 		webExtension({
 			disableAutoLaunch: true,
 			transformManifest: (manifest) => {
-				manifest.version = manifest.version.replace(
-					/\.\d+$/,
-					`.${new Date().getMilliseconds()}`,
-				);
+				// this logic is for reload functionality during development
+				if (process.env.NODE_ENV === "development") {
+					manifest.version = manifest.version.replace(
+						/\.\d+$/,
+						`.${new Date().getMilliseconds()}`,
+					);
+				} else {
+					manifest.version = packageJSON.version;
+				}
+
 				return manifest;
 			},
 		}),

@@ -1,47 +1,48 @@
 {
-  "name": "quick-edits",
-  "version": "0.2.0",
-  "description": "quick-edits",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "dev": "vite vuild --watch",
-    "build": "vite build",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "author": "m5x5",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/m5x5/quick-edits.git"
-  },
-  "dependencies": {
-    "@floating-ui/react-dom": "^2.0.9",
-    "@storybook/addon-essentials": "^8.2.9",
-    "@tailwindcss/vite": "^4.0.0-alpha.15",
-    "@tanstack/react-query": "^5.52.1",
-    "debug": "^4.3.4",
-    "keyux": "^0.8.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "use-debounce": "^10.0.1",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
-    "@storybook/blocks": "^8.1.10",
-    "@storybook/react": "^8.1.10",
-    "@storybook/react-vite": "^8.1.10",
-    "@storybook/test": "^8.1.10",
-    "@types/chrome": "^0.0.270",
-    "@types/debug": "^4.1.12",
-    "@types/react": "^18.0.29",
-    "@types/react-dom": "^18.0.11",
-    "storybook": "^8.1.10",
-    "tailwindcss": "^4.0.0-alpha.19",
-    "typescript": "^5.5.4",
-    "vite": "^5.2.9",
-    "vite-plugin-web-extension": "^4.1.3"
-  }
+	"name": "quick-edits",
+	"version": "0.2.0",
+	"description": "quick-edits",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "NODE_ENV=development vite vuild --watch",
+		"build": "NODE_ENV=production vite build && node ./scripts/zip.js",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build"
+	},
+	"author": "m5x5",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/m5x5/quick-edits.git"
+	},
+	"dependencies": {
+		"@floating-ui/react-dom": "^2.0.9",
+		"@storybook/addon-essentials": "^8.2.9",
+		"@tailwindcss/vite": "^4.0.0-alpha.15",
+		"@tanstack/react-query": "^5.52.1",
+		"debug": "^4.3.4",
+		"keyux": "^0.8.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"use-debounce": "^10.0.1",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.3",
+		"@storybook/blocks": "^8.1.10",
+		"@storybook/react": "^8.1.10",
+		"@storybook/react-vite": "^8.1.10",
+		"@storybook/test": "^8.1.10",
+		"@types/chrome": "^0.0.270",
+		"@types/debug": "^4.1.12",
+		"@types/react": "^18.0.29",
+		"@types/react-dom": "^18.0.11",
+		"archiver": "^7.0.1",
+		"storybook": "^8.1.10",
+		"tailwindcss": "^4.0.0-alpha.19",
+		"typescript": "^5.5.4",
+		"vite": "^5.2.9",
+		"vite-plugin-web-extension": "^4.1.3"
+	}
 }

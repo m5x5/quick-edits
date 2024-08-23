@@ -3,7 +3,7 @@
   "manifest_version": 3,
   "name": "Quick Edits",
   "description": "Quickly edit websites and find the locations in code.",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "options_ui": {
     "page": "options.html"
   },
@@ -16,32 +16,19 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "src/content_script.tsx"
-      ],
+      "matches": ["<all_urls>"],
+      "js": ["src/content_script.tsx"],
       "css": []
     }
   ],
   "background": {
     "service_worker": "src/background.ts"
   },
-  "permissions": [
-    "storage",
-    "nativeMessaging",
-    "activeTab",
-    "webNavigation"
-  ],
+  "permissions": ["storage", "nativeMessaging", "activeTab", "webNavigation"],
   "web_accessible_resources": [
     {
-      "resources": [
-        "manifest.json"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
+      "resources": ["manifest.json"],
+      "matches": ["<all_urls>"]
     }
   ]
 }
