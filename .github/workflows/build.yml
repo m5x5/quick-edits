@@ -33,9 +33,9 @@ jobs:
         # Desired action, one of: upload, publish, testers
         action: upload
         # Webstore API client id parameter
-        client_id: ${{ CHROME_EXTENSION_CLIENT_ID }}
+        client_id: $CHROME_EXTENSION_CLIENT_ID
         # Webstore API client secret parameter
-        client_secret: ${{ CHROME_EXTENSION_CLIENT_SECRET }}
+        client_secret: $CHROME_EXTENSION_CLIENT_SECRET
         # Webstore API refresh token
         # refresh_token: 
         # Path to extension .zip file
