@@ -1,155 +1,154 @@
 import { useEffect, useRef } from "react";
 import InspectPopupClassListInput from "./InspectPopupClassListInput";
 import {
-  getCssSelectorShort,
-  isUtilityClassForLargerBreakpoint,
-  tailwindCSSUtilityMappings,
+	getCssSelectorShort,
+	isUtilityClassForLargerBreakpoint,
+	tailwindCSSUtilityMappings,
 } from "./utils";
 
 const getUtilityClassesForGroup = (group: string) => {
-  const utilityClasses = [];
+	const utilityClasses = [];
 
-  for (let i = 0; i < document.styleSheets.length; i++) {
-    const styleSheet = document.styleSheets[i] as CSSStyleSheet;
+	for (let i = 0; i < document.styleSheets.length; i++) {
+		const styleSheet = document.styleSheets[i] as CSSStyleSheet;
 
-    for (let j = 0; j < styleSheet.cssRules.length; j++) {
-      const cssRule = styleSheet.cssRules[j] as CSSStyleRule;
+		for (let j = 0; j < styleSheet.cssRules.length; j++) {
+			const cssRule = styleSheet.cssRules[j] as CSSStyleRule;
 
-      if (cssRule.selectorText?.startsWith(`.${group}`)) {
-        utilityClasses.push(cssRule.selectorText.replace(".", ""));
-      }
-    }
-  }
+			if (cssRule.selectorText?.startsWith(`.${group}`)) {
+				utilityClasses.push(cssRule.selectorText.replace(".", ""));
+			}
+		}
+	}
 
-  return utilityClasses;
+	return utilityClasses;
 };
 
 const internalClassList = new Map<string, string>();
 
 export default function InspectPopupClassList({
-  target,
-  classes = "",
-  setClasses,
-  setAdditionalClasses,
-  additionalClasses,
+	target,
+	classes = "",
+	setClasses,
+	setAdditionalClasses,
+	additionalClasses,
 }: {
-  target: HTMLElement | SVGElement;
-  classes: string;
-  setClasses: (classNames: string) => void;
-  setAdditionalClasses: (classNames: string) => void;
-  additionalClasses: string;
+	target: HTMLElement | SVGElement;
+	classes: string;
+	setClasses: (classNames: string) => void;
+	setAdditionalClasses: (classNames: string) => void;
+	additionalClasses: string;
 }) {
-  const prevTargetRef = useRef<HTMLElement | SVGElement | null>(null);
-  useEffect(() => {
-    internalClassList.set(
-      getCssSelectorShort(target),
-      Array.from(target.classList).join(" ")
-    );
-  }, [target]);
+	const prevTargetRef = useRef<HTMLElement | SVGElement | null>(null);
+	useEffect(() => {
+		internalClassList.set(
+			getCssSelectorShort(target),
+			Array.from(target.classList).join(" "),
+		);
+	}, [target]);
 
-  useEffect(() => {
-    if (target !== prevTargetRef.current) {
-      // Target has changed, reset additionalClasses
-      setAdditionalClasses("");
-      prevTargetRef.current = target;
-      // No need to apply previous classes to new element
-      return;
-    }
+	useEffect(() => {
+		if (target !== prevTargetRef.current) {
+			// Target has changed, reset additionalClasses
+			setAdditionalClasses("");
+			prevTargetRef.current = target;
+			// No need to apply previous classes to new element
+			return;
+		}
 
-    if (!additionalClasses) return;
+		if (!additionalClasses) return;
 
-    const internalClasses = internalClassList.get(getCssSelectorShort(target));
+		const internalClasses = internalClassList.get(getCssSelectorShort(target));
 
-    target.classList.remove(...target.classList.values());
+		target.classList.remove(...target.classList.values());
 
-    target.classList.add(
-      ...additionalClasses.split(" ").filter((className) => className)
-    );
-    target.classList.add(
-      ...classes.split(" ").filter((className) => className)
-    );
-  }, [additionalClasses, target, classes]);
+		target.classList.add(
+			...additionalClasses.split(" ").filter((className) => className),
+		);
+		target.classList.add(
+			...classes.split(" ").filter((className) => className),
+		);
+	}, [additionalClasses, target, classes]);
 
-  const addArrowSwitch = (event: React.MouseEvent<HTMLElement>) => {
-    const classElement = event.target as HTMLElement;
+	const addArrowSwitch = (event: React.MouseEvent<HTMLElement>) => {
+		const classElement = event.target as HTMLElement;
 
-    classElement.addEventListener("keydown", (event: KeyboardEvent) => {
-      const targetUtilityClass = (event.target as HTMLElement).textContent;
+		classElement.addEventListener("keydown", (event: KeyboardEvent) => {
+			const targetUtilityClass = (event.target as HTMLElement).textContent;
 
-      if (["ArrowDown", "ArrowUp"].includes(event.key)) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+			if (["ArrowDown", "ArrowUp"].includes(event.key)) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
 
-      const getGroup = () => {
-        const groups: string[] = Object.keys(tailwindCSSUtilityMappings);
-        return groups.find((group) => targetUtilityClass?.startsWith(group));
-      };
+			const getGroup = () => {
+				const groups: string[] = Object.keys(tailwindCSSUtilityMappings);
+				return groups.find((group) => targetUtilityClass?.startsWith(group));
+			};
 
-      const group = getGroup() as keyof typeof tailwindCSSUtilityMappings;
+			const group = getGroup() as keyof typeof tailwindCSSUtilityMappings;
 
-      if (!group) return;
+			if (!group) return;
 
-      const groupUtilityClasses = getUtilityClassesForGroup(group);
-      console.log(groupUtilityClasses);
-      const currentIndex = groupUtilityClasses.indexOf(targetUtilityClass);
+			const groupUtilityClasses = getUtilityClassesForGroup(group);
+			const currentIndex = groupUtilityClasses.indexOf(targetUtilityClass);
 
-      if (event.key === "ArrowDown") {
-        const newUtilityClass =
-          groupUtilityClasses[currentIndex - 1] || groupUtilityClasses[0];
-        target.classList.replace(targetUtilityClass, newUtilityClass);
-        setClasses(target.classList.toString());
-      }
+			if (event.key === "ArrowDown") {
+				const newUtilityClass =
+					groupUtilityClasses[currentIndex - 1] || groupUtilityClasses[0];
+				target.classList.replace(targetUtilityClass, newUtilityClass);
+				setClasses(target.classList.toString());
+			}
 
-      if (event.key === "ArrowUp") {
-        const newUtilityClass =
-          groupUtilityClasses[currentIndex + 1] ||
-          groupUtilityClasses[groupUtilityClasses.length - 1];
-        target.classList.replace(targetUtilityClass, newUtilityClass);
-        setClasses(target.classList.toString());
-      }
-    });
-  };
+			if (event.key === "ArrowUp") {
+				const newUtilityClass =
+					groupUtilityClasses[currentIndex + 1] ||
+					groupUtilityClasses[groupUtilityClasses.length - 1];
+				target.classList.replace(targetUtilityClass, newUtilityClass);
+				setClasses(target.classList.toString());
+			}
+		});
+	};
 
-  return (
-    <span className="text-[#2211AA] font-bold pt-[0.25rem]">
-      {(classes?.trim?.() || "").split(" ").map((elementClass: string) => {
-        const isNotGray = isUtilityClassForLargerBreakpoint(elementClass);
+	return (
+		<span className="text-[#2211AA] font-bold pt-[0.25rem]">
+			{(classes?.trim?.() || "").split(" ").map((elementClass: string) => {
+				const isNotGray = isUtilityClassForLargerBreakpoint(elementClass);
 
-        return (
-          <ClassItem
-            key={elementClass}
-            addArrowSwitch={addArrowSwitch}
-            elementClass={elementClass}
-            isGray={!isNotGray}
-          />
-        );
-      })}
-      <InspectPopupClassListInput onChangeClasses={setAdditionalClasses} />
-    </span>
-  );
+				return (
+					<ClassItem
+						key={elementClass}
+						addArrowSwitch={addArrowSwitch}
+						elementClass={elementClass}
+						isGray={!isNotGray}
+					/>
+				);
+			})}
+			<InspectPopupClassListInput onChangeClasses={setAdditionalClasses} />
+		</span>
+	);
 }
 
 const ClassItem = ({
-  addArrowSwitch,
-  elementClass,
-  isGray,
+	addArrowSwitch,
+	elementClass,
+	isGray,
 }: {
-  addArrowSwitch: React.FocusEventHandler<HTMLButtonElement>;
-  elementClass: string;
-  isGray: boolean;
+	addArrowSwitch: React.FocusEventHandler<HTMLButtonElement>;
+	elementClass: string;
+	isGray: boolean;
 }) => {
-  return (
-    <>
-      &nbsp;
-      <button
-        style={{ color: isGray ? "#AAA" : undefined }}
-        type="button"
-        className={"focus:outline-none"}
-        onFocus={addArrowSwitch}
-      >
-        {elementClass}
-      </button>
-    </>
-  );
+	return (
+		<>
+			&nbsp;
+			<button
+				style={{ color: isGray ? "#AAA" : undefined }}
+				type="button"
+				className={"focus:outline-none"}
+				onFocus={addArrowSwitch}
+			>
+				{elementClass}
+			</button>
+		</>
+	);
 };
