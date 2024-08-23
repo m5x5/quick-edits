@@ -27,3 +27,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: cd browser-extension && npm ci --legacy-peer-deps
     - run: cd browser-extension && npm run build --if-present
+    - name: Publish Chrome extension to Chrome Web Store
+    - uses: MobileFirstLLC/cws-publish@2.1.1
+            
