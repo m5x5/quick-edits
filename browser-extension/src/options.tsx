@@ -28,7 +28,6 @@ const Options = () => {
 			const developmentPath = await chrome.storage.local.get([
 				"extensionDevelopmentPath",
 			]);
-			console.log(developmentPath);
 			return developmentPath.extensionDevelopmentPath;
 		},
 	});
@@ -82,7 +81,8 @@ const Options = () => {
 								className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 								aria-label="im neuen Tab in Twitter öffnen"
 								target="_blank"
-								href="https://twitter.com/m5x5p" rel="noreferrer"
+								href="https://twitter.com/m5x5p"
+								rel="noreferrer"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,8 @@ const Options = () => {
 								className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 								aria-label="im neuen Tab in GitHub öffnen"
 								target="_blank"
-								href="https://github.com/m5x5" rel="noreferrer"
+								href="https://github.com/m5x5"
+								rel="noreferrer"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -127,7 +128,8 @@ const Options = () => {
 								className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 								aria-label="im neuen Tab in Linkedin öffnen"
 								target="_blank"
-								href="https://www.linkedin.com/in/michael-peters-3985a0223/" rel="noreferrer"
+								href="https://www.linkedin.com/in/michael-peters-3985a0223/"
+								rel="noreferrer"
 							>
 								<svg
 									className="h-6 w-6"
@@ -151,7 +153,8 @@ const Options = () => {
 								className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 								aria-label="im neuen Tab in Xing öffnen"
 								target="_blank"
-								href="https://www.xing.com/profile/Michael_Peters339" rel="noreferrer"
+								href="https://www.xing.com/profile/Michael_Peters339"
+								rel="noreferrer"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
