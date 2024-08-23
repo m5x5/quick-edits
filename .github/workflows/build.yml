@@ -39,7 +39,7 @@ jobs:
         # Webstore API refresh token
         refresh_token: $secrets.CHROME_EXTENSION_REFRESH_TOKEN
         # Path to extension .zip file
-        # zip_file: 
+        zip_file: ./browser-extension/dist.zip 
         # Unique identifier of the Chrome extension
         extension_id: bfcjldhcnibiijidbbeddopkpljkahja
               
