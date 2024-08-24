@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"dev": "NODE_ENV=development vite vuild --watch",
+		"dev": "NODE_ENV=production WATCH=true vite build --watch",
 		"build": "NODE_ENV=production vite build && node ./scripts/zip.js",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"

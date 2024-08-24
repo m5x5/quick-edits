@@ -17,7 +17,7 @@ export default defineConfig({
 			disableAutoLaunch: true,
 			transformManifest: (manifest) => {
 				// this logic is for reload functionality during development
-				if (process.env.NODE_ENV === "development") {
+				if (process.env.WATCH === "true") {
 					manifest.version = manifest.version.replace(
 						/\.\d+$/,
 						`.${new Date().getMilliseconds()}`,
