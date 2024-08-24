@@ -22,6 +22,8 @@ Follow the docs here to follow the quick install guide: [https://quick-edits-ext
 
 ### Manual Installation
 
+If you're on MacOS simply start the new ./start.sh command and it'll attempt to configure it for you. Otherwise continue with this installation.
+
 #### Chrome Extension
 
 Install and build Chrome Extension.
