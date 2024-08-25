@@ -19,6 +19,7 @@
     "next": "^15.0.0-rc.0",
     "next-i18next": "^15.2.0",
     "next-themes": "^0.2.1",
+    "posthog-js": "^1.157.2",
     "react": "^19.0.0-rc-6f23540c7d-20240528",
     "react-dom": "^19.0.0-rc-6f23540c7d-20240528",
     "react-i18next": "^14.0.5",
