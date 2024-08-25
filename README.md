@@ -1,4 +1,4 @@
-# Quick Edits
+# Quick Edits 🚀
 
 Quickly locates the code you need to edit. Optimizes the frontend development workflow.
 
@@ -18,9 +18,12 @@ Offers a few settings to configure the project code folder that includes the cod
 
 ## Installation
 
-Follow the docs here to follow the quick install guide: [https://quick-edits-extension.vercel.app/docs](https://quick-edits-extension.vercel.app/docs)
+### Quick Install 🚀
+Follow the [docs](https://quick-edits-extension.vercel.app/docs) to follow the quick install guide.
 
 ### Manual Installation
+
+If you're on MacOS simply start the new ./start.sh command and it'll attempt to configure it for you. Otherwise continue with this installation.
 
 #### Chrome Extension
 
