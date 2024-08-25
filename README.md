@@ -19,7 +19,7 @@ Offers a few settings to configure the project code folder that includes the cod
 ## Installation
 
 ### Quick Install 🚀
-Follow the docs [Quick Edits Docs](https://quick-edits-extension.vercel.app/docs) to follow the quick install guide.
+Follow the [docs](https://quick-edits-extension.vercel.app/docs) to follow the quick install guide.
 
 ### Manual Installation
 
