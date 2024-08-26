@@ -1,4 +1,4 @@
-source ./scripts/logging_lib.sh
+source scripts/logging_lib.sh
 
 extension_id="bfcjldhcnibiijidbbeddopkpljkahja"
 binary_path=""

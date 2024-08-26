@@ -1,0 +1,32 @@
+{
+	"name": "quick-edits",
+	"version": "0.2.1",
+	"description": "Quickly locates the code you need to edit. Optimizes the frontend development workflow.",
+	"main": "browser-extension/start.sh",
+	"directories": {
+		"doc": "docs"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"bin": {
+		"quick-edits": "browser-extension/start.sh"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/m5x5/quick-edits.git"
+	},
+	"keywords": [
+		"chrome-extension",
+		"frontend",
+		"devtools",
+		"code-search",
+		"tailwindcss"
+	],
+	"author": "m5x5",
+	"license": "SEE LICENSE IN LICENSE",
+	"bugs": {
+		"url": "https://github.com/m5x5/quick-edits/issues"
+	},
+	"homepage": "https://github.com/m5x5/quick-edits#readme"
+}
