@@ -1,10 +1,14 @@
 #!/bin/sh
 
-. "$(dirname "$0")/scripts/logging_lib.sh"
+# Resolve the real path of the script (following symbolic links)
+script_path="$(realpath "$0")"
+script_dir="$(dirname "$script_path")"
+
+. "$script_path/scripts/logging_lib.sh"
 
 extension_id="bfcjldhcnibiijidbbeddopkpljkahja"
 
-native_search_dir="$(cd "$(dirname "$0")/../native-search" && pwd)"
+native_search_dir="$(cd "$script_dir/../native-search" && pwd)"
 
 binary_path="${native_search_dir}/native_search"
 
@@ -30,7 +34,7 @@ build_native_search() {
 }
 copy_manifest () {
 
-    if [ ! -f "$(dirname "$0")/examples/nmh-manifest.json" ]; then
+    if [ ! -f "$script_dir/examples/nmh-manifest.json" ]; then
         log_error "Aborting because ./examples/nmh-manifest.json does not exist"
         exit 1
     fi
@@ -42,7 +46,7 @@ copy_manifest () {
 
     build_native_search
 
-    file_content=$(cat "$(dirname "$0")/examples/nmh-manifest.json")
+    file_content=$(cat "$script_dir/examples/nmh-manifest.json")
     file_content=$(echo "$file_content" | sed "s|__REPLACE_ABSOLUTE_PATH__|${binary_path}|g; s|__REPLACE_EXTENSION_ID__|${extension_id}|g")
 
     log_info "${file_content}"
