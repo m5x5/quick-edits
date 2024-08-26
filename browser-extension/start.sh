@@ -4,7 +4,7 @@
 script_path="$(realpath "$0")"
 script_dir="$(dirname "$script_path")"
 
-. "$script_path/scripts/logging_lib.sh"
+. "$script_dir/scripts/logging_lib.sh"
 
 extension_id="bfcjldhcnibiijidbbeddopkpljkahja"
 
