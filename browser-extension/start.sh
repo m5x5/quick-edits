@@ -1,7 +1,14 @@
-source scripts/logging_lib.sh
+#!/bin/sh
+
+. "$(dirname "$0")/scripts/logging_lib.sh"
 
 extension_id="bfcjldhcnibiijidbbeddopkpljkahja"
-binary_path=""
+
+native_search_dir="$(cd "$(dirname "$0")/../native-search" && pwd)"
+
+binary_path="${native_search_dir}/native_search"
+
+log_info "${native_search_dir}"
 
 # check NODE_ENV == production otherwise prompt for extension id
 if [ "$NODE_ENV" = "production" ]; then
@@ -14,19 +21,16 @@ fi
 
 ###region Functions
 
-function build_native_search {
-    cd ../native-search || exit
-    go install
-    go build
-
-    binary_path=$(pwd)"/native-search"
-
-    cd ../browser-extension || exit
+build_native_search() {
+   # Build and install the Go project
+       if ! (cd "$native_search_dir" && go install && go build); then
+           echo "Failed to build and install Go project"
+           exit 1
+       fi
 }
+copy_manifest () {
 
-function copy_manifest {
-
-    if [ ! -f "./examples/nmh-manifest.json" ]; then
+    if [ ! -f "$(dirname "$0")/examples/nmh-manifest.json" ]; then
         log_error "Aborting because ./examples/nmh-manifest.json does not exist"
         exit 1
     fi
@@ -36,13 +40,15 @@ function copy_manifest {
         exit 1
     fi
 
-    file_content=$(cat ./examples/nmh-manifest.json)
+    build_native_search
 
-    file_content="${file_content//__REPLACE_ABSOLUTE_PATH__/${binary_path}}"
-    file_content="${file_content//__REPLACE_EXTENSION_ID__/${extension_id}}"
+    file_content=$(cat "$(dirname "$0")/examples/nmh-manifest.json")
+    file_content=$(echo "$file_content" | sed "s|__REPLACE_ABSOLUTE_PATH__|${binary_path}|g; s|__REPLACE_EXTENSION_ID__|${extension_id}|g")
+
+    log_info "${file_content}"
 
     log_info "Admin permissions required to add manifest file /Library/Google/Chrome/NativeMessagingHosts/com.quick_edits.native_search.json"
-    log_info "${file_content}" | sudo tee /Library/Google/Chrome/NativeMessagingHosts/com.quick_edits.native_search.json > /dev/null
+    echo "${file_content}" | sudo tee /Library/Google/Chrome/NativeMessagingHosts/com.quick_edits.native_search.json > /dev/null
 
     # cat /Library/Google/Chrome/NativeMessagingHosts/com.quick_edits.native_search.json
     # ls /Library/Google/Chrome/NativeMessagingHosts/

@@ -1,27 +1,71 @@
-declare -A _log_levels=([FATAL]=0 [ERROR]=1 [WARN]=2 [INFO]=3 [DEBUG]=4 [VERBOSE]=5)
-declare -i _log_level=3
+#!/bin/sh
+
+# Define log levels as simple variables instead of an associative array
+FATAL=0
+ERROR=1
+WARN=2
+INFO=3
+DEBUG=4
+VERBOSE=5
+
+# Set default log level
+_log_level=$INFO
 
 set_log_level() {
-  level="${1:-INFO}"
-  _log_level="${_log_levels[$level]}"
+  case "$1" in
+    FATAL) _log_level=$FATAL ;;
+    ERROR) _log_level=$ERROR ;;
+    WARN)  _log_level=$WARN ;;
+    INFO)  _log_level=$INFO ;;
+    DEBUG) _log_level=$DEBUG ;;
+    VERBOSE) _log_level=$VERBOSE ;;
+    *) echo "Invalid log level: $1" ;;
+  esac
 }
 
 log_execute() {
-  level=${1:-INFO}
-  if (( $1 >= ${_log_levels[$level]} )); then
-    "${@:2}" >/dev/null
+  level=$1
+  shift
+  if [ "$_log_level" -ge "$level" ]; then
+    "$@"
   else
-    "${@:2}"
+    "$@" >/dev/null 2>&1
   fi
 }
 
-log_fatal()   { (( _log_level >= _log_levels[FATAL] ))   && echo "FATAL  $*";  }
-log_error()   { (( _log_level >= _log_levels[ERROR] ))   && echo "ERROR  $*";  }
-log_warning() { (( _log_level >= _log_levels[WARNING] )) && echo "WARNING  $*";  }
-log_info()    { (( _log_level >= _log_levels[INFO] ))    && echo "$*";  }
-log_debug()   { (( _log_level >= _log_levels[DEBUG] ))   && echo "DEBUG  $*";  }
-log_verbose() { (( _log_level >= _log_levels[VERBOSE] )) && echo "VERBOSE $*"; }
+log_fatal() {
+  if [ "$_log_level" -ge "$FATAL" ]; then
+    echo "[FATAL]: $*"
+    exit 1
+  fi
+}
 
-# functions for logging command output
-log_debug_file()   { (( _log_level >= _log_levels[DEBUG] ))   && [[ -f $1 ]] && echo "=== command output start ===" && cat "$1" && echo "=== command output end ==="; }
-log_verbose_file() { (( _log_level >= _log_levels[VERBOSE] )) && [[ -f $1 ]] && echo "=== command output start ===" && cat "$1" && echo "=== command output end ==="; }
+log_error() {
+  if [ "$_log_level" -ge "$ERROR" ]; then
+    echo "[ERROR]: $*"
+  fi
+}
+
+log_warn() {
+  if [ "$_log_level" -ge "$WARN" ]; then
+    echo "[WARN]: $*"
+  fi
+}
+
+log_info() {
+  if [ "$_log_level" -ge "$INFO" ]; then
+    echo "$*"
+  fi
+}
+
+log_debug() {
+  if [ "$_log_level" -ge "$DEBUG" ]; then
+    echo "[DEBUG]: $*"
+  fi
+}
+
+log_verbose() {
+  if [ "$_log_level" -ge "$VERBOSE" ]; then
+    echo "[VERBOSE]: $*"
+  fi
+}
