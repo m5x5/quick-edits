@@ -1,6 +1,6 @@
 {
 	"name": "quick-edits",
-	"version": "0.2.5",
+	"version": "0.2.7",
 	"description": "Quickly locates the code you need to edit. Optimizes the frontend development workflow.",
 	"main": "browser-extension/start.sh",
 	"directories": {
