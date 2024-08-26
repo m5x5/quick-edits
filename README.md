@@ -35,6 +35,7 @@ Install and build Chrome Extension.
   npm run build
 ```
 
+This project is tested with BrowserStack.
 #### Native Code Search Module
 
 ```bash
