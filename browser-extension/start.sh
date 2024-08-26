@@ -10,7 +10,7 @@ extension_id="bfcjldhcnibiijidbbeddopkpljkahja"
 
 native_search_dir="$(cd "$script_dir/../native-search" && pwd)"
 
-binary_path="${native_search_dir}/native_search"
+binary_path="${native_search_dir}/native-search"
 
 log_info "${native_search_dir}"
 
