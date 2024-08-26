@@ -73,13 +73,16 @@ export default function Home() {
 							Setup Quick Edits
 						</h1>
 						<p className="max-w-[600px] pb-3">
-							Quick Edits consists of a Chrome extension and a native search
-							module. The Chrome extension is used to show you the info for the
-							hovered element and the native search module is used to search for
-							files in your projects. The native search module is a Go module
-							that is used to search for files in your projects. You can build
-							the module by cloning the repository and running the following
-							commands.
+							Quick Edits consists of two parts a <b>Chrome extension</b> and a{" "}
+							<b>native search module</b>.<br />
+							<br /> 1. The Chrome extension is used to show you the info for
+							the hovered element and the native search module is used to search
+							for files in your projects.
+							<br />
+							<br />
+							2.The native search module is a Go module that is used to search
+							for files in your projects. You can build the module by cloning
+							the repository and running the following commands.
 						</p>
 					</section>
 
@@ -105,6 +108,18 @@ export default function Home() {
 								<IconBrandApple className="inline-block text-blue-600" />
 							</span>
 						</ArticleHeader2>
+						<p className="pb-4">
+							The native search module is a Go module that is used to search for
+							files in your projects. You can build the module by cloning the
+							repository and running the following commands.
+						</p>
+						<div className="overflow-x-auto mb-2">
+							<code>
+								<pre className="inline-block border p-4 text-[0.875rem] whitespace-nowrap my-2">
+									npx quick-edits
+								</pre>
+							</code>
+						</div>
 						<div className="p-4 mb-4 rounded-2xl inline-block bg-blue-100">
 							Currently this guide is only available for macOS users, but I am
 							working on adding support for other operating systems.
@@ -117,81 +132,6 @@ export default function Home() {
 							>
 								#5
 							</Link>
-						</div>
-						<p className="pb-4">
-							The native search module is a Go module that is used to search for
-							files in your projects. You can build the module by cloning the
-							repository and running the following commands.
-						</p>
-						<Link
-							className="mt-4 inline-flex h-10 items-center justify-center gap-2 rounded-full bg-blue-500 px-8 font-medium text-gray-50 text-sm shadow transition-colors hover:bg-blue-600 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
-							href="https://github.com/m5x5/quick-edits/releases/tag/v0.0.1"
-							target={"_blank"}
-						>
-							Download Binary from GitHub <IconBrandGithub stroke={1.5} />
-						</Link>
-						<p className="py-4 font-bold">Or</p>
-						<div className="overflow-x-auto">
-							<code>
-								<pre className="inline-block border p-4 text-[0.875rem] whitespace-nowrap">
-									git clone git@github.com:m5x5/quick-edits.git
-									<br />
-									cd native-search
-									<br />
-									go install
-									<br />
-									go build
-									<br />
-								</pre>
-							</code>
-						</div>
-					</section>
-
-					<section className="col-span-12 col-start-2">
-						<ArticleHeader3>
-							2.1. Connect Native Search Module to Chrome Extension
-						</ArticleHeader3>
-						<b>Automatic Setup</b>
-						<div className="overflow-x-auto">
-							<code>
-								<pre className="inline-block border p-4 text-[0.875rem] whitespace-nowrap my-2">
-									npx quick-edits
-								</pre>
-							</code>
-						</div>
-						<b>Manual Setup</b>
-						<br />
-						<div className="overflow-x-auto">
-							<code>
-								<pre className="inline-block border p-4 text-[0.875rem] whitespace-nowrap my-2">
-									cd /Library/Google/Chrome/NativeMessagingHosts
-									<br />
-									sudo touch com.quick_search.native_search.json
-									<br />
-								</pre>
-							</code>
-						</div>
-						<br />
-						<div className="overflow-x-auto max-w-full">
-							<code>
-								<pre className="inline-block border p-4 text-[0.875rem] whitespace-nowrap">
-									&#123;
-									<br />
-									&quot;name&quot;: &quot;com.quick_edits.native_search&quot;,
-									<br />
-									&quot;description&quot;: &quot;Quick Edits&quot;,
-									<br />
-									&quot;path&quot;:
-									&quot;/absolute/path/to/built/go/module/native-search&quot;,
-									<br />
-									&quot;type&quot;: &quot;stdio&quot;,
-									<br />
-									&quot;allowed_origins&quot;:
-									[&quot;chrome-extension://bfcjldhcnibiijidbbeddopkpljkahja/&quot;]
-									<br />
-									&#125;
-								</pre>
-							</code>
 						</div>
 					</section>
 				</main>

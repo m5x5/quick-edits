@@ -6,6 +6,7 @@ import {
 	IconBrandChrome,
 	IconBrandGithub,
 	IconBrandX,
+	IconRocket,
 } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import Head from "next/head";
@@ -52,20 +53,19 @@ export default function Home() {
 									</div>
 									<div className="flex flex-col gap-2 min-[400px]:flex-row flex-wrap">
 										<Link
-											className="inline-flex h-10 items-center gap-2 justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+											className="inline-flex h-10 items-center gap-2 justify-center rounded-md border-2 border-gray-900 px-5 text-sm font-medium text-gray-900 hover:text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
 											href="https://chromewebstore.google.com/detail/quick-edits/bfcjldhcnibiijidbbeddopkpljkahja"
 											target="_blank"
 											rel="noopener noreferrer"
 										>
 											Add Chrome Extension
-											<IconBrandChrome />
 										</Link>
 										<Link
-											className="inline-flex h-10 items-center gap-2 justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
-											href="https://github.com/m5x5/quick-edits"
-											target={"_blank"}
+											className="inline-flex h-10 items-center gap-2 justify-center rounded-md bg-blue-600 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-blue-800/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+											href="/docs"
 										>
-											Checkout the GitHub <IconBrandGithub />
+											Get Started
+											<IconRocket />
 										</Link>
 									</div>
 								</div>
@@ -140,34 +140,20 @@ export default function Home() {
 								<div className="flex flex-col items-center justify-center space-y-4 text-center">
 									<div className="space-y-2">
 										<h2 className="text-3xl font-medium font-heading tracking-tight md:text-4xl/tight">
-											Thanks for visiting! 👋
+											Try it yourself
 										</h2>
 										<p className="max-w-[900px] text-gray-500 lg:text-base/relaxed">
-											Quick Edits is still in its early stages but I&apos;m
-											always open for a chat. Feel free to reach out to me on X
-											or LinkedIn.
+											Quick Edits is still in its early stages but I&apos;m sure
+											you&apos;ll find it useful.
 										</p>
 									</div>
-									<div className="mt-6 flex space-x-4">
-										<Link
-											className="text-gray-500 hover:text-gray-900"
-											aria-label="Open Twitter in a new tab"
-											href="https://x.com/m5x5p"
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<IconBrandX className="h-6 w-6" />
-										</Link>
-										<Link
-											className="text-gray-500 hover:text-gray-900"
-											aria-label="Open LinkedIn in a new tab"
-											href="https://www.linkedin.com/in/michael-peters-3985a0223/"
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<LinkedinIcon className="h-6 w-6" />
-										</Link>
-									</div>
+									<Link
+										className="inline-flex h-10 items-center gap-2 justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+										href="/docs"
+										rel="noopener noreferrer"
+									>
+										Get Started
+									</Link>
 								</div>
 							</div>
 						</section>
