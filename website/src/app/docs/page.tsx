@@ -1,10 +1,6 @@
 import Footer from "@/components/Footer";
 import NavigationBar from "@/components/navbar/NavigationBar";
-import {
-	IconBrandApple,
-	IconBrandChrome,
-	IconBrandGithub,
-} from "@tabler/icons-react";
+import { IconBrandApple, IconBrandChrome } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
