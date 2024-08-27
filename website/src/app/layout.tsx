@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { CSPostHogProvider } from "@/app/providers";
+import { CSPostHogProvider } from "./providers";
 
 export const metadata: Metadata = {
 	title: "Michael Peters - Web Developer Portfolio",

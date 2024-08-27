@@ -1,0 +1,17 @@
+website/
+native-search/
+browser-extension/node_modules/
+browser-extension/dist/
+browser-extension/docs/
+browser-extension/*
+!browser-extension/start.sh
+!browser-extension/scripts/
+browser-extension/localhost.pem
+browser-extension/localhost-key.pem
+.github
+.idea
+.vscode
+.storybook
+.zed
+.nvmrc
+.hintrc

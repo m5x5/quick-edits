@@ -1,0 +1,7 @@
+{
+	"name": "com.quick_edits.native_search",
+	"description": "Quick Edits",
+	"path": "__REPLACE_ABSOLUTE_PATH__",
+	"type": "stdio",
+	"allowed_origins": ["chrome-extension://__REPLACE_EXTENSION_ID__/"]
+}
