@@ -1,42 +1,46 @@
-import {
-	NativeResponse,
-	PerformSearchData,
+import type {
+  NativeResponse,
+  PerformSearchData,
 } from "../background/NativeMessageController";
 import ProjectMappingStorage from "./ProjectStorage";
 
 export const performSearch = async (
-	searchData: Omit<PerformSearchData, "folder">,
+  searchData: Omit<PerformSearchData, "folder">,
 ): Promise<{ path: string; lineNumber: number; charNumber: number }[]> => {
-	const time = Date.now();
-	const mapping = await ProjectMappingStorage.getProjectMapping(
-		window.location.href,
-	);
+  const time = Date.now();
+  const mapping = await ProjectMappingStorage.getProjectMapping(
+    window.location.href,
+  );
 
-	return new Promise((resolve) => {
-		// TODO: handle multiple mappings with filter
+  if (searchData.textContent.length >= 500) {
+    searchData.textContent = searchData.textContent.substring(0, 499)
+  }
 
-		if (!mapping) return resolve([]);
+  return new Promise((resolve) => {
+    // TODO: handle multiple mappings with filter
 
-		chrome.runtime.sendMessage(
-			{
-				action: "perform_search",
-				data: {
-					folder: mapping.searchFolder,
-					classes: searchData.classes,
-					textContent: searchData.textContent,
-					browserUrl: searchData.browserUrl,
-				},
-			},
-			(response: NativeResponse<"perform_search">) => {
-				if (!response.data?.length) return resolve([]);
-				resolve(response.data);
+    if (!mapping) return resolve([]);
 
-				console.debug(
-					"It took",
-					Date.now() - time,
-					"ms to perform the code search",
-				);
-			},
-		);
-	});
+    chrome.runtime.sendMessage(
+      {
+        action: "perform_search",
+        data: {
+          folder: mapping.searchFolder,
+          classes: searchData.classes,
+          textContent: searchData.textContent,
+          browserUrl: searchData.browserUrl,
+        },
+      },
+      (response: NativeResponse<"perform_search">) => {
+        if (!response.data?.length) return resolve([]);
+        resolve(response.data);
+
+        console.debug(
+          "It took",
+          Date.now() - time,
+          "ms to perform the code search",
+        );
+      },
+    );
+  });
 };

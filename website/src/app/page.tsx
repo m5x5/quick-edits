@@ -1,13 +1,7 @@
 import Footer from "@/components/Footer";
-import LinkedinIcon from "@/components/LinkedinIcon";
 import Technologies from "@/components/Technologies";
 import NavigationBar from "@/components/navbar/NavigationBar";
-import {
-	IconBrandChrome,
-	IconBrandGithub,
-	IconBrandX,
-	IconRocket,
-} from "@tabler/icons-react";
+import { IconRocket } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import Head from "next/head";
 import Image from "next/image";

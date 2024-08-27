@@ -15,7 +15,7 @@ func TestSorting(t *testing.T) {
 			PerformSearchData: PerformSearchData{
 				Folder:      "",
 				BrowserURL:  "",
-				Classes:     "bg-berli-yellow",
+				Classes:     "bg-yellow",
 				TextContent: "Test",
 			},
 		},
