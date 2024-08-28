@@ -3,30 +3,44 @@ import { performSearch } from "../../../content_script/performSearch";
 import useMapping from "../hooks/useMapping";
 import type { NativeResponse } from "../../../background/NativeMessageController";
 
+type Match = {
+  path: string;
+  lineNumber: number;
+  charNumber: number;
+  shortenedPath: string;
+}
+
 export default function InspectPopupResults({
   target,
   ...props
 }: { target: SVGElement | HTMLElement; astroResult?: boolean }) {
   const [results, setResults] = useState<
-    { path: string; lineNumber: number; charNumber: number }[]
+    Match[]
   >([]);
   const mapping = useMapping();
 
   useEffect(() => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     performSearch({
-      classes: Array.from(target.classList.values()).join(' ') ?? '',
+      classes: Array.from(target.classList.values()).join(' '),
       textContent: target.textContent || "",
       browserUrl: window.location.href,
     }).then((results) => {
-      setResults(results);
-    });
-  }, [target]);
 
-  if (mapping?.searchFolder && results.length > 0) {
-    for (const result of results) {
-      result.shortenedPath = result.path.replace(mapping.searchFolder, "");
-    }
-  }
+      if (signal.aborted) {
+        return;
+      }
+
+      setResults(results.map((result) => ({
+        ...result,
+        shortenedPath: result.path.replace(mapping?.searchFolder ?? "", ""),
+      })));
+    });
+    return () => {
+      abortController.abort();
+    };
+  }, [target, mapping?.searchFolder]);
 
   return (
     <div className="text-left">

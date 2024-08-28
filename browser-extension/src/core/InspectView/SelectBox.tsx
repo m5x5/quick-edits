@@ -26,7 +26,7 @@ export default function SelectBox({
 			window.removeEventListener("resize", updateSelectBox);
 			window.removeEventListener("scroll", updateSelectBox);
 		};
-	}, []);
+	}, [target]);
 
 	const updateSelectBox = () => {
 		const targetRect = target.getBoundingClientRect();
@@ -36,12 +36,12 @@ export default function SelectBox({
 			blueBoxRef.current.style.position = "fixed";
 			blueBoxRef.current.style.top = `calc(${targetRect.top}px + ${targetStyle.paddingTop})`;
 			blueBoxRef.current.style.left = `${
-				targetRect.left + parseInt(targetStyle.paddingLeft)
+				targetRect.left + Number.parseInt(targetStyle.paddingLeft)
 			}px`;
 			blueBoxRef.current.style.width = `${
 				targetRect.width -
-				parseInt(targetStyle.paddingRight) -
-				parseInt(targetStyle.paddingLeft)
+				Number.parseInt(targetStyle.paddingRight) -
+				Number.parseInt(targetStyle.paddingLeft)
 			}px`;
 			blueBoxRef.current.style.height = `calc(${targetRect.height}px - ${targetStyle.paddingBottom} - ${targetStyle.paddingTop})`;
 			blueBoxRef.current.style.zIndex = "999999";
