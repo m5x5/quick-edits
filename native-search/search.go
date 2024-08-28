@@ -48,6 +48,10 @@ func Search(message Message) ([]Match, error) {
 			return err
 		}
 
+		if len(matches) >= 15 {
+			return nil
+		}
+
 		if shouldIgnorePath(path) {
 			if info.IsDir() {
 				return filepath.SkipDir
@@ -130,7 +134,7 @@ func SearchLine(line string, message Message) int {
 
 func shouldIgnorePath(path string) bool {
 	ignoreList := []string{
-		".git", ".next", ".vercel", "node_modules", "vendor", "cache", "fileadmin", "lock", "log", "var", ".idea", ".DS_Store", "dist",
+		".git", ".next", ".vercel", "node_modules", "vendor", "cache", "fileadmin", "lock", "log", "var", ".idea", ".DS_Store", "dist", "package.json", "package-lock.json",
 	}
 	for _, ignore := range ignoreList {
 		if strings.Contains(path, string(filepath.Separator)+ignore+string(filepath.Separator)) {
@@ -150,8 +154,10 @@ func containsKeyword(path, keyword string, textContent string) bool {
 
 	if keyword != "" {
 		return strings.Contains(string(content), keyword)
-	} else {
+	} else if textContent != "" {
 		return strings.Contains(string(content), textContent)
+	} else {
+		return false
 	}
 }
 
