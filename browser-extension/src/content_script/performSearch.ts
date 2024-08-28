@@ -32,6 +32,9 @@ export const performSearch = async (
         },
       },
       (response: NativeResponse<"perform_search">) => {
+        if (!response) {
+          console.error("Quick Edits native messaging host returned no response to perform search request.")
+        }
         if (!response.data?.length) return resolve([]);
         resolve(response.data);
 
