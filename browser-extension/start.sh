@@ -14,13 +14,12 @@ binary_path="${native_search_dir}/native-search"
 
 log_info "${native_search_dir}"
 
-# check NODE_ENV == production otherwise prompt for extension id
-if [ "$NODE_ENV" = "production" ]; then
-    log_verbose "Production mode"
-else
+if [ "$NODE_ENV" = "development" ]; then
     log_verbose "Development mode"
     log_info "Enter extension id: "
     read -r extension_id
+else
+    log_verbose "Production mode"
 fi
 
 ###region Functions
@@ -61,6 +60,7 @@ copy_manifest () {
 ###endregion
 
 ###region OS handling
+
 unameOut="$(uname -s)"
 
 case "${unameOut}" in
@@ -86,4 +86,5 @@ elif [ "${machine}" = "Mac" ]; then
 else
     log_error "This os is not yet supported for automatic setup. Try the manual setup instead :)"
 fi
+
 ###endregion

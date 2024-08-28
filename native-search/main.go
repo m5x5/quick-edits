@@ -44,14 +44,19 @@ func main() {
 	args := os.Args
 	if len(args) > 1 {
 		origin := args[1]
-		fmt.Fprintln(os.Stderr, "Origin:", origin)
+		if origin == "setup" {
+			setupNativeMessaging()
+			return
+		} else {
+			fmt.Fprintln(os.Stderr, "Origin:", origin)
+		}
 	}
 	if len(args) > 2 && strings.HasPrefix(args[2], "--parent-window=") {
 		parentWindow := strings.TrimPrefix(args[2], "--parent-window=")
 		fmt.Fprintln(os.Stderr, "Parent window:", parentWindow)
 	}
 
-	log, err := NewLog(executablePath + "/native-messaging.log")
+	log, err := NewLog(filepath.Join(executablePath, "native-messaging.log"))
 
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Error opening file:", err)
@@ -73,8 +78,11 @@ func main() {
 
 		// Ensure the message length does not exceed 1MB
 		if length > 1024*1024 {
-			fmt.Fprintln(os.Stderr, "Message length exceeds limit")
-			continue
+			fmt.Fprintln(os.Stderr, "Message length exceeds limits")
+			// Print it
+			messageBytes := make([]byte, length)
+			_, err = reader.Read(messageBytes)
+			fmt.Fprintln(os.Stderr, string(messageBytes))
 		}
 
 		// Read the message itself

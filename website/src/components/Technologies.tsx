@@ -92,6 +92,15 @@ export default function Technologies() {
           This is how it works
         </h2>
 
+        <div className={"overflow-hidden rounded-md border border-gray-800 col-start-4 col-span-8 mb-16"}>
+          <Image
+            src="/home/how-to-use-popup.gif"
+            alt={""}
+            width={500}
+            height={500}
+            className="w-full"
+          />
+        </div>
         <div
           className={
             "col-span-full pb-4 text-center md:col-span-7 md:col-start-1"
@@ -105,15 +114,6 @@ export default function Technologies() {
             Press option or alt key and hover over the elements on your website
             of choice.
           </p>
-          <div className={"overflow-hidden rounded-md border border-gray-800"}>
-            <Image
-              src="/home/editing-step-1.png"
-              alt={""}
-              width={500}
-              height={500}
-              className="w-full"
-            />
-          </div>
         </div>
         <div className={"col-span-full pb-8 text-center md:col-span-7"}>
           <IconCursorText className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
@@ -121,15 +121,6 @@ export default function Technologies() {
             Pick the right class
           </h3>
           <p className="pb-2">Test your TailwindCSS classes in record speed.</p>
-          <div className={"overflow-hidden rounded-md border border-gray-800"}>
-            <Image
-              src="/home/editing-step-2.png"
-              alt={""}
-              width={500}
-              height={500}
-              className="w-full"
-            />
-          </div>
         </div>
         <div
           className={
@@ -144,17 +135,8 @@ export default function Technologies() {
             Click one of the direct code links. And you&apos;ll see the exact
             code location in your favorite editor.
           </p>
-          <div className={"overflow-hidden rounded-md border border-gray-800"}>
-            <Image
-              src="/home/editing-step-3.png"
-              alt={""}
-              width={500}
-              height={500}
-              className="w-full"
-            />
-          </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
