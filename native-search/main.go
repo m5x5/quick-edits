@@ -8,30 +8,13 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"quick_edits.com/native-search/open_editor"
+	"quick_edits.com/native-search/save_changes"
+	"quick_edits.com/native-search/search"
+	"quick_edits.com/native-search/setup"
+	"quick_edits.com/native-search/types"
 )
-
-type PerformSearchData struct {
-	BrowserURL  string `json:"browserURL"`
-	Folder      string `json:"folder"`
-	Classes     string `json:"classes"`
-	TextContent string `json:"textContent"`
-}
-
-type Message struct {
-	ID     string `json:"id"`
-	Action string `json:"action"`
-	Data   struct {
-		PerformSearchData
-		OpenEditorData
-	} `json:"data"`
-}
-
-type Response struct {
-	ID      string `json:"id"`
-	Message string `json:"message"`
-	Success bool   `json:"success"`
-	Data    any    `json:"data"`
-}
 
 func main() {
 	executable, err := os.Executable()
@@ -45,7 +28,7 @@ func main() {
 	if len(args) > 1 {
 		origin := args[1]
 		if origin == "setup" {
-			setupNativeMessaging()
+			native_messaging_setup.SetupNativeMessaging()
 			return
 		} else {
 			fmt.Fprintln(os.Stderr, "Origin:", origin)
@@ -93,14 +76,14 @@ func main() {
 			continue
 		}
 
-		var message Message
+		var message types.Message
 		err = json.Unmarshal(messageBytes, &message)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error unmarshalling message:", err)
 			continue
 		}
 
-		var response Response
+		var response types.Response
 		log.Log("Action: " + message.Action)
 		log.Log("Data.Folder: " + message.Data.Folder)
 		log.Log("Data.Classes: " + message.Data.Classes)
@@ -109,10 +92,12 @@ func main() {
 		log.Log("Data.CharNumber: " + fmt.Sprint(message.Data.CharNumber))
 		log.Log("Data.Path: " + fmt.Sprint(message.Data.Path))
 		if message.Action == "perform_search" {
-			response = PerformSearch(message)
+			response = search.PerformSearch(message)
+		} else if message.Action == "save_changes" {
+			response = save_changes.SaveChanges(message)
 		} else {
-			match := Match{Path: message.Data.Path, LineNumber: message.Data.LineNumber, CharNumber: message.Data.CharNumber}
-			response = OpenEditor(match, message.Data.Editor)
+			match := search.Match{Path: message.Data.Path, LineNumber: message.Data.LineNumber, CharNumber: message.Data.CharNumber}
+			response = open_editor.OpenEditor(match, message.Data.Editor)
 		}
 
 		response.ID = message.ID

@@ -1,4 +1,4 @@
-package main
+package native_messaging_setup
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func setupNativeMessaging() error {
+func SetupNativeMessaging() error {
 	fmt.Sprintln("Starting setup of native-search.")
 	println("During the setup we connect your Chrome Browser to this module so we can search the projects you configure.")
 

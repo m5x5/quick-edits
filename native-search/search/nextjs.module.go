@@ -1,10 +1,12 @@
-package main
+package search
 
 import (
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
+
+	"quick_edits.com/native-search/types"
 )
 
 func isNextJSProject(folder string) bool {
@@ -22,8 +24,9 @@ func isNextJSProject(folder string) bool {
 }
 
 func nextJSHeuristicSorting(performSearchData struct {
-	PerformSearchData
-	OpenEditorData
+	types.PerformSearchData
+	types.OpenEditorData
+	types.SaveChangesData
 }, matches []Match) {
 	browserUrl := performSearchData.BrowserURL
 	if !strings.Contains(browserUrl, "http://") {

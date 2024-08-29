@@ -1,21 +1,17 @@
-package main
+package open_editor
 
 import (
 	"fmt"
 	"os/exec"
 	"strings"
+
+	"quick_edits.com/native-search/search"
+	"quick_edits.com/native-search/types"
 )
 
-type OpenEditorData struct {
-	Path       string `json:"path"`
-	LineNumber int    `json:"lineNumber"`
-	CharNumber int    `json:"charNumber"`
-	Editor     string `json:"editor"`
-}
-
-func OpenEditor(match Match, editor string) Response {
+func OpenEditor(match search.Match, editor string) types.Response {
 	if len(match.Path) == 0 {
-		return Response{
+		return types.Response{
 			Message: "Path is empty.",
 			Success: false,
 		}
@@ -36,13 +32,13 @@ func OpenEditor(match Match, editor string) Response {
 	}
 
 	if err != nil {
-		return Response{
+		return types.Response{
 			Message: err.Error(),
 			Success: false,
 		}
 	}
 
-	return Response{
+	return types.Response{
 		Message: "Successfully launched editor.",
 		Success: true,
 	}
@@ -61,7 +57,7 @@ func isPathAdequate(path string) bool {
 	return is_path_adequate
 }
 
-func launchPHPStormIfPathIsAdequate(match Match) error {
+func launchPHPStormIfPathIsAdequate(match search.Match) error {
 	return exec.Command(
 		"/usr/local/bin/phpstorm",
 		"--line", fmt.Sprintf("%d", match.LineNumber),
@@ -71,7 +67,7 @@ func launchPHPStormIfPathIsAdequate(match Match) error {
 	).Run()
 }
 
-func launchVSCodeIfPathIsAdequate(match Match) error {
+func launchVSCodeIfPathIsAdequate(match search.Match) error {
 	return exec.Command(
 		"/usr/local/bin/code",
 		"-g",
@@ -79,14 +75,14 @@ func launchVSCodeIfPathIsAdequate(match Match) error {
 	).Run()
 }
 
-func launchZedIfPathIsAdequate(match Match) error {
+func launchZedIfPathIsAdequate(match search.Match) error {
 	return exec.Command(
 		"/usr/local/bin/zed",
 		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
 	).Run()
 }
 
-func launchCursorIfPathIsAdequate(match Match) error {
+func launchCursorIfPathIsAdequate(match search.Match) error {
 	return exec.Command(
 		"/usr/local/bin/cursor",
 		"-g",
