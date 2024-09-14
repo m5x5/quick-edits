@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import InspectPopupClassListInput from "./InspectPopupClassListInput";
 import {
 	getCssSelectorShort,
 	isUtilityClassForLargerBreakpoint,
 	tailwindCSSUtilityMappings,
 } from "./utils";
+import { twMerge as cn } from "tailwind-merge";
 
 const getUtilityClassesForGroup = (group: string) => {
 	const utilityClasses = [];
@@ -12,13 +13,15 @@ const getUtilityClassesForGroup = (group: string) => {
 	for (let i = 0; i < document.styleSheets.length; i++) {
 		const styleSheet = document.styleSheets[i] as CSSStyleSheet;
 
-		for (let j = 0; j < styleSheet.cssRules.length; j++) {
-			const cssRule = styleSheet.cssRules[j] as CSSStyleRule;
+		try {
+			for (let j = 0; j < styleSheet.cssRules.length; j++) {
+				const cssRule = styleSheet.cssRules[j] as CSSStyleRule;
 
-			if (cssRule.selectorText?.startsWith(`.${group}`)) {
-				utilityClasses.push(cssRule.selectorText.replace(".", ""));
+				if (cssRule.selectorText?.startsWith(`.${group}`)) {
+					utilityClasses.push(cssRule.selectorText.replace(".", ""));
+				}
 			}
-		}
+		} catch {}
 	}
 
 	return utilityClasses;
@@ -74,7 +77,10 @@ export default function InspectPopupClassList({
 		const classElement = event.target as HTMLElement;
 
 		classElement.addEventListener("keydown", (event: KeyboardEvent) => {
+			event.preventDefault();
 			const targetUtilityClass = (event.target as HTMLElement).textContent;
+
+			if (!targetUtilityClass) return;
 
 			if (["ArrowDown", "ArrowUp"].includes(event.key)) {
 				event.preventDefault();
@@ -124,6 +130,7 @@ export default function InspectPopupClassList({
 					/>
 				);
 			})}
+
 			<InspectPopupClassListInput onChangeClasses={setAdditionalClasses} />
 		</span>
 	);
@@ -138,14 +145,19 @@ const ClassItem = ({
 	elementClass: string;
 	isGray: boolean;
 }) => {
+	const [active, setActive] = useState(false);
 	return (
 		<>
 			&nbsp;
 			<button
 				style={{ color: isGray ? "#AAA" : undefined }}
 				type="button"
-				className={"focus:outline-none"}
-				onFocus={addArrowSwitch}
+				className={cn("focus:outline-none", active ? "bg-[#f0f0f0]" : "")}
+				onFocus={(event: React.FocusEvent<HTMLButtonElement>) => {
+					addArrowSwitch(event);
+					setActive(true);
+				}}
+				onBlur={() => setActive(false)}
 			>
 				{elementClass}
 			</button>

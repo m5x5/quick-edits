@@ -35,40 +35,17 @@ export const metadata = {
 	},
 } satisfies Metadata;
 
-function ArticleHeader2(props: {
-	children: React.ReactNode | React.ReactNode[];
-	className?: string;
-}) {
-	return (
-		<h2
-			className={`pt-8 pb-4 font-bold font-heading text-xl sm:text-3xl ${props.className}`}
-		>
-			{props.children}
-		</h2>
-	);
-}
-
-function ArticleHeader3(props: {
-	children: React.ReactNode | React.ReactNode[];
-}) {
-	return (
-		<h2 className="pt-8 pb-4 font-bold font-heading text-lg sm:text-2xl">
-			{props.children}
-		</h2>
-	);
-}
-
 export default function Home() {
 	return (
 		<>
-			<div className="relative z-10 flex min-h-screen flex-col">
+			<div className="">
 				<NavigationBar />
-				<main className="flex-1 grid-cols-full pb-10 container mx-auto px-4 sm:px-6 lg:px-8">
-					<section className="col-span-12 col-start-2 pt-10">
-						<h1 className="pb-12 font-heading font-semibold text-2xl tracking-[-0.04] sm:font-medium sm:text-5xl">
+				<main className="pb-10 container mx-auto prose w-full">
+					<section className="col-span-12 col-start-2">
+						<h1 className="font-heading font-semibold text-3xl tracking-[-0.04] sm:font-medium xl:text-5xl">
 							Setup Quick Edits
 						</h1>
-						<p className="max-w-[600px] pb-3">
+						<p className="max-w-[600px]">
 							Quick Edits consists of two parts a <b>Chrome extension</b> and a{" "}
 							<b>native search module</b>.<br />
 							<br /> 1. The Chrome extension is used to show you the info for
@@ -76,14 +53,12 @@ export default function Home() {
 							for files in your projects.
 							<br />
 							<br />
-							2.The native search module is a Go module that is used to search
-							for files in your projects. You can build the module by cloning
-							the repository and running the following commands.
+							2.The native search module is a Go module.
 						</p>
 					</section>
 
-					<section className="col-span-12 col-start-2">
-						<ArticleHeader2>1. Install the browser extension</ArticleHeader2>
+					<section>
+						<h2>1. Install the browser extension</h2>
 						<p>
 							Press on the button below and install the Quick Edits Chrome
 							extension from the Chrome Webstore.
@@ -97,23 +72,21 @@ export default function Home() {
 						</Link>
 					</section>
 
-					<section className="col-span-12 col-start-2">
-						<ArticleHeader2>
+					<section>
+						<h2>
 							2. Setup Native Search Module{" "}
 							<span className="bg-blue-100 rounded-lg inline-flex p-1">
 								<IconBrandApple className="inline-block text-blue-600" />
 							</span>
-						</ArticleHeader2>
-						<p className="pb-4">
+						</h2>
+						<p>
 							The native search module is a Go module that is used to search for
 							files in your projects. You can build the module by cloning the
 							repository and running the following commands.
 						</p>
-						<div className="overflow-x-auto mb-2">
+						<div className="overflow-x-auto">
 							<code>
-								<pre className="inline-block border p-4 text-[0.875rem] whitespace-nowrap my-2">
-									npx quick-edits
-								</pre>
+								<pre>./native-search setup</pre>
 							</code>
 						</div>
 						<div className="p-4 mb-4 rounded-2xl inline-block bg-blue-100">

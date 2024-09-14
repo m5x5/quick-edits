@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { compile } from "tailwindcss";
 import defaultTheme from "tailwindcss/theme.css?inline";
 import { useDebounce } from "use-debounce";
@@ -17,6 +17,7 @@ export default function InspectPopupClassListInput({
 }) {
 	const [input, setInput] = useState("");
 	const [debouncedInput] = useDebounce(input, 100);
+	const ref = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		/**
@@ -46,6 +47,7 @@ export default function InspectPopupClassListInput({
 	return (
 		<div className={"flex gap-1 py-1"}>
 			<input
+				ref={ref}
 				onChange={(e) => setInput(e.target.value)}
 				onClick={(e) => {
 					e.preventDefault();

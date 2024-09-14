@@ -4,15 +4,19 @@ import (
 	"encoding/json"
 	"strings"
 	"testing"
+
+	"quick_edits.com/native-search/open_editor"
+	"quick_edits.com/native-search/search"
+	"quick_edits.com/native-search/types"
 )
 
 func TestSorting(t *testing.T) {
-	message := Message{
+	message := types.Message{
 		Data: struct {
-			PerformSearchData
-			OpenEditorData
+			types.PerformSearchData
+			open_editor.OpenEditorData
 		}{
-			PerformSearchData: PerformSearchData{
+			PerformSearchData: types.PerformSearchData{
 				Folder:      "",
 				BrowserURL:  "",
 				Classes:     "bg-yellow",
@@ -21,7 +25,7 @@ func TestSorting(t *testing.T) {
 		},
 	}
 
-	response, err := Search(message)
+	response, err := search.Search(message)
 
 	jresponse, _ := json.MarshalIndent(response, "", "  ")
 	t.Log(string(jresponse))

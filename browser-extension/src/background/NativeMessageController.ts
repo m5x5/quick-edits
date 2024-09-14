@@ -12,20 +12,32 @@ interface OpenEditorData {
   editor: "vscode" | "phpstorm" | "zed" | "cursor";
 }
 
-export type ActionType = "perform_search" | "open_editor";
+export interface SaveChangesData {
+  path: string;
+  lineNumber: number;
+  charNumber: number;
+  originalContent: string;
+  newContent: string;
+}
+
+export type ActionType = "perform_search" | "open_editor" | "save_changes";
 
 export type ActionData<T extends ActionType> = T extends "perform_search"
   ? PerformSearchData
   : T extends "open_editor"
   ? OpenEditorData
+  : T extends "save_changes"
+  ? SaveChangesData
   : never;
 
 export type NativeResponse<T extends ActionType> = {
   success: boolean;
   message: string;
 } & T extends "perform_search"
-  ? { data: { path: string; lineNumber: number; charNumber: number }[] }
+  ? { data: { path: string; lineNumber: number; charNumber: number, isDirectMatch: boolean }[] }
   : T extends "open_editor"
+  ? object
+  : T extends "save_changes"
   ? object
   : never;
 

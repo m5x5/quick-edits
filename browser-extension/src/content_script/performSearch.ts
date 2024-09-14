@@ -6,7 +6,7 @@ import ProjectMappingStorage from "./ProjectStorage";
 
 export const performSearch = async (
   searchData: Omit<PerformSearchData, "folder">,
-): Promise<{ path: string; lineNumber: number; charNumber: number }[]> => {
+): Promise<{ path: string; lineNumber: number; charNumber: number, isDirectMatch: boolean }[]> => {
   const time = Date.now();
   const mapping = await ProjectMappingStorage.getProjectMapping(
     window.location.href,
