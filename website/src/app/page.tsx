@@ -27,13 +27,13 @@ export default function Home() {
 			</Head>
 			<div className="relative z-10 flex min-h-screen flex-col">
 				<NavigationBar />
-				<main className="flex-1">
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+				<main className="flex-1 container">
+					<div className="mx-auto">
 						<section
-							className="w-full py-12 md:py-24 lg:py-32"
+							className="w-full pb-12 lg:pb-32"
 							aria-label="Hero Section"
 						>
-							<div className="grid w-full gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+							<div className="grid w-full gap-6 lg:gap-12 xl:grid-cols-[1fr_600px]">
 								<div className="flex flex-col justify-center space-y-4">
 									<div className="space-y-2">
 										<h1 className="pb-5 font-heading font-semibold text-4xl tracking-tight sm:text-5xl xl:text-6xl/none text-balance">
@@ -47,7 +47,7 @@ export default function Home() {
 									</div>
 									<div className="flex flex-col gap-2 min-[400px]:flex-row flex-wrap">
 										<Link
-											className="inline-flex h-10 items-center gap-2 justify-center rounded-md border-2 border-gray-900 px-5 text-sm font-medium text-gray-900 hover:text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+											className="inline-flex h-10 items-center gap-2 justify-center rounded-full border-2 border-gray-900 px-5 text-sm font-medium text-gray-900 hover:text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
 											href="https://chromewebstore.google.com/detail/quick-edits/bfcjldhcnibiijidbbeddopkpljkahja"
 											target="_blank"
 											rel="noopener noreferrer"
@@ -55,7 +55,7 @@ export default function Home() {
 											Add Chrome Extension
 										</Link>
 										<Link
-											className="inline-flex h-10 items-center gap-2 justify-center rounded-md bg-blue-600 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-blue-800/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+											className="inline-flex h-10 items-center gap-2 justify-center rounded-full bg-blue-600 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-blue-800/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
 											href="/docs"
 										>
 											Get Started
