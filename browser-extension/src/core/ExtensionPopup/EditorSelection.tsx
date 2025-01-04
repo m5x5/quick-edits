@@ -22,7 +22,7 @@ export default function EditorSelection() {
         title="Select your editor"
         onChange={(e) => mutation.mutate(e.target.value)}
         value={data?.editor || "vscode"}
-        className="text-white rounded-[4px]"
+        className="dark:text-white rounded-[4px]"
       >
         <option value="phpstorm">PhpStorm</option>
         <option value="zed">Zed</option>
