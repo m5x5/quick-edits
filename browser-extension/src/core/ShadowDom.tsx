@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 
 export function ShadowDom({
 	parentElement,
-	position = "beforebegin",
 	children,
 }: {
 	parentElement: Element;
@@ -24,13 +23,13 @@ export function ShadowDom({
 		}
 
 		if (parentElement) {
-			parentElement.insertAdjacentElement(position, shadowHost);
+			parentElement.appendChild(shadowHost);
 		}
 
 		return () => {
 			shadowHost.remove();
 		};
-	}, [parentElement, shadowHost, position]);
+	}, [parentElement, shadowHost]);
 
 	return ReactDOM.createPortal(children, shadowRoot);
 }

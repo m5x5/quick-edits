@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { openFolderInEditor } from "./content_script/utils";
+import { openPathInEditor } from "./content_script/utils";
 import Button from "./core/Button";
 import Section, { SectionBody } from "./core/Section";
 import EditorSelection from "./core/ExtensionPopup/EditorSelection";
@@ -22,7 +22,7 @@ export const Popup = () => {
 			return;
 		}
 
-		openFolderInEditor(developmentPath.extensionDevelopmentPath);
+		openPathInEditor(developmentPath.extensionDevelopmentPath);
 	};
 
 	return (

@@ -1,10 +1,11 @@
 import React from "react";
 import { SectionBody } from "../Section";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { openFolderInEditor } from "../../content_script/utils";
+import { openPathInEditor } from "../../content_script/utils";
 import Button from "../Button";
-import ProjectMappingStorage, {
-	ProjectMapping,
+import ProjectMappingStorage from "../../content_script/ProjectStorage";
+import type {
+    ProjectMapping,
 } from "../../content_script/ProjectStorage";
 
 const projectMappingStorage = new ProjectMappingStorage();
@@ -51,7 +52,7 @@ export default function ProjectMappingConfiguration() {
 				}
 			/>
 			{data?.searchFolder && (
-				<Button onMouseDown={() => openFolderInEditor(data.searchFolder)}>
+				<Button onMouseDown={() => openPathInEditor(data.searchFolder)}>
 					Open in Editor
 				</Button>
 			)}
