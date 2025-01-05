@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <footer className="flex flex-col gap-2 sm:flex-row justify-center py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-white">
-      <p className="text-xs text-gray-600">
-        © 2021-2024 Quick Edits. All rights reserved.
+    <footer className="flex w-full shrink-0 flex-col items-center justify-center gap-2 border-t bg-white px-4 py-6 sm:flex-row md:px-6">
+      <p className="text-gray-600 text-xs">
+        © 2021-2025 Quick Edits. All rights reserved.
       </p>
     </footer>
   );
