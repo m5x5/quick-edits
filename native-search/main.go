@@ -130,12 +130,3 @@ func main() {
 		}
 	}
 }
-
-func log(msg string, file *os.File) {
-	msg = msg + "\n"
-	// Write the received message to the file
-	_, err := file.Write([]byte(msg))
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error writing received message to file:", err)
-	}
-}

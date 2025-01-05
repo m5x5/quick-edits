@@ -3,8 +3,6 @@ package open_editor
 import (
 	"fmt"
 	"os/exec"
-	"strings"
-
 	"quick_edits.com/native-search/search"
 	"quick_edits.com/native-search/types"
 )
@@ -20,13 +18,13 @@ func OpenEditor(match search.Match, editor string) types.Response {
 	err := error(nil)
 
 	if editor == "phpstorm" {
-		err = launchPHPStormIfPathIsAdequate(match)
+		err = launchPHPStorm(match)
 	} else if editor == "zed" {
-		err = launchZedIfPathIsAdequate(match)
+		err = launchZed(match)
 	} else if editor == "vscode" {
-		err = launchVSCodeIfPathIsAdequate(match)
+		err = launchVSCode(match)
 	} else if editor == "cursor" {
-		err = launchCursorIfPathIsAdequate(match)
+		err = launchCursor(match)
 	} else {
 		err = fmt.Errorf("Editor not supported: " + editor)
 	}
@@ -44,20 +42,7 @@ func OpenEditor(match search.Match, editor string) types.Response {
 	}
 }
 
-func isPathAdequate(path string) bool {
-	extensions := []string{".html", ".js", ".tsx", ".ts"}
-	is_path_adequate := false
-
-	for i := 0; i < len(extensions); i++ {
-		if strings.HasSuffix(path, extensions[i]) {
-			is_path_adequate = true
-		}
-	}
-
-	return is_path_adequate
-}
-
-func launchPHPStormIfPathIsAdequate(match search.Match) error {
+func launchPHPStorm(match search.Match) error {
 	return exec.Command(
 		"/usr/local/bin/phpstorm",
 		"--line", fmt.Sprintf("%d", match.LineNumber),
@@ -67,7 +52,7 @@ func launchPHPStormIfPathIsAdequate(match search.Match) error {
 	).Run()
 }
 
-func launchVSCodeIfPathIsAdequate(match search.Match) error {
+func launchVSCode(match search.Match) error {
 	return exec.Command(
 		"/usr/local/bin/code",
 		"-g",
@@ -75,14 +60,14 @@ func launchVSCodeIfPathIsAdequate(match search.Match) error {
 	).Run()
 }
 
-func launchZedIfPathIsAdequate(match search.Match) error {
+func launchZed(match search.Match) error {
 	return exec.Command(
 		"/usr/local/bin/zed",
 		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
 	).Run()
 }
 
-func launchCursorIfPathIsAdequate(match search.Match) error {
+func launchCursor(match search.Match) error {
 	return exec.Command(
 		"/usr/local/bin/cursor",
 		"-g",

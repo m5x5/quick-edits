@@ -254,8 +254,8 @@ func ParseHTML(code string) []LexedTokenValue {
 			lexed = append(lexed, LexedTokenValue{TokenType: AfterAttributeValueQuoted, Value: temp})
 			temp = ""
 			break
+		default:
 		}
-
 	}
 
 	return lexed

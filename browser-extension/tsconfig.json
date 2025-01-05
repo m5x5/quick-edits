@@ -1,4 +1,7 @@
 {
+  "include": [
+    "src/**/*"
+  ],
   "compilerOptions": {
     "strict": true,
     "target": "es6",
@@ -11,7 +14,9 @@
     "noEmitOnError": true,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "composite": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true

@@ -9,7 +9,8 @@ export const initAutoReload = () => {
           if (manifest.version !== chrome.runtime.getManifest().version) {
             console.debug("Extension has been updated. Reloading...");
             // send message to background to reload the extension
-            chrome.runtime.sendMessage({ action: "reload_extension" });
+            chrome.runtime.sendMessage({ action: "reload_extension" })
+                .then(() => console.debug("Extension has been updated."));
             clearInterval(interval);
             window.location.reload();
           }

@@ -10,7 +10,7 @@ type ContextSearchResult struct {
 	IsDirectMatch bool
 }
 
-func SearchWithContext(fileContent string, lineNumber int, classes string, textContent string) bool {
+func WithContext(fileContent string, lineNumber int, classes string, textContent string) bool {
 	lines := strings.Split(fileContent, "\n")
 	line := lines[lineNumber]
 

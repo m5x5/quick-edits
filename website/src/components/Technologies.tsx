@@ -94,7 +94,7 @@ export default function Technologies() {
 
 				<div
 					className={
-						"overflow-hidden rounded-md border border-gray-800 col-start-4 col-span-8 mb-16"
+						"overflow-hidden rounded-md border border-gray-800 col-start-4 col-span-8 mb-16 col-start-3 col-span-10"
 					}
 				>
 					<Image

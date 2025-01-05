@@ -41,7 +41,7 @@ func PerformSearch(message types.Message) types.Response {
 
 func Search(message types.Message) ([]Match, error) {
 	if len(message.Data.Classes) < 4 && len(message.Data.TextContent) < 7 {
-		err := errors.New("Keyword length should be at least 4 characters")
+		err := errors.New("keyword length should be at least 4 characters")
 		return nil, err
 	}
 
@@ -83,7 +83,7 @@ func Search(message types.Message) ([]Match, error) {
 				if charNumber == -1 {
 					continue
 				}
-				directMatch := SearchWithContext(fileContent, lineNumber, message.Data.Classes, message.Data.TextContent)
+				directMatch := WithContext(fileContent, lineNumber, message.Data.Classes, message.Data.TextContent)
 				if directMatch {
 					fmt.Fprintln(os.Stderr, "Quick Edits: Direct match found")
 				}

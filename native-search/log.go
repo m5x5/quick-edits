@@ -12,12 +12,21 @@ type Log struct {
 
 func (log Log) Log(message string) {
 	timestamp := time.Now().Format("2006-01-02 15:04:05")
-	log.File.WriteString(fmt.Sprintf("[%s] %s\n", timestamp, message))
-	log.File.Sync() // Flush changes to disk
+	_, err := log.File.WriteString(fmt.Sprintf("[%s] %s\n", timestamp, message))
+	if err != nil {
+		return
+	}
+	err = log.File.Sync()
+	if err != nil {
+		return
+	} // Flush changes to disk
 }
 
 func (log Log) Close() {
-	log.File.Close()
+	err := log.File.Close()
+	if err != nil {
+		return
+	}
 }
 
 func NewLog(filePath string) (*Log, error) {
