@@ -194,7 +194,7 @@ const Options = () => {
 				</div>
 			</SectionBody>
 			<section
-				className="dark:bg-black dark:text-white w-full py-12 md:py-24 lg:py-32"
+				className="dark:text-white w-full py-12 md:py-24 lg:py-32"
 				id="contact"
 				aria-label="Sektion zu Kontaktmöglichkeiten"
 			>

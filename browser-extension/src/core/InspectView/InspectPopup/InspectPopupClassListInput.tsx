@@ -55,7 +55,7 @@ export default function InspectPopupClassListInput({
 				}}
 				onKeyDown={(e) => e.stopPropagation()}
 				className={
-					"border rounded-[2px] border-solid border-gray-400 placeholder:font-normal placeholder:text-gray-400 px-1"
+					"w-full border rounded-md border-solid border-gray-300 placeholder:font-normal placeholder:text-gray-400 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
 				}
 				placeholder="Add classes"
 			/>

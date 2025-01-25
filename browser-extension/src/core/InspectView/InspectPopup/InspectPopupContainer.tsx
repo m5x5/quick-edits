@@ -7,11 +7,16 @@ export default function InspectPopupContainer({
 	return (
 		<div
 			role="tooltip"
-			className="bg-white p-[10px] absolute top-0 left-0 z-[9999] max-w-[400px] rounded-md shadow-md border-[#ccc] border font-bold overflow-x-scroll m-2 border-solid"
+			className="bg-white p-4 absolute top-0 left-0 max-w-[400px] rounded-lg shadow-lg border border-gray-200 font-medium overflow-x-auto m-3 border-solid transition-all duration-200 ease-in-out backdrop-blur-sm bg-opacity-95"
 			style={{
 				pointerEvents: targetSelectionActive ? "none" : "auto",
+				position: "relative",
+				zIndex: 1,
 			}}
-			onClick={(e) => e.stopPropagation()}
+			onClick={(e) => {
+				e.preventDefault();
+				e.stopPropagation();
+			}}
 			onKeyDown={(e) => e.stopPropagation()}
 		>
 			{children}

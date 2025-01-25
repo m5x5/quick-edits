@@ -69,6 +69,18 @@ export const isUtilityClassForLargerBreakpoint = (utilityClass: string) => {
 };
 
 export const tailwindCSSUtilityMappings = {
+  p: [
+    "p-1",
+    "p-2",
+    "p-3",
+    "p-4",
+    "p-5",
+    "p-6",
+    "p-7",
+    "p-8",
+    "p-9",
+    "p-10",
+  ],
   pt: [
     "pt-1",
     "pt-2",
@@ -97,7 +109,7 @@ export const tailwindCSSUtilityMappings = {
     "pl-1",
     "pl-2",
     "pl-3",
-    "pl-4",
+    "pl-4","p-60", "pl-64",
     "pl-5",
     "pl-6",
     "pl-7",

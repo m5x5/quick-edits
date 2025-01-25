@@ -20,6 +20,7 @@ export default function InspectView() {
   const { target, targetSelectionActive, left, up, down, right, ref } = useSelectedTarget();
   const [classes, setClasses] = useState<string>("");
   const [additionalClasses, setAdditionalClasses] = useState<string>("");
+  const [showSelectBox, setShowSelectBox] = useState<boolean>(true);
 
   useEffect(() => {
     if (target) {
@@ -35,7 +36,7 @@ export default function InspectView() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SelectBox target={target} classes={`${classes} ${additionalClasses}`} />
+      {showSelectBox && <SelectBox target={target} classes={`${classes} ${additionalClasses}`} />}
       <PopupPositioning target={target}>
         <InspectPopup
           targetSelectionActive={targetSelectionActive}
@@ -109,6 +110,7 @@ export default function InspectView() {
             setClasses={setClasses}
             additionalClasses={additionalClasses}
             setAdditionalClasses={setAdditionalClasses}
+            setShowSelectBox={setShowSelectBox}
           />
           <InspectPopupAstroSection target={target} />
           <InspectPopupResults target={target} classes={classes} additionalClasses={additionalClasses} />
