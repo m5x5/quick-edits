@@ -7,7 +7,7 @@ export function saveChanges(data: SaveChangesData) {
       data,
     },
     (response: unknown) => {
-      console.log("response", response);
+      console.debug("response", response);
     },
   );
 }

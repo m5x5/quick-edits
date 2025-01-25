@@ -69,7 +69,7 @@ export default class NativeMessageController {
     });
 
     this.port.onDisconnect.addListener(() => {
-      console.log("Disconnected");
+      console.debug("QuickEdits Extension: Disconnected");
     });
   }
 
