@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quick Edits Extension's Popup</title>
   <title>My Test Extension Options</title>
   <script src="/src/content_script.tsx" type="module"></script>
+  <script src="src/popup.css" type="module"></script>
 </head>
 
-<body>
-  <div id="root"></div>
-  
+<body class="min-h-full dark:bg-[#292929] bg-white ">
+  <div id="root" class="min-h-full"></div>
+
   <script src="/src/options.tsx" type="module"></script>
 
   <!-- Add Vite client module during development -->
   <script type="module" src="http://localhost:5173/@vite/client"></script>
 </body>
+
 </html>

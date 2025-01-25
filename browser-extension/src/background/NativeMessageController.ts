@@ -10,6 +10,7 @@ interface OpenEditorData {
   lineNumber: number;
   charNumber: number;
   editor: "vscode" | "phpstorm" | "zed" | "cursor";
+  editorPath?: string;
 }
 
 export interface SaveChangesData {

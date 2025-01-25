@@ -6,18 +6,18 @@ export default function Section({
 	className,
 }: { children: React.ReactNode | React.ReactNode[]; className?: string }) {
 	return (
-		<div
+		<h2
 			className={`bg-blue-50 dark:bg-[#3c3c3c] text-xs text-blue-700 dark:text-white border-y border-y-blue-200 dark:border-y-[#474747] py-1 px-3 ${className}`}
 		>
 			{children}
-		</div>
+		</h2>
 	);
 }
 
 export function SectionBody({
 	children,
 	className,
-}: { children: React.ReactNode | React.ReactNode[]; className?: string }) {
+}: { children: React.ReactNode | React.ReactNode[]; className?: string  }) {
 	return (
 		<div className={`${className} py-2 px-3 text-blue-700 flex flex-col gap-4`}>
 			{children}

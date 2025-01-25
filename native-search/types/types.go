@@ -5,6 +5,7 @@ type OpenEditorData struct {
 	LineNumber int    `json:"lineNumber"`
 	CharNumber int    `json:"charNumber"`
 	Editor     string `json:"editor"`
+	EditorPath string `json:"editorPath"`
 }
 
 type PerformSearchData struct {

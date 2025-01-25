@@ -32,7 +32,6 @@ export default function InspectPopupResults({
       textContent: target.textContent || "",
       browserUrl: window.location.href,
     }).then((results) => {
-      console.log("results", results);
       if (signal.aborted) {
         return;
       }
@@ -82,7 +81,7 @@ export default function InspectPopupResults({
                     },
                   },
                   (response: NativeResponse<"open_editor">) => {
-                    console.log("response", response);
+                    console.debug("response", response);
                   },
                 );
               }}
@@ -94,7 +93,6 @@ export default function InspectPopupResults({
               disabled={props.additionalClasses === ""}
               className={`bg-blue-600 px-1 rounded-sm text-white hover:bg-blue-700 disabled:bg-gray-500`}
               onClick={() => {
-                console.log(props.classes, props.additionalClasses);
                 saveChanges({
                   originalContent: props.classes,
                   newContent: `${props.classes} ${props.additionalClasses}`,

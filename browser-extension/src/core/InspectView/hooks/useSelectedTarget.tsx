@@ -63,7 +63,6 @@ export default function useSelectedTarget() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const noOtherKeyPressed = !e.ctrlKey && !e.shiftKey && !e.metaKey;
-      console.log(e.key);
       if (e.altKey && noOtherKeyPressed) {
         setTargetSelectionActive(true);
       } else if (e.ctrlKey && e.metaKey && e.shiftKey && e.key === "L") {
@@ -120,8 +119,6 @@ export default function useSelectedTarget() {
       e.stopImmediatePropagation();
 
       const newTarget = e.target as HTMLElement;
-      console.log(newTarget);
-      console.log(newTarget.children);
       setTarget(newTarget);
     };
     document.addEventListener("mouseover", setTargetIfNeeded, {

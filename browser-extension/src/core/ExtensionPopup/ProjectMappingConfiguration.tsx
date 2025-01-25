@@ -7,6 +7,7 @@ import ProjectMappingStorage from "../../content_script/ProjectStorage";
 import type {
     ProjectMapping,
 } from "../../content_script/ProjectStorage";
+import Input from "../Input";
 
 const projectMappingStorage = new ProjectMappingStorage();
 
@@ -38,7 +39,7 @@ export default function ProjectMappingConfiguration() {
 
 	return (
 		<SectionBody>
-			<input
+			<Input
 				placeholder={"Search Folder"}
 				className={
 					"rounded-[4px] text-xs border-gray-300 py-[0.05rem] px-[0.2rem] placeholder:text-gray-400 dark:text-white"
