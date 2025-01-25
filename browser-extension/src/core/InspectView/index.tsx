@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { hotkeyKeyUX, startKeyUX } from "keyux";
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-// import styles from "../../../dist/popup.css?inline";
+import styles from "../../../dist/popup.css?inline";
 import { ShadowDom } from "../ShadowDom";
 import InspectPopup from "./InspectPopup";
 import InspectPopupAstroSection from "./InspectPopup/InspectPopupAstroSection";

@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import InspectPopupClassListInput from "./InspectPopupClassListInput";
+//import InspectPopupClassListInput from "./InspectPopupClassListInput";
+import "./../../../popup.css";
 import {
 	getCssSelectorShort,
+	isUtilityClassForLargerBreakpoint,
 	tailwindCSSUtilityMappings,
 } from "./utils";
+import InspectPopupClassListInput from "./InspectPopupClassListInput";
 
 type ClassChange = {
 	type: 'regular' | 'additional';
@@ -41,6 +44,7 @@ export default function InspectPopupClassList({
 	additionalClasses: string;
 	setShowSelectBox: (show: boolean) => void;
 }) {
+	console.log({classes});
 	const prevTargetRef = useRef<HTMLElement | SVGElement | null>(null);
 	const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 	const [undoStack, setUndoStack] = useState<ClassChange[]>([]);
@@ -221,6 +225,7 @@ const ClassItem = ({
 	active: boolean;
 	setActive: (active: boolean) => void;
 }) => {
+	console.log(elementClass);
 	return (
 		<div className="flex items-center gap-1 bg-[#202124] text-[#9ba0a5] px-2 py-1 rounded-sm text-[13px] font-mono relative group hover:bg-[#292a2d] border border-[#3c4043]">
 			<button

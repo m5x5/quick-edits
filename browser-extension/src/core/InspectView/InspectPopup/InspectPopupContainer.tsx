@@ -7,7 +7,7 @@ export default function InspectPopupContainer({
 	return (
 		<div
 			role="tooltip"
-			className="bg-white p-4 absolute top-0 left-0 max-w-[400px] rounded-lg shadow-lg border border-gray-200 font-medium overflow-x-auto m-3 border-solid transition-all duration-200 ease-in-out backdrop-blur-sm bg-opacity-95"
+			className="absolute top-0 left-0 max-w-[400px] rounded-lg border border-gray-200 font-medium overflow-x-auto m-3 transition-all duration-200 ease-in-out backdrop-blur-sm bg-opacity-95"
 			style={{
 				pointerEvents: targetSelectionActive ? "none" : "auto",
 				position: "relative",

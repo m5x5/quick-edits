@@ -1,6 +1,41 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@source "../../../browser-extension/src/core";
+
+@theme {
+    --color-black: #000;
+    --color-white: #fff;
+    --color-dark-900: #000;
+    --color-dark-800: #070707;
+    --color-dark-700: #222;
+    --font-sans: "Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif";
+    --font-heading: "Manrope", "-apple-system", "BlinkMacSystemFont", "sans-serif";
+    /* --container: center; */
+    /* --container-padding 2rem; */
+
+    /* --container-screens: {
+        DEFAULT: "100%",
+            sm: "640px",
+            md: "868px",
+            xl: "1280px",
+    } */
+
+    ;
+    /* gridTemplateColumns: {
+				full: "var(--columns)",
+				"1-2": "1fr 2fr",
+			},
+			backgroundImage: {
+				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+				"gradient-conic":
+					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+				"gradient-dark":
+					"linear-gradient(-180deg, black, rgba(0,0,0,0.9) 50%, transparent 100%)",
+				"gradient-light":
+					"linear-gradient(180deg, rgba(255,255,255,1), transparent 400%)",
+			},
+			colors: {
+		, */
+}
 
 @layer base {
     @font-face {

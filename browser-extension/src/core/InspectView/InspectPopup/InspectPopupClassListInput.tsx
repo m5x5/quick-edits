@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { compile } from "tailwindcss";
-import defaultTheme from "tailwindcss/theme.css?inline";
+import defaultTheme from "./theme.css?inline";
 import { useDebounce } from "use-debounce";
 
 const css = `${defaultTheme} @tailwind base;@tailwind components;@tailwind utilities;`;
