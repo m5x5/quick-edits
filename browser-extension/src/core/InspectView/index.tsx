@@ -42,8 +42,8 @@ export default function InspectView() {
           targetSelectionActive={targetSelectionActive}
           tagName={target.tagName}
         >
-          <div className="border-y border-gray-400 flex items-center">
-            <button type="button" onClick={left} ref={ref}>
+          <div className="border-y border-[#3c4043] flex items-center bg-[#202124] px-2 py-1">
+            <button type="button" onClick={left} ref={ref} className="hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
               <svg
                 width="20"
                 height="20"
@@ -59,7 +59,7 @@ export default function InspectView() {
                 <circle cx="12.5" cy="10.125" r="1.25" fill="black" />
               </svg>
             </button>
-            <button type="button" onClick={up}>
+            <button type="button" onClick={up} className="hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
               <svg
                 width="20"
                 height="20"
@@ -73,7 +73,7 @@ export default function InspectView() {
                 />
               </svg>
             </button>
-            <button type="button" onClick={down}>
+            <button type="button" onClick={down} className="hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
               <svg
                 width="20"
                 height="20"
@@ -87,7 +87,7 @@ export default function InspectView() {
                 />
               </svg>
             </button>
-            <button type="button" onClick={right}>
+            <button type="button" onClick={right} className="hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
               <svg
                 width="20"
                 height="20"
@@ -101,6 +101,13 @@ export default function InspectView() {
                   fill="black"
                 />
               </svg>
+            </button>
+            <button
+            onClick={() => {
+              setShowSelectBox(!showSelectBox);
+            }}
+            >
+              Toggle Select box
             </button>
           </div>
           <InspectPopupClassList

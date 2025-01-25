@@ -55,14 +55,14 @@ export default function InspectPopupClassListInput({
 				}}
 				onKeyDown={(e) => e.stopPropagation()}
 				className={
-					"w-full border rounded-md border-solid border-gray-300 placeholder:font-normal placeholder:text-gray-400 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+					"w-full bg-[#202124] border border-[#3c4043] rounded-sm text-[#e8eaed] placeholder:text-[#9ba0a5] px-3 py-1.5 text-[13px] font-mono focus:outline-none focus:ring-1 focus:ring-[#8ab4f8] focus:border-[#8ab4f8] transition-all duration-200"
 				}
 				placeholder="Add classes"
 			/>
 			<button
 				onMouseDown={copy}
 				type={"button"}
-				className={"inline"}
+				className={"inline text-[#9ba0a5] hover:text-[#e8eaed] transition-colors"}
 				onClick={(e) => {
 					e.preventDefault();
 					e.stopPropagation();

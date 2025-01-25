@@ -210,21 +210,23 @@ export default function InspectPopupClassList({
 
 const ClassItem = ({
 	elementClass,
+	displayClass,
 	onDelete,
 	onVariantSelect,
 	active,
 	setActive,
 }: {
 	elementClass: string;
+	displayClass: string;
 	onDelete: () => void;
 	onVariantSelect?: (variant: string) => void;
 	active: boolean;
 	setActive: (active: boolean) => void;
 }) => {
 	return (
-		<div className="flex items-center gap-1 bg-[#383a3d] text-[#e8eaed] px-2 py-1 rounded text-xs relative group">
+		<div className="flex items-center gap-1 bg-[#202124] text-[#9ba0a5] px-2 py-1 rounded-sm text-[13px] font-mono relative group hover:bg-[#292a2d] border border-[#3c4043]">
 			<button
-				className="cursor-pointer relative "
+				className="cursor-pointer relative hover:text-[#e8eaed] transition-colors"
 				tabIndex={0}
 				onClick={(e) => {
 					e.stopPropagation();
@@ -241,12 +243,12 @@ const ClassItem = ({
 				{elementClass}
 				{onVariantSelect && getSizeVariants(elementClass).length > 0 && (
 					<div
-						className={`absolute ${active ? 'block' : 'hidden'} top-full left-0 mt-1 bg-[#383a3d] border border-gray-600 rounded-md py-1 max-h-48 overflow-y-auto min-w-[120px] shadow-lg z-50`}
+						className={`absolute ${active ? 'block' : 'hidden'} top-full left-0 mt-1 bg-[#202124] border border-[#3c4043] rounded-sm py-1 max-h-48 overflow-y-auto min-w-[140px] shadow-lg z-50`}
 					>
 						{getSizeVariants(elementClass).map((variant) => (
 							<button
 								key={variant}
-								className="block w-full text-left px-3 py-1 hover:bg-gray-700 text-[#e8eaed]"
+								className="block w-full text-left px-3 py-1.5 hover:bg-[#292a2d] text-[#9ba0a5] hover:text-[#e8eaed] transition-colors font-mono text-[13px]"
 								onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
@@ -273,7 +275,7 @@ const ClassItem = ({
 					e.stopPropagation();
 					onDelete();
 				}}
-				className="hover:text-red-500 transition-colors relative z-10"
+				className="text-[#9ba0a5] hover:text-[#f28b82] transition-colors relative z-10 opacity-100 group-hover:opacity-100"
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
 					<path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
