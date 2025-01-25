@@ -64,13 +64,19 @@ export default function Home() {
 							<h2>Near Future</h2>
 							<ul className="list-disc">
 								<li>
-									Optimize{" "}
 									<Link href="/docs" className="text-blue-600 underline">
 										Onboarding Experience
 									</Link>
 								</li>
 								<li>Stabilize</li>
 								<li>Improve Code Search Algorithm</li>
+								<li>Next.js Content Management Features
+									<ul className="list-disc ml-6 mt-2">
+										<li>Smart page detection</li>
+										<li>Content block management</li>
+										<li>Static site optimization</li>
+									</ul>
+								</li>
 							</ul>
 							<h2 className="inline-block">Far Future 🚀</h2>
 							<ul>

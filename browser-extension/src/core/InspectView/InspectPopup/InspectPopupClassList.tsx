@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import InspectPopupClassListInput from "./InspectPopupClassListInput";
 import {
 	getCssSelectorShort,
-	isUtilityClassForLargerBreakpoint,
 	tailwindCSSUtilityMappings,
 } from "./utils";
-import { twMerge as cn } from "tailwind-merge";
 
 type ClassChange = {
 	type: 'regular' | 'additional';
@@ -151,7 +149,7 @@ export default function InspectPopupClassList({
 	return (
 		<div ref={popupRef} className="flex flex-col gap-2 relative z-[1000]">
 			<div className="flex flex-wrap gap-1 relative">
-				{(classes || "").split(" ").filter(Boolean).map((className) => (
+				{(classes || "").split?.(" ").filter(Boolean).map((className) => (
 					<ClassItem
 						key={className}
 						elementClass={className}

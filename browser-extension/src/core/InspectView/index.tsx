@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { hotkeyKeyUX, startKeyUX } from "keyux";
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import styles from "../../../dist/popup.css?inline";
+// import styles from "../../../dist/popup.css?inline";
 import { ShadowDom } from "../ShadowDom";
 import InspectPopup from "./InspectPopup";
 import InspectPopupAstroSection from "./InspectPopup/InspectPopupAstroSection";
@@ -42,7 +42,7 @@ export default function InspectView() {
           targetSelectionActive={targetSelectionActive}
           tagName={target.tagName}
         >
-          <div className="border-y border-[#3c4043] flex items-center bg-[#202124] px-2 py-1">
+          <div className="border-y border-[#3c4043] flex items-center bg-[#202124] px-2 py-1 dark:text-white">
             <button type="button" onClick={left} ref={ref} className="hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
               <svg
                 width="20"

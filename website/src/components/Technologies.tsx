@@ -12,7 +12,7 @@ export default function Technologies() {
 			className="grid grid-cols-full"
 			aria-label={"Sektion mit einer Auflistung von Technologien"}
 		>
-			<div className="col-span-full bg-blue-500 py-7 md:py-12 lg:py-16 hidden">
+			<div className="col-span-full bg-blue-500 py-7 md:py-12 lg:py-16">
 				<div className="container mx-auto">
 					<div className="flex flex-col gap-y-7 md:flex-row">
 						<div className="space-y-2 px-4">
@@ -20,8 +20,8 @@ export default function Technologies() {
 								Integrate with your favorite editor
 							</h2>
 							<p className="max-w-[900px] text-white pb-4">
-								Quick Edits allows you to reduce the steps it takes to make
-								TailwindCSS changes to a website.
+								Quick Edits features a DevTools-like interface that makes working with
+                TailwindCSS faster and more intuitive than ever.
 							</p>
 							<ul>
 								<li
@@ -36,7 +36,7 @@ export default function Technologies() {
 									>
 										<IconEdit />
 									</span>
-									Speeds up the process of finding HTML elements in your code.
+									Enhanced DevTools-like interface with improved class management.
 								</li>
 								<li
 									className={
@@ -50,7 +50,7 @@ export default function Technologies() {
 									>
 										<IconPointer />
 									</span>
-									Hover over an element an overview of the classes used on it.
+									Smart popup positioning and comprehensive class overview with undo functionality.
 								</li>
 								<li
 									className={
@@ -64,8 +64,22 @@ export default function Technologies() {
 									>
 										<IconEdit />
 									</span>
-									Add utility classes to the element with a single click. And
-									get a preview of the changes.
+									Instantly preview and apply TailwindCSS classes with real-time updates
+									and intelligent suggestions.
+								</li>
+								<li
+									className={
+										"flex items-center gap-3 rounded-lg py-2 text-white"
+									}
+								>
+									<span
+										className={
+											"flex aspect-square h-14 items-center justify-center rounded-full bg-blue-600/50"
+										}
+									>
+										<IconEdit />
+									</span>
+									Upcoming Next.js-specific features for streamlined content management in static sites.
 								</li>
 							</ul>
 						</div>
@@ -107,7 +121,7 @@ export default function Technologies() {
 				</div>
 				<div
 					className={
-						"col-span-full pb-4 text-center md:col-span-7 md:col-start-1"
+						"col-span-full pb-4 text-center md:col-span-7 md:col-start-1 border-1 rounded-lg max-w-md px-4"
 					}
 				>
 					<IconPointer className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
@@ -119,7 +133,7 @@ export default function Technologies() {
 						of choice.
 					</p>
 				</div>
-				<div className={"col-span-full pb-8 text-center md:col-span-7"}>
+				<div className={"border-1 rounded-lg max-w-md col-span-full pb-8 text-center md:col-span-7"}>
 					<IconCursorText className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
 					<h3 className="font-heading font-medium text-xl">
 						Pick the right class
@@ -128,7 +142,7 @@ export default function Technologies() {
 				</div>
 				<div
 					className={
-						"col-span-full pb-8 text-center md:col-span-8 md:col-start-4"
+						"border-1 rounded-lg max-w-md col-span-full pb-8 text-center md:col-span-8 md:col-start-4"
 					}
 				>
 					<IconCode className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />

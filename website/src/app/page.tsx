@@ -6,6 +6,8 @@ import type { Metadata } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import PopupShowcase from "@/components/PopupShowcase";
+import InspectionShowCase from "@/components/InspectionShowCase";
 
 export const metadata: Metadata = {
 	title: "Quick Edits - A Developer Utility",
@@ -41,8 +43,9 @@ export default function Home() {
 											<span className="text-blue-500">ease</span>.
 										</h1>
 										<p className="!mt-0 max-w-[600px] text-black md:text-base pb-3">
-											Quick Edits is a developer utility that helps you locate
-											the code you need to edit.
+											Quick Edits is a powerful developer tool with a DevTools-like interface
+											that streamlines TailwindCSS development with smart class management,
+											real-time previews, and instant code location.
 										</p>
 									</div>
 									<div className="flex flex-col gap-2 min-[400px]:flex-row flex-wrap">
@@ -76,6 +79,8 @@ export default function Home() {
 						</section>
 					</div>
 					<Technologies />
+					<PopupShowcase />
+					<InspectionShowCase />
 					<section className="w-full container mx-auto px-4 sm:px-6 lg:px-8">
 						<h2 className="pb-8 text-center font-bold font-heading text-4xl">
 							Integrates with your favorite editor
