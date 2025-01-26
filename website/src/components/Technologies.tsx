@@ -3,156 +3,80 @@ import {
 	IconCursorText,
 	IconEdit,
 	IconPointer,
+	IconBolt,
+	IconDeviceLaptop,
 } from "@tabler/icons-react";
 import Image from "next/image";
 
 export default function Technologies() {
 	return (
-		<section
-			className="grid grid-cols-full"
-			aria-label={"Sektion mit einer Auflistung von Technologien"}
-		>
-			<div className="col-span-full bg-blue-500 py-7 md:py-12 lg:py-16">
-				<div className="container mx-auto">
-					<div className="flex flex-col gap-y-7 md:flex-row">
-						<div className="space-y-2 px-4">
-							<h2 className="font-bold font-heading text-2xl text-white tracking-tight md:text-5xl/tight">
-								Integrate with your favorite editor
-							</h2>
-							<p className="max-w-[900px] text-white pb-4">
-								Quick Edits features a DevTools-like interface that makes working with
-                TailwindCSS faster and more intuitive than ever.
-							</p>
-							<ul>
-								<li
-									className={
-										"flex items-center gap-3 rounded-lg py-2 text-white"
-									}
-								>
-									<span
-										className={
-											"flex aspect-square h-14 items-center justify-center rounded-full bg-blue-600/50"
-										}
-									>
-										<IconEdit />
-									</span>
-									Enhanced DevTools-like interface with improved class management.
-								</li>
-								<li
-									className={
-										"flex items-center gap-3 rounded-lg py-2 text-white"
-									}
-								>
-									<span
-										className={
-											"flex aspect-square h-14 items-center justify-center rounded-full bg-blue-600/50"
-										}
-									>
-										<IconPointer />
-									</span>
-									Smart popup positioning and comprehensive class overview with undo functionality.
-								</li>
-								<li
-									className={
-										"flex items-center gap-3 rounded-lg py-2 text-white"
-									}
-								>
-									<span
-										className={
-											"flex aspect-square h-14 items-center justify-center rounded-full bg-blue-600/50"
-										}
-									>
-										<IconEdit />
-									</span>
-									Instantly preview and apply TailwindCSS classes with real-time updates
-									and intelligent suggestions.
-								</li>
-								<li
-									className={
-										"flex items-center gap-3 rounded-lg py-2 text-white"
-									}
-								>
-									<span
-										className={
-											"flex aspect-square h-14 items-center justify-center rounded-full bg-blue-600/50"
-										}
-									>
-										<IconEdit />
-									</span>
-									Upcoming Next.js-specific features for streamlined content management in static sites.
-								</li>
-							</ul>
-						</div>
-						<div
-							className={
-								"hidden aspect-square w-full max-w-[40vw] items-center justify-center rounded-2xl bg-white lg:col-span-4"
-							}
-						>
-							<p className="rounded-md border border-gray-500 border-dashed px-4 py-2">
-								Hover over me! <IconPointer className="inline w-6" />
-							</p>
+		<section className="overflow-hidden relative bg-gradient-to-b from-blue-50 to-white">
+			{/* Hero Section */}
+			<div className="relative z-10 px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:py-24">
+				<div className="grid grid-cols-1 gap-12 items-center lg:grid-cols-2">
+					<div className="max-w-2xl">
+						<h2 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 font-heading sm:text-5xl">
+							Powerful Features for Modern Development
+						</h2>
+						<p className="mb-8 text-lg text-gray-600">
+							Streamline your development workflow with our intuitive tools and features designed for modern web development.
+						</p>
+						<div className="grid gap-6 sm:grid-cols-2">
+							<div className="flex gap-4 items-start">
+								<div className="flex-shrink-0">
+									<div className="flex justify-center items-center w-12 h-12 text-white bg-blue-600 rounded-lg">
+										<IconBolt className="w-6 h-6" />
+									</div>
+								</div>
+								<div>
+									<h3 className="mb-2 text-lg font-semibold text-gray-900">Lightning Fast</h3>
+									<p className="text-gray-600">Real-time updates and instant class previews for rapid development.</p>
+								</div>
+							</div>
+							<div className="flex gap-4 items-start">
+								<div className="flex-shrink-0">
+									<div className="flex justify-center items-center w-12 h-12 text-white bg-blue-600 rounded-lg">
+										<IconDeviceLaptop className="w-6 h-6" />
+									</div>
+								</div>
+								<div>
+									<h3 className="mb-2 text-lg font-semibold text-gray-900">Cross-Editor Support</h3>
+									<p className="text-gray-600">Works seamlessly with your favorite code editor.</p>
+								</div>
+							</div>
+							<div className="flex gap-4 items-start">
+								<div className="flex-shrink-0">
+									<div className="flex justify-center items-center w-12 h-12 text-white bg-blue-600 rounded-lg">
+										<IconEdit className="w-6 h-6" />
+									</div>
+								</div>
+								<div>
+									<h3 className="mb-2 text-lg font-semibold text-gray-900">Smart Editing</h3>
+									<p className="text-gray-600">Intelligent class suggestions and management tools.</p>
+								</div>
+							</div>
+							<div className="flex gap-4 items-start">
+								<div className="flex-shrink-0">
+									<div className="flex justify-center items-center w-12 h-12 text-white bg-blue-600 rounded-lg">
+										<IconPointer className="w-6 h-6" />
+									</div>
+								</div>
+								<div>
+									<h3 className="mb-2 text-lg font-semibold text-gray-900">Intuitive Interface</h3>
+									<p className="text-gray-600">DevTools-like experience for seamless workflow.</p>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div
-				className={
-					"relative col-span-full gap-4 py-12 container mx-auto px-4 sm:px-6 lg:px-8  grid grid-cols-full"
-				}
-			>
-				<div className="-top-14 absolute" id="process" />
-
-				<h2 className="col-span-12 col-start-2 pb-8 text-center font-bold font-heading text-4xl">
-					This is how it works
-				</h2>
-
-				<div
-					className={
-						"overflow-hidden rounded-md border border-gray-800 col-start-4 col-span-8 mb-16 col-start-3 col-span-10"
-					}
-				>
-					<Image
-						src="/home/how-to-use-popup.gif"
-						alt={""}
-						width={500}
-						height={500}
-						className="w-full"
-					/>
-				</div>
-				<div
-					className={
-						"col-span-full pb-4 text-center md:col-span-7 md:col-start-1 border-1 rounded-lg max-w-md px-4"
-					}
-				>
-					<IconPointer className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
-					<h3 className="font-heading font-medium text-xl">
-						Find the right element
-					</h3>
-					<p className="pb-2">
-						Press option or alt key and hover over the elements on your website
-						of choice.
-					</p>
-				</div>
-				<div className={"border-1 rounded-lg max-w-md col-span-full pb-8 text-center md:col-span-7"}>
-					<IconCursorText className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
-					<h3 className="font-heading font-medium text-xl">
-						Pick the right class
-					</h3>
-					<p className="pb-2">Test your TailwindCSS classes in record speed.</p>
-				</div>
-				<div
-					className={
-						"border-1 rounded-lg max-w-md col-span-full pb-8 text-center md:col-span-8 md:col-start-4"
-					}
-				>
-					<IconCode className="mb-2 box-content inline-block rounded-full border-8 border-blue-50 bg-blue-200 p-2 text-blue-500" />
-					<h3 className="mb-2 font-medium font-heading text-xl">
-						Find the matching code location
-					</h3>
-					<p className="pb-2 rotate-10">
-						Click one of the direct code links. And you&apos;ll see the exact
-						code location in your favorite editor.
-					</p>
+					<div className="hidden relative lg:block">
+						<Image
+							src="/quick-edits-tool.png"
+							alt="Quick Edits Tool Interface"
+							width={600}
+							height={400}
+							className="rounded-lg shadow-xl"
+						/>
+					</div>
 				</div>
 			</div>
 		</section>

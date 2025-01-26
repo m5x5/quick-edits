@@ -30,9 +30,9 @@ export default function NavigationBar() {
 
 	return (
 		<>
-			<header className="fixed top-0 bg-white z-20 w-full border-b">
+			<header className="fixed top-0 z-20 w-full bg-white shadow">
 				<div className={"container"}>
-					<div className="flex items-center justify-between mx-auto border-x px-4">
+					<div className="flex justify-between items-center px-4 mx-auto">
 						<div className="flex gap-5 items-center">
 							<Link href="/" aria-label={"Homepage öffnen"}>
 								<Logo />
@@ -41,7 +41,7 @@ export default function NavigationBar() {
 						<NavigationLinks />
 						<dialog
 							ref={ref}
-							className="inset-0 fixed z-10 w-full backdrop:cursor-pointer backdrop:opacity-0"
+							className="fixed inset-0 z-10 w-full backdrop:cursor-pointer backdrop:opacity-0"
 							onClick={closeDialog}
 							onClose={() => setOpen(false)}
 							onKeyDown={(e) => {
@@ -52,8 +52,7 @@ export default function NavigationBar() {
 						>
 							<div
 								className={`flex flex-col w-full top-14 fixed bg-gradient-light inset-0 navigation--mobile ${
-									open ? "active" : ""
-								}`}
+									open ? "active" : ""}`}
 							>
 								<MobileNavigationLinks />
 							</div>
@@ -61,7 +60,7 @@ export default function NavigationBar() {
 
 						<button
 							type="button"
-							className="menu cross hidden col-span-2 col-start-10"
+							className="hidden col-span-2 col-start-10 menu cross"
 							aria-label={open ? "Close Menu" : "Open Menu"}
 							aria-expanded={open}
 							aria-haspopup="true"
@@ -84,7 +83,7 @@ export default function NavigationBar() {
 					</div>
 				</div>
 			</header>
-			<div className="h-16 mb-14" />
+			<div className="mb-14 h-16" />
 		</>
 	);
 }

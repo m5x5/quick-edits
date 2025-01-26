@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @source "../../../browser-extension/src/core";
+@plugin "@tailwindcss/typography";;
 
 @theme {
     --color-black: #000;
@@ -9,8 +10,9 @@
     --color-dark-700: #222;
     --font-sans: "Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif";
     --font-heading: "Manrope", "-apple-system", "BlinkMacSystemFont", "sans-serif";
-    /* --container: center; */
-    /* --container-padding 2rem; */
+    --grid-template-columns-full: var(--columns);
+    --grid-template-columns-1-1: 1fr 2fr;
+    
 
     /* --container-screens: {
         DEFAULT: "100%",
@@ -21,8 +23,6 @@
 
     ;
     /* gridTemplateColumns: {
-				full: "var(--columns)",
-				"1-2": "1fr 2fr",
 			},
 			backgroundImage: {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -32,9 +32,12 @@
 					"linear-gradient(-180deg, black, rgba(0,0,0,0.9) 50%, transparent 100%)",
 				"gradient-light":
 					"linear-gradient(180deg, rgba(255,255,255,1), transparent 400%)",
-			},
-			colors: {
-		, */
+		}, */
+}
+
+@utility container {
+    margin-inline: auto;
+    padding-inline: 2rem;
 }
 
 @layer base {
@@ -81,11 +84,11 @@ body {
 }
 
 article h2 {
-    @apply text-2xl font-bold text-left pb-4;
+    @apply pb-4 text-2xl font-bold text-left;
 }
 
 article p {
-    @apply text-left text-gray-700 pb-6 lg:pb-12 leading-7 antialiased;
+    @apply pb-6 antialiased leading-7 text-left text-gray-700 lg:pb-12;
 }
 
 p {

@@ -6,7 +6,6 @@ import type { Metadata } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import PopupShowcase from "@/components/PopupShowcase";
 import InspectionShowCase from "@/components/InspectionShowCase";
 
 export const metadata: Metadata = {
@@ -27,18 +26,18 @@ export default function Home() {
 					}
 				/>
 			</Head>
-			<div className="relative z-10 flex min-h-screen flex-col">
+			<div className="flex relative z-10 flex-col min-h-screen">
 				<NavigationBar />
-				<main className="flex-1 container">
+				<main className="container flex-1">
 					<div className="mx-auto">
 						<section
-							className="w-full pb-12 lg:pb-32"
+							className="pb-12 w-full lg:pb-32"
 							aria-label="Hero Section"
 						>
 							<div className="grid w-full gap-6 lg:gap-12 xl:grid-cols-[1fr_600px]">
 								<div className="flex flex-col justify-center space-y-4">
 									<div className="space-y-2">
-										<h1 className="pb-5 font-heading font-semibold text-4xl tracking-tight sm:text-5xl xl:text-6xl/none text-balance">
+										<h1 className="pb-5 text-4xl font-semibold tracking-tight font-heading sm:text-5xl xl:text-6xl/none text-balance">
 											Find and edit your code with{" "}
 											<span className="text-blue-500">ease</span>.
 										</h1>
@@ -50,7 +49,7 @@ export default function Home() {
 									</div>
 									<div className="flex flex-col gap-2 min-[400px]:flex-row flex-wrap">
 										<Link
-											className="inline-flex h-10 items-center gap-2 justify-center rounded-full border-2 border-gray-900 px-5 text-sm font-medium text-gray-900 hover:text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+											className="inline-flex gap-2 justify-center items-center px-5 h-10 text-sm font-medium text-gray-900 rounded-full border-2 border-gray-900 shadow transition-colors hover:text-gray-50 hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
 											href="https://chromewebstore.google.com/detail/quick-edits/bfcjldhcnibiijidbbeddopkpljkahja"
 											target="_blank"
 											rel="noopener noreferrer"
@@ -58,7 +57,7 @@ export default function Home() {
 											Add Chrome Extension
 										</Link>
 										<Link
-											className="inline-flex h-10 items-center gap-2 justify-center rounded-full bg-blue-600 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-blue-800/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
+											className="inline-flex gap-2 justify-center items-center px-8 h-10 text-sm font-medium text-gray-50 bg-blue-600 rounded-full shadow transition-colors hover:bg-blue-800/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
 											href="/docs"
 										>
 											Get Started
@@ -79,16 +78,15 @@ export default function Home() {
 						</section>
 					</div>
 					<Technologies />
-					<PopupShowcase />
 					<InspectionShowCase />
-					<section className="w-full container mx-auto px-4 sm:px-6 lg:px-8">
-						<h2 className="pb-8 text-center font-bold font-heading text-4xl">
+					<section className="container px-4 mx-auto w-full sm:px-6 lg:px-8">
+						<h2 className="pb-8 text-4xl font-bold text-center font-heading">
 							Integrates with your favorite editor
 						</h2>
-						<p className="text-center pb-14">
+						<p className="pb-14 text-center">
 							Quick Edits currently supports VSCode, PHPStorm, Cursor and Zed.
 						</p>
-						<ul className="flex justify-center gap-8 pb-24">
+						<ul className="flex gap-8 justify-center pb-24">
 							<li>
 								<Image
 									src="/editors/vscode.png"
@@ -115,7 +113,7 @@ export default function Home() {
 							</li>
 						</ul>
 					</section>
-					<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="container px-4 mx-auto sm:px-6 lg:px-8">
 						<svg
 							aria-hidden="true"
 							xmlns="http://www.w3.org/2000/svg"
@@ -131,14 +129,14 @@ export default function Home() {
 							/>
 						</svg>
 						<section
-							className="w-full py-12 md:py-24 lg:py-32"
+							className="py-12 w-full md:py-24 lg:py-32"
 							id="contact"
 							aria-label="Contact Section"
 						>
-							<div className="container px-4 md:px-6 mx-auto">
-								<div className="flex flex-col items-center justify-center space-y-4 text-center">
+							<div className="container px-4 mx-auto md:px-6">
+								<div className="flex flex-col justify-center items-center space-y-4 text-center">
 									<div className="space-y-2">
-										<h2 className="text-3xl font-medium font-heading tracking-tight md:text-4xl/tight">
+										<h2 className="text-3xl font-medium tracking-tight font-heading md:text-4xl/tight">
 											Try it yourself
 										</h2>
 										<p className="max-w-[900px] text-gray-500 lg:text-base/relaxed">
@@ -147,7 +145,7 @@ export default function Home() {
 										</p>
 									</div>
 									<Link
-										className="inline-flex h-10 items-center gap-2 justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
+										className="inline-flex gap-2 justify-center items-center px-8 h-10 text-sm font-medium text-gray-50 bg-gray-900 rounded-md shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50"
 										href="/docs"
 										rel="noopener noreferrer"
 									>

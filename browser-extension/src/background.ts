@@ -8,7 +8,7 @@ polling();
 const nativeMessageController = new NativeMessageController();
 
 // add listener to receive message from content script
-chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "perform_search") {
     const data = request?.data as any;
     if (typeof data?.folder !== "string") {
@@ -67,6 +67,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   } else if (request.action === "reload_extension") {
     chrome.runtime.reload();
     sendResponse({ success: true });
+    return true;
   } else if (request.action === "save_changes") {
     const data = request?.data as any;
     if (

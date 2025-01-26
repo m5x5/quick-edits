@@ -152,7 +152,7 @@ export default function InspectPopupClassList({
 
 	return (
 		<div ref={popupRef} className="flex flex-col gap-2 relative z-[1000]">
-			<div className="flex flex-wrap gap-1 relative">
+			<div className="flex relative flex-wrap gap-1">
 				{(classes || "").split?.(" ").filter(Boolean).map((className) => (
 					<ClassItem
 						key={className}
@@ -179,7 +179,7 @@ export default function InspectPopupClassList({
 					/>
 				))}
 			</div>
-			<div className="flex flex-wrap gap-1 relative">
+			<div className="flex relative flex-wrap gap-1">
 				{(additionalClasses || "").split(" ").filter(Boolean).map((className) => (
 					<ClassItem
 						key={className}
@@ -227,9 +227,9 @@ const ClassItem = ({
 }) => {
 	console.log(elementClass);
 	return (
-		<div className="flex items-center gap-1 bg-[#202124] text-[#9ba0a5] px-2 py-1 rounded-sm text-[13px] font-mono relative group hover:bg-[#292a2d] border border-[#3c4043]">
+		<div className="flex items-center gap-1 bg-white dark:bg-[#202124] text-gray-500 dark:text-[#9ba0a5] px-2 py-1 rounded-sm text-[13px] font-mono relative group hover:bg-gray-100 dark:hover:bg-[#292a2d] border border-gray-200 dark:border-[#3c4043]">
 			<button
-				className="cursor-pointer relative hover:text-[#e8eaed] transition-colors"
+				className="cursor-pointer relative hover:text-[#e8eaed] transition-colors focus-visible:outline-offset-2 focus-visible:outline-2 focus-visible:outline-blue-400 focus-visible:rounded-sm"
 				tabIndex={0}
 				onClick={(e) => {
 					e.stopPropagation();
@@ -246,12 +246,12 @@ const ClassItem = ({
 				{elementClass}
 				{onVariantSelect && getSizeVariants(elementClass).length > 0 && (
 					<div
-						className={`absolute ${active ? 'block' : 'hidden'} top-full left-0 mt-1 bg-[#202124] border border-[#3c4043] rounded-sm py-1 max-h-48 overflow-y-auto min-w-[140px] shadow-lg z-50`}
+						className={`absolute ${active ? 'block' : 'hidden'} top-full left-0 mt-1 bg-white dark:bg-[#202124] border border-gray-200 dark:border-[#3c4043] rounded-sm py-1 max-h-48 overflow-y-auto min-w-[140px] shadow-lg z-50`}
 					>
 						{getSizeVariants(elementClass).map((variant) => (
 							<button
 								key={variant}
-								className="block w-full text-left px-3 py-1.5 hover:bg-[#292a2d] text-[#9ba0a5] hover:text-[#e8eaed] transition-colors font-mono text-[13px]"
+								className="block w-full text-left px-3 py-1.5 hover:bg-gray-100 dark:hover:bg-[#292a2d] text-gray-500 dark:text-[#9ba0a5] hover:text-gray-700 dark:hover:text-[#e8eaed] transition-colors font-mono text-[13px]"
 								onClick={(e) => {
 									e.preventDefault();
 									e.stopPropagation();
@@ -278,9 +278,9 @@ const ClassItem = ({
 					e.stopPropagation();
 					onDelete();
 				}}
-				className="text-[#9ba0a5] hover:text-[#f28b82] transition-colors relative z-10 opacity-100 group-hover:opacity-100"
+				className="text-[#9ba0a5] hover:text-[#f28b82] transition-colors relative z-10 opacity-100 group-hover:opacity-100  focus-visible:outline-offset-2 focus-visible:outline-2 focus-visible:outline-blue-400 focus-visible:rounded-sm"
 			>
-				<svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+				<svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
 					<path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
 				</svg>
 			</button>
