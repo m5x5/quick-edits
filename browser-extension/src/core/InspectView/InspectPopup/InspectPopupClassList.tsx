@@ -121,33 +121,47 @@ export default function InspectPopupClassList({
 		);
 	}, [additionalClasses, target, classes]);
 
-	const handleDeleteClass = (classToDelete: string) => {
-		const oldClasses = classes || "";
-		const updatedClasses = oldClasses
-			.split(" ")
-			.filter(c => c !== classToDelete)
-			.join(" ");
-		setClasses(updatedClasses);
-		target.classList.remove(classToDelete);
-		setUndoStack(prev => [...prev, { type: 'regular', old: oldClasses, new: updatedClasses }]);
-		// Ensure visual update with a single toggle
-		setShowSelectBox(false);
-		setTimeout(() => setShowSelectBox(true), 1000);
-	};
+  const handleDeleteClass = (classToDelete: string) => {
+    const oldClasses = classes || "";
+    const updatedClasses = oldClasses
+      .split(" ")
+      .filter(c => c !== classToDelete)
+      .join(" ");
+    setClasses(updatedClasses);
+    target.classList.remove(classToDelete);
+    setUndoStack(prev => [...prev, { type: 'regular', old: oldClasses, new: updatedClasses }]);
+    // Send message to DevTools panel
+    chrome.runtime.sendMessage({
+      type: "class_change",
+      element: target.tagName.toLowerCase(),
+      oldClasses,
+      newClasses: updatedClasses
+    });
+    // Ensure visual update with a single toggle
+    setShowSelectBox(false);
+    setTimeout(() => setShowSelectBox(true), 1000);
+  };
 
-	const handleDeleteAdditionalClass = (classToDelete: string) => {
-		const oldClasses = additionalClasses || "";
-		const updatedClasses = oldClasses
-			.split(" ")
-			.filter(c => c !== classToDelete)
-			.join(" ");
-		setAdditionalClasses(updatedClasses);
-		target.classList.remove(classToDelete);
-		setUndoStack(prev => [...prev, { type: 'additional', old: oldClasses, new: updatedClasses }]);
-		// Ensure visual update with a single toggle
-		setShowSelectBox(false);
-		setTimeout(() => setShowSelectBox(true), 1000);
-	};
+  const handleDeleteAdditionalClass = (classToDelete: string) => {
+    const oldClasses = additionalClasses || "";
+    const updatedClasses = oldClasses
+      .split(" ")
+      .filter(c => c !== classToDelete)
+      .join(" ");
+    setAdditionalClasses(updatedClasses);
+    target.classList.remove(classToDelete);
+    setUndoStack(prev => [...prev, { type: 'additional', old: oldClasses, new: updatedClasses }]);
+    // Send message to DevTools panel
+    chrome.runtime.sendMessage({
+      type: "class_change",
+      element: target.tagName.toLowerCase(),
+      oldClasses,
+      newClasses: updatedClasses
+    });
+    // Ensure visual update with a single toggle
+    setShowSelectBox(false);
+    setTimeout(() => setShowSelectBox(true), 1000);
+  };
 
 
 	return (

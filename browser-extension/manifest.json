@@ -4,6 +4,7 @@
 	"name": "Quick Edits",
 	"description": "Quickly edit websites and find the locations in code.",
 	"version": "0.0.0",
+	"devtools_page": "devtools.html",
 	"options_ui": {
 		"page": "options.html"
 	},
