@@ -3,6 +3,7 @@ import { performSearch } from "../../../content_script/performSearch";
 import useMapping from "../hooks/useMapping";
 import type { NativeResponse } from "../../../background/NativeMessageController";
 import { saveChanges } from "../../../content_script/utils";
+import Button from "../../Button";
 
 type Match = {
   path: string;
@@ -32,7 +33,6 @@ export default function InspectPopupResults({
       textContent: target.textContent || "",
       browserUrl: window.location.href,
     }).then((results) => {
-      console.log("results", results);
       if (signal.aborted) {
         return;
       }
@@ -64,7 +64,7 @@ export default function InspectPopupResults({
           <div key={result.path + result.charNumber + result.lineNumber}>
             <button
               type="button"
-              className={`text-[#666] cursor-pointer hover:text-[#000] block hover:bg-gray-100 text-left  ${result.isDirectMatch ? "border-l-4 border-2 border-yellow-300" : ""}`}
+              className={`text-[#e8eaed] cursor-pointer hover:bg-[#292a2d] block hover:bg-[#3c4043] text-left px-4 py-3 rounded-md transition-colors duration-200 ${result.isDirectMatch ? "border-l-4 border-[#8ab4f8] bg-[#1a73e8]/10" : ""}`}
               aria-keyshortcuts={
                 !props.astroResult && i === 0 ? "meta+enter" : undefined
               }
@@ -82,19 +82,17 @@ export default function InspectPopupResults({
                     },
                   },
                   (response: NativeResponse<"open_editor">) => {
-                    console.log("response", response);
+                    console.debug("response", response);
                   },
                 );
               }}
             >
               {`${result.shortenedPath}:${result.lineNumber}:${result.charNumber}`}
             </button>
-            <button
+            <Button
               type="button"
               disabled={props.additionalClasses === ""}
-              className={`bg-blue-600 px-1 rounded-sm text-white hover:bg-blue-700 disabled:bg-gray-500`}
               onClick={() => {
-                console.log(props.classes, props.additionalClasses);
                 saveChanges({
                   originalContent: props.classes,
                   newContent: `${props.classes} ${props.additionalClasses}`,
@@ -102,12 +100,10 @@ export default function InspectPopupResults({
                   lineNumber: result.lineNumber,
                   path: result.path,
                 });
-
-                alert("Save button clicked");
               }}
             >
               Save
-            </button>
+            </Button>
           </div>
         </>
       ))}

@@ -5,11 +5,17 @@ import webExtension from "vite-plugin-web-extension";
 import packageJSON from "./package.json";
 
 export default defineConfig({
+  optimizeDeps: {
+    exclude: ["@tanstack/react-query"]
+  },
   server: {
     hmr: false,
   },
   build: {
     sourcemap: "inline",
+    commonjsOptions: {
+      include: [/node_modules/], // Ensures CommonJS modules are bundled correctly
+    },
   },
   plugins: [
     tailwindcss(),

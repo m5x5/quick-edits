@@ -9,10 +9,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	editor_manager "quick_edits.com/native-search/editor"
 	"quick_edits.com/native-search/open_editor"
 	"quick_edits.com/native-search/save_changes"
 	"quick_edits.com/native-search/search"
-	"quick_edits.com/native-search/setup"
+	native_messaging_setup "quick_edits.com/native-search/setup"
 	"quick_edits.com/native-search/types"
 )
 
@@ -26,12 +27,24 @@ func main() {
 	// Handle command line arguments
 	args := os.Args
 	if len(args) > 1 {
-		origin := args[1]
-		if origin == "setup" {
+		switch args[1] {
+		case "setup":
 			native_messaging_setup.SetupNativeMessaging()
 			return
-		} else {
-			fmt.Fprintln(os.Stderr, "Origin:", origin)
+		case "register-editor":
+			if len(args) != 4 {
+				fmt.Fprintln(os.Stderr, "Usage: native-search register-editor <editor-name> <editor-path>")
+				os.Exit(1)
+			}
+			err := editor_manager.ValidateAndRegisterEditor(args[2], args[3])
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Error registering editor:", err)
+				os.Exit(1)
+			}
+			fmt.Println("Editor registered successfully")
+			return
+		default:
+			fmt.Fprintln(os.Stderr, "Origin:", args[1])
 		}
 	}
 	if len(args) > 2 && strings.HasPrefix(args[2], "--parent-window=") {
@@ -97,7 +110,7 @@ func main() {
 			response = save_changes.SaveChanges(message)
 		} else {
 			match := search.Match{Path: message.Data.Path, LineNumber: message.Data.LineNumber, CharNumber: message.Data.CharNumber}
-			response = open_editor.OpenEditor(match, message.Data.Editor)
+			response = open_editor.OpenEditor(match, message.Data.Editor, message.Data.EditorPath)
 		}
 
 		response.ID = message.ID

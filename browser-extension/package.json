@@ -8,7 +8,8 @@
 		"dev": "NODE_ENV=production WATCH=true vite build --watch",
 		"build": "NODE_ENV=production vite build && node ./scripts/zip.js",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"test": "vitest"
 	},
 	"author": "m5x5",
 	"license": "MIT",
@@ -21,10 +22,10 @@
 		"@storybook/addon-essentials": "^8.2.9",
 		"@tailwindcss/vite": "^4.0.0-alpha.15",
 		"@tanstack/react-query": "^5.52.1",
-		"debug": "^4.3.4",
-		"keyux": "^0.9.0",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
+		"debug": "^4.4.0",
+		"keyux": "^0.10.0",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
 		"tailwind-merge": "^2.5.2",
 		"use-debounce": "^10.0.1",
 		"zod": "^3.22.4"
@@ -35,15 +36,18 @@
 		"@storybook/react": "^8.1.10",
 		"@storybook/react-vite": "^8.1.10",
 		"@storybook/test": "^8.1.10",
-		"@types/chrome": "^0.0.279",
+		"@testing-library/react": "^16.2.0",
+		"@types/chrome": "^0.0.289",
 		"@types/debug": "^4.1.12",
-		"@types/react": "^18.0.29",
-		"@types/react-dom": "^18.0.11",
+		"@types/react": "^19.0.2",
+		"@types/react-dom": "^19.0.2",
 		"archiver": "^7.0.1",
+		"jsdom": "^26.0.0",
 		"storybook": "^8.1.10",
 		"tailwindcss": "^4.0.0-beta.8",
 		"typescript": "^5.5.4",
 		"vite": "^6.0.7",
-		"vite-plugin-web-extension": "^4.4.3"
+		"vite-plugin-web-extension": "^4.4.3",
+		"vitest": "^3.0.4"
 	}
 }

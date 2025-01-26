@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { compile } from "tailwindcss";
-import defaultTheme from "tailwindcss/theme.css?inline";
+import defaultTheme from "./theme.css?inline";
 import { useDebounce } from "use-debounce";
+import Input from "../../Input";
 
 const css = `${defaultTheme} @tailwind base;@tailwind components;@tailwind utilities;`;
 const compiled = compile(css);
@@ -45,8 +46,8 @@ export default function InspectPopupClassListInput({
 	const copy = () => navigator.clipboard.writeText(debouncedInput);
 
 	return (
-		<div className={"flex gap-1 py-1"}>
-			<input
+		<div className={"flex gap-2 py-1"}>
+			<Input
 				ref={ref}
 				onChange={(e) => setInput(e.target.value)}
 				onClick={(e) => {
@@ -55,14 +56,14 @@ export default function InspectPopupClassListInput({
 				}}
 				onKeyDown={(e) => e.stopPropagation()}
 				className={
-					"border rounded-[2px] border-solid border-gray-400 placeholder:font-normal placeholder:text-gray-400 px-1"
+					"w-full bg-white dark:bg-[#202124] border border-gray-200 dark:border-[#3c4043] rounded-md text-gray-700 dark:text-[#e8eaed] placeholder:text-gray-400 dark:placeholder:text-[#9ba0a5] px-3 py-1.5 text-[13px] font-mono focus:outline-none focus:ring-1 focus:ring-blue-400 dark:focus:ring-[#8ab4f8] focus:border-blue-400 dark:focus:border-[#8ab4f8] shadow-sm transition-all duration-200"
 				}
 				placeholder="Add classes"
 			/>
 			<button
 				onMouseDown={copy}
 				type={"button"}
-				className={"inline"}
+				className={"inline text-gray-400 hover:text-gray-600 dark:text-[#9ba0a5] dark:hover:text-[#e8eaed] transition-colors"}
 				onClick={(e) => {
 					e.preventDefault();
 					e.stopPropagation();

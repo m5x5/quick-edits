@@ -3,11 +3,13 @@ package open_editor
 import (
 	"fmt"
 	"os/exec"
+
+	editor_manager "quick_edits.com/native-search/editor"
 	"quick_edits.com/native-search/search"
 	"quick_edits.com/native-search/types"
 )
 
-func OpenEditor(match search.Match, editor string) types.Response {
+func OpenEditor(match search.Match, editor string, editorPath string) types.Response {
 	if len(match.Path) == 0 {
 		return types.Response{
 			Message: "Path is empty.",
@@ -17,17 +19,7 @@ func OpenEditor(match search.Match, editor string) types.Response {
 
 	err := error(nil)
 
-	if editor == "phpstorm" {
-		err = launchPHPStorm(match)
-	} else if editor == "zed" {
-		err = launchZed(match)
-	} else if editor == "vscode" {
-		err = launchVSCode(match)
-	} else if editor == "cursor" {
-		err = launchCursor(match)
-	} else {
-		err = fmt.Errorf("Editor not supported: " + editor)
-	}
+	launchEditor(match, editor)
 
 	if err != nil {
 		return types.Response{
@@ -42,34 +34,15 @@ func OpenEditor(match search.Match, editor string) types.Response {
 	}
 }
 
-func launchPHPStorm(match search.Match) error {
-	return exec.Command(
-		"/usr/local/bin/phpstorm",
-		"--line", fmt.Sprintf("%d", match.LineNumber),
-		"--column",
-		fmt.Sprintf("%d", match.CharNumber-1),
-		match.Path,
-	).Run()
-}
+func launchEditor(match search.Match, editor string) error {
+	path, err := editor_manager.GetEditorPath(editor)
 
-func launchVSCode(match search.Match) error {
-	return exec.Command(
-		"/usr/local/bin/code",
-		"-g",
-		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
-	).Run()
-}
+	if err != nil {
+		return err
+	}
 
-func launchZed(match search.Match) error {
 	return exec.Command(
-		"/usr/local/bin/zed",
-		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
-	).Run()
-}
-
-func launchCursor(match search.Match) error {
-	return exec.Command(
-		"/usr/local/bin/cursor",
+		path,
 		"-g",
 		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
 		"-r",

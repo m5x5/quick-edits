@@ -10,6 +10,7 @@ interface OpenEditorData {
   lineNumber: number;
   charNumber: number;
   editor: "vscode" | "phpstorm" | "zed" | "cursor";
+  editorPath?: string;
 }
 
 export interface SaveChangesData {
@@ -69,7 +70,7 @@ export default class NativeMessageController {
     });
 
     this.port.onDisconnect.addListener(() => {
-      console.log("Disconnected");
+      console.debug("QuickEdits Extension: Disconnected");
     });
   }
 
