@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import Section, { SectionBody } from "../core/Section";
 import "../popup.css";
-import styles from "../../../dist/popup.css?inline";
 
 interface ClassChange {
   element: string;
