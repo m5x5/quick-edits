@@ -10,7 +10,7 @@ func SetupNativeMessaging() error {
 	fmt.Sprintln("Starting setup of native-search.")
 	println("During the setup we connect your Chrome Browser to this module so we can search the projects you configure.")
 
-	extensionId := "bfcjldhcnibiijidbbeddopkpljkahja"
+	extensionId := "mkgggehjablaljefihlkcleikcoinimk"
 	if len(os.Args) > 2 {
 		extensionId = os.Args[2]
 	}

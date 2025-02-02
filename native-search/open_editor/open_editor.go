@@ -17,11 +17,7 @@ func OpenEditor(match search.Match, editor string, editorPath string) types.Resp
 		}
 	}
 
-	err := error(nil)
-
-	launchEditor(match, editor)
-
-	if err != nil {
+	if err := launchEditor(match, editor); err != nil {
 		return types.Response{
 			Message: err.Error(),
 			Success: false,

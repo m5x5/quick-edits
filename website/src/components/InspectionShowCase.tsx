@@ -1,8 +1,8 @@
 "use client";
-import InspectPopup from "../browser-extension/core/InspectView/InspectPopup";
-import InspectPopupClassList from "../browser-extension/core/InspectView/InspectPopup/InspectPopupClassList";
-import InspectPopupAstroSection from "../browser-extension/core/InspectView/InspectPopup/InspectPopupAstroSection";
 import { useEffect, useRef, useState } from "react";
+import InspectPopup from "../browser-extension/core/InspectView/InspectPopup";
+import InspectPopupAstroSection from "../browser-extension/core/InspectView/InspectPopup/InspectPopupAstroSection";
+import InspectPopupClassList from "../browser-extension/core/InspectView/InspectPopup/InspectPopupClassList";
 
 export default function InspectionShowCase() {
   const ref = useRef<HTMLDivElement>(null);
@@ -11,7 +11,7 @@ export default function InspectionShowCase() {
 
   useEffect(() => {
     if (!ref.current) return;
-    
+
     // Update classes whenever ref is available or classes change
     const newClasses = `relative p-6 bg-white rounded-xl border-2 border-blue-300 border-dashed shadow-lg transition-all duration-200 hover:border-blue-400 hover:shadow-xl ${classes} ${additionalClasses}`;
     ref.current.className = newClasses;
@@ -25,7 +25,7 @@ export default function InspectionShowCase() {
           <h2 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Try it yourself</h2>
           <p className="text-lg text-gray-600">Experience the power of our intuitive class management interface</p>
         </div>
-        <div className="grid gap-16 items-center lg:grid-cols-2">
+        <div className="grid gap-4 items-center xl:gap-16 lg:grid-cols-2">
           <section className="space-y-8">
             <div className="space-y-6">
               <h3 className="text-2xl font-semibold text-gray-900">DevTools-like Interface</h3>
@@ -71,7 +71,7 @@ export default function InspectionShowCase() {
             </div>
           </section>
           <div className="relative space-y-8">
-            <div className="relative flex justify-center items-center min-h-[300px] bg-gray-50/50 rounded-xl p-8">
+            <div className="relative flex justify-center items-center min-h-[300px] bg-gray-50/50 rounded-xl p-8 pr-0">
               <div ref={ref}>
                 <p>Test</p>
               </div>
@@ -84,7 +84,7 @@ export default function InspectionShowCase() {
                     setClasses={setClasses}
                     additionalClasses={additionalClasses}
                     setAdditionalClasses={setAdditionalClasses}
-                    setShowSelectBox={() => {}}
+                    setShowSelectBox={() => { }}
                   />
                   <InspectPopupAstroSection target={ref.current} />
                 </InspectPopup>

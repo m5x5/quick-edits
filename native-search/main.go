@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -64,10 +65,17 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
+		fmt.Fprintln(os.Stderr, "Reading")
 		// Read the length of the incoming message
 		var length uint32
 		err := binary.Read(reader, binary.LittleEndian, &length)
 		if err != nil {
+			if err == io.EOF {
+				// Parent process has closed the pipe, exit gracefully
+				fmt.Fprintln(os.Stderr, "Exiting")
+				log.Log("Parent process closed connection, exiting...")
+				return
+			}
 			fmt.Fprintln(os.Stderr, "Error reading length:", err)
 			continue
 		}
@@ -75,17 +83,22 @@ func main() {
 		// Ensure the message length does not exceed 1MB
 		if length > 1024*1024 {
 			fmt.Fprintln(os.Stderr, "Message length exceeds limits")
-			// Print it
-			messageBytes := make([]byte, length)
-			_, err = reader.Read(messageBytes)
-			fmt.Fprintln(os.Stderr, string(messageBytes))
+			log.Log("Error: Message length exceeds limits")
+			// Discard the oversized message
+			io.CopyN(io.Discard, reader, int64(length))
+			continue
 		}
 
+		fmt.Fprintln(os.Stderr, "Here")
 		// Read the message itself
 		messageBytes := make([]byte, length)
-		_, err = reader.Read(messageBytes)
+		n, err := io.ReadFull(reader, messageBytes)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error reading message:", err)
+			continue
+		}
+		if uint32(n) != length {
+			fmt.Fprintln(os.Stderr, "Incomplete message read")
 			continue
 		}
 

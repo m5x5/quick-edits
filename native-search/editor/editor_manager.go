@@ -54,12 +54,22 @@ func ValidateAndRegisterEditor(name, path string) error {
 func GetEditorPath(name string) (string, error) {
 	configs, err := loadEditorConfigs()
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("Unable to load editor configurations: %v", err)
 	}
+
+	if len(configs) == 0 {
+		return "", fmt.Errorf("No editors are configured. To set up an editor, please run:\n'native-search register-editor <editor-name> <editor-path>'")
+	}
+
 	config, exists := configs[name]
 	if !exists {
-		return "", fmt.Errorf("editor %s not found", name)
+		names := make([]string, 0, len(configs))
+		for editorName := range configs {
+			names = append(names, editorName)
+		}
+		return "", fmt.Errorf("Editor '%s' is not configured. Available editors: %v\nTo configure a new editor, use:\n'native-search register-editor <editor-name> <editor-path>'", name, names)
 	}
+
 	return config.Path, nil
 }
 

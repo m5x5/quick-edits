@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import Section, { SectionBody } from "../core/Section";
+import Section from "../core/Section";
 import "../popup.css";
 
 interface ClassChange {
@@ -22,7 +22,7 @@ const DevToolsPanel = () => {
           newClasses: message.newClasses.trim(),
           timestamp: Date.now()
         };
-        
+
         // Only add the change if classes are actually different
         if (newChange.oldClasses !== newChange.newClasses) {
           setChanges(prev => [newChange, ...prev]);
@@ -39,15 +39,15 @@ const DevToolsPanel = () => {
   const getClassChanges = (oldClasses: string, newClasses: string) => {
     const oldClassArray = oldClasses.split(' ').filter(Boolean);
     const newClassArray = newClasses.split(' ').filter(Boolean);
-    
+
     const removed = oldClassArray.filter(c => !newClassArray.includes(c));
     const added = newClassArray.filter(c => !oldClassArray.includes(c));
-    
+
     // Only consider as swapped if the number of additions equals removals
     const swapped = added.length === removed.length && added.length > 0
       ? added.map((newClass, i) => ({ from: removed[i], to: newClass }))
       : [];
-    
+
     return { removed, added, swapped };
   };
 
