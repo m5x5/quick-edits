@@ -75,7 +75,6 @@ export default function useSelectedTarget() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log('Handle Key Down', { e })
       const noOtherKeyPressed = !e.ctrlKey && !e.shiftKey && !e.metaKey;
 
       // Handle Alt key for target selection activation

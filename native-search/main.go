@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	editor_manager "quick_edits.com/native-search/editor"
 	"quick_edits.com/native-search/open_editor"
@@ -17,6 +18,77 @@ import (
 	native_messaging_setup "quick_edits.com/native-search/setup"
 	"quick_edits.com/native-search/types"
 )
+
+const maxLogSize = 10 * 1024 // 10KB
+
+type Log struct {
+	File     *os.File
+	FilePath string
+}
+
+func (log Log) Log(message string) {
+	// Check file size before writing
+	fileInfo, err := log.File.Stat()
+	if err == nil && fileInfo.Size() > maxLogSize {
+		// Close the current file
+		log.File.Close()
+
+		// Reopen the file with truncate flag to clear it
+		file, err := os.OpenFile(log.FilePath, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			return
+		}
+		log.File = file
+
+		// Write a message indicating the log was truncated
+		timestamp := time.Now().Format("2006-01-02 15:04:05")
+		log.File.WriteString(fmt.Sprintf("[%s] Log file truncated as it exceeded 10KB\n", timestamp))
+	}
+
+	timestamp := time.Now().Format("2006-01-02 15:04:05")
+	_, err = log.File.WriteString(fmt.Sprintf("[%s] %s\n", timestamp, message))
+	if err != nil {
+		return
+	}
+	err = log.File.Sync()
+	if err != nil {
+		return
+	} // Flush changes to disk
+}
+
+func (log Log) Close() {
+	err := log.File.Close()
+	if err != nil {
+		return
+	}
+}
+
+func NewLog(filePath string) (*Log, error) {
+	// Create the file if it doesn't exist
+	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return nil, err
+	}
+
+	// Check if file size already exceeds limit
+	fileInfo, err := file.Stat()
+	if err == nil && fileInfo.Size() > maxLogSize {
+		// Close the file
+		file.Close()
+
+		// Reopen with truncate flag
+		file, err = os.OpenFile(filePath, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			return nil, err
+		}
+
+		// Write a message indicating the log was truncated
+		timestamp := time.Now().Format("2006-01-02 15:04:05")
+		file.WriteString(fmt.Sprintf("[%s] Log file truncated as it exceeded 10KB\n", timestamp))
+	}
+
+	return &Log{File: file, FilePath: filePath}, nil
+}
 
 func main() {
 	executable, err := os.Executable()
@@ -65,58 +137,48 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
-		fmt.Fprintln(os.Stderr, "Reading")
 		// Read the length of the incoming message
 		var length uint32
 		err := binary.Read(reader, binary.LittleEndian, &length)
 		if err != nil {
 			if err == io.EOF {
 				// Parent process has closed the pipe, exit gracefully
-				fmt.Fprintln(os.Stderr, "Exiting")
 				log.Log("Parent process closed connection, exiting...")
 				return
 			}
-			fmt.Fprintln(os.Stderr, "Error reading length:", err)
 			continue
 		}
 
 		// Ensure the message length does not exceed 1MB
 		if length > 1024*1024 {
-			fmt.Fprintln(os.Stderr, "Message length exceeds limits")
 			log.Log("Error: Message length exceeds limits")
 			// Discard the oversized message
 			io.CopyN(io.Discard, reader, int64(length))
 			continue
 		}
 
-		fmt.Fprintln(os.Stderr, "Here")
 		// Read the message itself
 		messageBytes := make([]byte, length)
 		n, err := io.ReadFull(reader, messageBytes)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error reading message:", err)
 			continue
 		}
 		if uint32(n) != length {
-			fmt.Fprintln(os.Stderr, "Incomplete message read")
 			continue
 		}
 
 		var message types.Message
 		err = json.Unmarshal(messageBytes, &message)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error unmarshalling message:", err)
 			continue
 		}
 
 		var response types.Response
 		log.Log("Action: " + message.Action)
-		log.Log("Data.Folder: " + message.Data.Folder)
-		log.Log("Data.Classes: " + message.Data.Classes)
-		log.Log("Data.TextContent: " + message.Data.TextContent)
-		log.Log("Data.BrowserURL: " + message.Data.BrowserURL)
-		log.Log("Data.CharNumber: " + fmt.Sprint(message.Data.CharNumber))
-		log.Log("Data.Path: " + fmt.Sprint(message.Data.Path))
+
+		// Only log essential information, not the full content
+		log.Log("Request ID: " + message.ID)
+
 		if message.Action == "perform_search" {
 			response = search.PerformSearch(message)
 		} else if message.Action == "save_changes" {
@@ -131,7 +193,6 @@ func main() {
 		// Marshal the response into JSON
 		responseBytes, err := json.Marshal(response)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error marshalling response:", err)
 			continue
 		}
 
@@ -139,20 +200,16 @@ func main() {
 		length = uint32(len(responseBytes))
 		err = binary.Write(os.Stdout, binary.LittleEndian, length)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error writing response length:", err)
 			continue
 		}
 
 		// Write the response
 		_, err = os.Stdout.Write(responseBytes)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error writing response:", err)
+			continue
 		}
 
-		// Write the received message to the file
-		log.Log(string(messageBytes) + "\n")
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error writing received message to file:", err)
-		}
+		// Log response status but not the full content
+		log.Log("Response: " + (map[bool]string{true: "Success", false: "Failure"})[response.Success])
 	}
 }

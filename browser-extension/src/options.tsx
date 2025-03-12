@@ -111,7 +111,7 @@ const Options = () => {
   });
 
   return (
-    <div className="quick-edits flex flex-col pb-4 font-sans text-white min-w-[500px] min-h-full">
+    <div className="quick-edits flex flex-col pb-4 dark:bg-[#292929] bg-white font-sans dark:text-white text-black min-w-[500px] min-h-full">
       <Section>Display Settings</Section>
       <SectionBody>
         <div className="flex gap-2 items-center">

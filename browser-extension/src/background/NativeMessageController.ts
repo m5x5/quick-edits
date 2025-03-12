@@ -3,6 +3,7 @@ export interface PerformSearchData {
   classes: string;
   textContent: string;
   browserUrl: string;
+  excludedDirectories?: string[];
 }
 
 interface OpenEditorData {

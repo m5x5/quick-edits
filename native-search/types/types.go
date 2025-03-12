@@ -9,10 +9,11 @@ type OpenEditorData struct {
 }
 
 type PerformSearchData struct {
-	BrowserURL  string `json:"browserURL"`
-	Folder      string `json:"folder"`
-	Classes     string `json:"classes"`
-	TextContent string `json:"textContent"`
+	BrowserURL          string   `json:"browserURL"`
+	Folder              string   `json:"folder"`
+	Classes             string   `json:"classes"`
+	TextContent         string   `json:"textContent"`
+	ExcludedDirectories []string `json:"excludedDirectories"`
 }
 
 type SaveChangesData struct {

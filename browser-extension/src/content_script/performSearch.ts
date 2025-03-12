@@ -24,6 +24,9 @@ export const performSearch = async (
     searchData.textContent = searchData.textContent.substring(0, 499)
   }
 
+  // Get excluded directories from storage
+  const { excludedDirectories = [] } = await chrome.storage.local.get(["excludedDirectories"]);
+
   return new Promise((resolve) => {
     console.log('QuickEdits Extension: Sending search request to background script');
     chrome.runtime.sendMessage(
@@ -34,6 +37,7 @@ export const performSearch = async (
           classes: searchData.classes,
           textContent: searchData.textContent,
           browserUrl: searchData.browserUrl,
+          excludedDirectories,
         },
       },
       (response: NativeResponse<"perform_search">) => {

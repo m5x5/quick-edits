@@ -19,7 +19,15 @@ type Match struct {
 }
 
 func PerformSearch(message types.Message) types.Response {
-	fmt.Fprintln(os.Stderr, "Quick Edits: Performing search...")
+	// Set custom excluded directories if provided
+	if message.Data.ExcludedDirectories != nil {
+		fmt.Fprintf(os.Stderr, "Setting custom excluded directories: %v\n", message.Data.ExcludedDirectories)
+		SetCustomExcludedDirectories(message.Data.ExcludedDirectories)
+	} else {
+		// Reset to empty if not provided
+		SetCustomExcludedDirectories([]string{})
+	}
+
 	search, err := Search(message)
 
 	if err != nil {
@@ -49,7 +57,6 @@ func Search(message types.Message) ([]Match, error) {
 
 	err := filepath.WalkDir(message.Data.Folder, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "Error accessing path:", err)
 			return err
 		}
 
@@ -59,6 +66,7 @@ func Search(message types.Message) ([]Match, error) {
 
 		if IsDirectoryExcluded(path) {
 			if d.IsDir() {
+				fmt.Fprintf(os.Stderr, "Skipping excluded directory: %s\n", path)
 				return filepath.SkipDir
 			}
 			return nil
@@ -84,9 +92,7 @@ func Search(message types.Message) ([]Match, error) {
 					continue
 				}
 				directMatch := WithContext(fileContent, lineNumber, message.Data.Classes, message.Data.TextContent)
-				if directMatch {
-					fmt.Fprintln(os.Stderr, "Quick Edits: Direct match found")
-				}
+
 				match := Match{
 					Path:        path,
 					LineNumber:  lineNumber + 1,
@@ -101,7 +107,6 @@ func Search(message types.Message) ([]Match, error) {
 	})
 
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
 		return nil, err
 	}
 
