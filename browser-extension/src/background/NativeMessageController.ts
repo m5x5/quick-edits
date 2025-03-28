@@ -35,31 +35,66 @@ export type ActionData<T extends ActionType> = T extends "perform_search"
 export type NativeResponse<T extends ActionType> = {
   success: boolean;
   message: string;
-} & T extends "perform_search"
-  ? { data: { path: string; lineNumber: number; charNumber: number, isDirectMatch: boolean }[] }
-  : T extends "open_editor"
-  ? object
-  : T extends "save_changes"
-  ? object
-  : never;
+  data?: T extends "perform_search"
+    ? {
+        path: string;
+        lineNumber: number;
+        charNumber: number;
+        isDirectMatch: boolean;
+      }[]
+    : T extends "open_editor"
+    ? object
+    : T extends "save_changes"
+    ? object
+    : never;
+};
 
 export default class NativeMessageController {
-  port: chrome.runtime.Port = chrome.runtime.connectNative(
-    "com.quick_edits.native_search"
-  );
+  port: chrome.runtime.Port | null = null;
   promises: Map<string, (msg: NativeResponse<ActionType>) => void> = new Map();
+  private connectionError: Error | null = null;
 
   constructor() {
+    this.initializePort();
+  }
+
+  private initializePort() {
+    try {
+      this.port = chrome.runtime.connectNative("com.quick_edits.native_search");
+      this.setupPortListeners();
+    } catch (error) {
+      this.handleConnectionError(error);
+    }
+  }
+
+  private handleConnectionError(error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    this.connectionError = new Error(errorMessage);
+    console.error(
+      "QuickEdits Extension: Failed to connect to native messaging host:",
+      error
+    );
+
+    // Let the background script handle the error message
+    chrome.runtime.sendMessage({
+      type: "native_host_error",
+      message:
+        "Access to the native messaging host is forbidden. Please check your native messaging host configuration.",
+    });
+  }
+
+  private setupPortListeners() {
+    if (!this.port) return;
+
     this.port.onMessage.addListener((msg) => {
       this.promises.get(msg.id)?.(msg);
-      // this.promises.values().next().value?.(msg);
       // get active tab id
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        const tabId = tabs[0].id;
-
+        const tabId = tabs[0]?.id;
         if (tabId === undefined) return;
         try {
-          chrome.tabs.sendMessage(tabId || 0, {
+          chrome.tabs.sendMessage(tabId, {
             data: msg.data,
             message: msg.message,
             success: msg.success,
@@ -72,6 +107,9 @@ export default class NativeMessageController {
 
     this.port.onDisconnect.addListener(() => {
       console.debug("QuickEdits Extension: Disconnected");
+      this.handleConnectionError(
+        new Error("Native messaging host disconnected")
+      );
     });
   }
 
@@ -80,6 +118,20 @@ export default class NativeMessageController {
   }
 
   exec<T extends ActionType>(action: T, data: ActionData<T>) {
+    if (this.connectionError) {
+      return Promise.resolve({
+        success: false,
+        message: this.connectionError.message,
+      } as NativeResponse<T>);
+    }
+
+    if (!this.port) {
+      return Promise.resolve({
+        success: false,
+        message: "Native messaging host is not connected",
+      } as NativeResponse<T>);
+    }
+
     const id = this.generateMessageId();
     this.port.postMessage({ id, action, data });
 
