@@ -141,7 +141,7 @@ func Search(message types.Message) ([]types.Match, error) {
 
 	err := filepath.WalkDir(message.Data.Folder, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to WalkDir: %w", err)
 		}
 
 		if len(matches) >= 15 {
@@ -280,7 +280,11 @@ func SearchLine(line string, message types.Message) int {
 func fileContainsKeyword(path, keyword string, textContent string) (string, error) {
 	fileInfo, err := os.Stat(path)
 	if err != nil {
-		return "", err
+		// We ignore errors here because it's not a big deal if we can't read a file
+		// Last time it happened, it was a symlink, and we don't need to read
+		// We'll need to change this handling if we want to support symlinks
+		// Maybe via a "Follow Symlinks" setting?
+		return "", nil
 	}
 	if fileInfo.IsDir() {
 		return "", nil
