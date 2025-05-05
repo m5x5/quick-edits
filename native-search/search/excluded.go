@@ -14,7 +14,7 @@ func SetCustomExcludedDirectories(dirs []string) {
 
 func IsDirectoryExcluded(directory string) bool {
 	// Default excluded directories
-	defaultExcludedList := []string{".git", ".next", ".vercel", "node_modules", "vendor", "cache", "fileadmin", "lock", "log", "var", ".idea", ".DS_Store", "dist", "package.json", "package-lock.json"}
+	defaultExcludedList := []string{".git", ".next", ".vercel", "node_modules", "vendor", "cache", "fileadmin", "lock", "log", "var", ".idea", ".DS_Store", "dist", "package.json", "package-lock.json", ".cursor", ".vscode", "docker-webhook", "e2e-tests", "fixtures"}
 
 	// Check custom excluded directories first
 	for _, ignore := range customExcludedDirectories {

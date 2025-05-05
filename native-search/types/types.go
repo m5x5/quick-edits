@@ -1,5 +1,17 @@
 package types
 
+import (
+	"quick_edits.com/native-search/logging"
+)
+
+type Match struct {
+	Path        string `json:"path"`
+	LineNumber  int    `json:"lineNumber"`
+	CharNumber  int    `json:"charNumber"`
+	Type        string `json:"type"`
+	DirectMatch bool   `json:"isDirectMatch"`
+}
+
 type OpenEditorData struct {
 	Path       string `json:"path"`
 	LineNumber int    `json:"lineNumber"`
@@ -29,8 +41,9 @@ type Response struct {
 }
 
 type Message struct {
-	ID     string `json:"id"`
-	Action string `json:"action"`
+	ID     string       `json:"id"`
+	Action string       `json:"action"`
+	Log    *logging.Log `json:"-"`
 	Data   struct {
 		PerformSearchData
 		OpenEditorData

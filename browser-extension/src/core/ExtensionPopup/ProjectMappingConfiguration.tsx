@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { ProjectMapping } from "../../content_script/ProjectStorage";
 import ProjectMappingStorage from "../../content_script/ProjectStorage";
 import { openPathInEditor } from "../../content_script/utils";
@@ -22,17 +22,6 @@ const escapeRegExp = (string: string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
-// Create a more lenient URL pattern by removing query parameters and hash
-const createUrlPattern = (url: string) => {
-  try {
-    const urlObj = new URL(url);
-    // Create a base pattern without query parameters and hash
-    return escapeRegExp(urlObj.origin + urlObj.pathname);
-  } catch (e) {
-    console.error("Failed to parse URL:", e);
-    return escapeRegExp(url);
-  }
-};
 
 export default function ProjectMappingConfiguration() {
   const queryClient = useQueryClient();
@@ -60,8 +49,9 @@ export default function ProjectMappingConfiguration() {
   });
 
   // Update local input value when query data changes
-  React.useEffect(() => {
-    if (data) {
+  useEffect(() => {
+    console.log("data", data);
+    if (data && !inputValue) {
       setInputValue(data.searchFolder || "");
     }
   }, [data]);
@@ -81,6 +71,11 @@ export default function ProjectMappingConfiguration() {
       setSaveStatus("saving");
       try {
         const result = await projectMappingStorage.addProjectMapping(data);
+        console.log("result", result);
+        const mapping = await ProjectMappingStorage.getProjectMapping(
+          data.pattern
+        );
+        console.log("mapping", mapping);
         setSaveStatus("saved");
         return result;
       } catch (error) {
@@ -138,7 +133,7 @@ export default function ProjectMappingConfiguration() {
             const url = await getActiveTabUrl();
             if (!url) return;
             mutation.mutate({
-              pattern: createUrlPattern(url),
+              pattern: url,
               searchFolder: newValue,
             });
           }}

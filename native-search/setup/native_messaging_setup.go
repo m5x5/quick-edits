@@ -4,20 +4,25 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"quick_edits.com/native-search/logging"
 )
 
 func SetupNativeMessaging() error {
-	fmt.Sprintln("Starting setup of native-search.")
-	println("During the setup we connect your Chrome Browser to this module so we can search the projects you configure.")
+	executable, err := os.Executable()
+	if err != nil {
+		return err
+	}
+	executablePath := filepath.Dir(executable)
+	log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
+	defer log.Close()
+
+	log.Log("Starting setup of native-search.")
+	log.Log("During the setup we connect your Chrome Browser to this module so we can search the projects you configure.")
 
 	extensionId := "mkgggehjablaljefihlkcleikcoinimk"
 	if len(os.Args) > 2 {
 		extensionId = os.Args[2]
-	}
-	executable, err := os.Executable()
-	if err != nil {
-		panic(err)
-
 	}
 
 	content := fmt.Sprintf(`{
@@ -28,7 +33,7 @@ func SetupNativeMessaging() error {
 	"allowed_origins": ["chrome-extension://%s/"]
 }`, executable, extensionId)
 
-	println(content)
+	log.Log(content)
 
 	/// Define the file path
 	filePath := "/Library/Google/Chrome/NativeMessagingHosts/com.quick_edits.native_search.json"
@@ -36,17 +41,17 @@ func SetupNativeMessaging() error {
 	// Ensure the directory exists
 	dir := filepath.Dir(filePath)
 	if err := os.MkdirAll(dir, 0755); err != nil {
-		fmt.Printf("Failed to create directory: %v\n", err)
+		log.Log(fmt.Sprintf("Failed to create directory: %v", err))
 		return nil
 	}
 
 	// Write the content to the file
 	err = os.WriteFile(filePath, []byte(content), 0644)
 	if err != nil {
-		fmt.Printf("Failed to write file: %v\n", err)
+		log.Log(fmt.Sprintf("Failed to write file: %v", err))
 		return nil
 	}
 
-	fmt.Println("File written successfully.")
+	log.Log("File written successfully.")
 	return nil
 }
