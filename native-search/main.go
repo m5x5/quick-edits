@@ -12,6 +12,7 @@ import (
 	"time"
 
 	editor_manager "quick_edits.com/native-search/editor"
+	"quick_edits.com/native-search/logging"
 	"quick_edits.com/native-search/open_editor"
 	"quick_edits.com/native-search/save_changes"
 	"quick_edits.com/native-search/search"
@@ -106,29 +107,39 @@ func main() {
 			return
 		case "register-editor":
 			if len(args) != 4 {
-				fmt.Fprintln(os.Stderr, "Usage: native-search register-editor <editor-name> <editor-path>")
+				log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
+				log.Log("Usage: native-search register-editor <editor-name> <editor-path>")
+				log.Close()
 				os.Exit(1)
 			}
 			err := editor_manager.ValidateAndRegisterEditor(args[2], args[3])
 			if err != nil {
-				fmt.Fprintln(os.Stderr, "Error registering editor:", err)
+				log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
+				log.Log(fmt.Sprintf("Error registering editor: %v", err))
+				log.Close()
 				os.Exit(1)
 			}
-			fmt.Println("Editor registered successfully")
+			log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
+			log.Log("Editor registered successfully")
+			log.Close()
 			return
 		default:
-			fmt.Fprintln(os.Stderr, "Origin:", args[1])
+			log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
+			log.Log(fmt.Sprintf("Origin: %s", args[1]))
+			log.Close()
 		}
 	}
 	if len(args) > 2 && strings.HasPrefix(args[2], "--parent-window=") {
 		parentWindow := strings.TrimPrefix(args[2], "--parent-window=")
-		fmt.Fprintln(os.Stderr, "Parent window:", parentWindow)
+		log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
+		log.Log(fmt.Sprintf("Parent window: %s", parentWindow))
+		log.Close()
 	}
 
-	log, err := NewLog(filepath.Join(executablePath, "native-messaging.log"))
+	log, err := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
 
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error opening file:", err)
+		log.Log(fmt.Sprintf("Error opening file: %v", err))
 		return
 	}
 
@@ -173,6 +184,9 @@ func main() {
 			continue
 		}
 
+		// Set the log for the message
+		message.Log = log
+
 		var response types.Response
 		log.Log("Action: " + message.Action)
 
@@ -184,7 +198,7 @@ func main() {
 		} else if message.Action == "save_changes" {
 			response = save_changes.SaveChanges(message)
 		} else {
-			match := search.Match{Path: message.Data.Path, LineNumber: message.Data.LineNumber, CharNumber: message.Data.CharNumber}
+			match := types.Match{Path: message.Data.Path, LineNumber: message.Data.LineNumber, CharNumber: message.Data.CharNumber}
 			response = open_editor.OpenEditor(match, message.Data.Editor, message.Data.EditorPath)
 		}
 
