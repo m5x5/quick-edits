@@ -8,7 +8,6 @@ export const performSearch = async (
   searchData: Omit<PerformSearchData, "folder">,
 ): Promise<{ path: string; lineNumber: number; charNumber: number, isDirectMatch: boolean }[]> => {
   const time = Date.now();
-  console.log('QuickEdits Extension: Initiating search with data:', searchData);
 
   const mapping = await ProjectMappingStorage.getProjectMapping(
     window.location.href,
@@ -28,18 +27,20 @@ export const performSearch = async (
   const { excludedDirectories = [] } = await chrome.storage.local.get(["excludedDirectories"]);
 
   return new Promise((resolve) => {
-    console.log('QuickEdits Extension: Sending search request to background script');
+    const message = {
+      action: "perform_search",
+      data: {
+        folder: mapping.searchFolder,
+        classes: searchData.classes,
+        textContent: searchData.textContent,
+        browserUrl: searchData.browserUrl,
+        excludedDirectories,
+      }
+    }
+
+    console.debug('QuickEdits Extension: Initiating search with message:', message);
     chrome.runtime.sendMessage(
-      {
-        action: "perform_search",
-        data: {
-          folder: mapping.searchFolder,
-          classes: searchData.classes,
-          textContent: searchData.textContent,
-          browserUrl: searchData.browserUrl,
-          excludedDirectories,
-        },
-      },
+      message,
       (response: NativeResponse<"perform_search">) => {
         if (!response) {
           console.error("QuickEdits Extension: Native messaging host returned no response to perform search request.");

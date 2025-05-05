@@ -153,8 +153,8 @@ func Search(message types.Message) ([]types.Match, error) {
 		level := strings.Count(relPath, string(os.PathSeparator))
 		if level <= 1 {
 			if d.IsDir() {
-				if IsDirectoryExcluded(path) {
-					message.Log.Log(fmt.Sprintf("Skipping excluded directory: %s", path))
+				if IsDirectoryExcluded(relPath) {
+					message.Log.Log(fmt.Sprintf("Skipping excluded directory: %s", relPath))
 					return filepath.SkipDir
 				}
 				// Start tracking new directory
