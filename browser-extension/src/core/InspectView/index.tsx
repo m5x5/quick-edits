@@ -1,9 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { hotkeyKeyUX, startKeyUX } from "keyux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import styles from "../../../dist/popup.css?inline";
-import { ShadowDom } from "../ShadowDom";
+import { ShadowDomProvider } from "../context/ShadowDomContext";
 import InspectPopup from "./InspectPopup";
 import InspectPopupAstroSection from "./InspectPopup/InspectPopupAstroSection";
 import InspectPopupClassList from "./InspectPopup/InspectPopupClassList";
@@ -11,53 +11,87 @@ import InspectPopupResults from "./InspectPopup/InspectPopupResults";
 import { getCssSelectorShort } from "./InspectPopup/utils";
 import PopupPositioning from "./PopupPositioning";
 import SelectBox from "./SelectBox";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import useSelectedTarget from "./hooks/useSelectedTarget";
 
 startKeyUX(window, [hotkeyKeyUX()]);
 const queryClient = new QueryClient();
 
 export default function InspectView() {
-  const { target, targetSelectionActive, } = useSelectedTarget();
-  const [classes, setClasses] = useState<string>("");
-  const [additionalClasses, setAdditionalClasses] = useState<string>("");
-  const [showSelectBox, setShowSelectBox] = useState<boolean>(true);
+  const { target, targetSelectionActive } = useSelectedTarget();
+  const [state, setState] = useState({
+    classes: "",
+    additionalClasses: "",
+    showSelectBox: true
+  });
+
+  const { classes, additionalClasses, showSelectBox } = state;
 
   useEffect(() => {
     if (target) {
-      setClasses(target.className);
-      setAdditionalClasses("");
+      setState(prev => ({
+        ...prev,
+        classes: target.className,
+        additionalClasses: ""
+      }));
     } else {
-      setClasses("");
-      setAdditionalClasses("");
+      setState(prev => ({
+        ...prev,
+        classes: "",
+        additionalClasses: ""
+      }));
     }
   }, [target]);
+
+  const setClasses = useCallback((newClasses: string) => {
+    setState(prev => ({ ...prev, classes: newClasses }));
+  }, []);
+
+  const setAdditionalClasses = useCallback((newClasses: string) => {
+    setState(prev => ({ ...prev, additionalClasses: newClasses }));
+  }, []);
+
+  const setShowSelectBox = useCallback((show: boolean) => {
+    setState(prev => ({ ...prev, showSelectBox: show }));
+  }, []);
+
+  const combinedClasses = useMemo(
+    () => `${classes} ${additionalClasses}`.trim(),
+    [classes, additionalClasses]
+  );
 
   if (!target) return null;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {showSelectBox && <SelectBox target={target} classes={`${classes} ${additionalClasses}`} />}
-      <PopupPositioning target={target}>
-        <InspectPopup
-          targetSelectionActive={targetSelectionActive}
-          tagName={target.tagName}
-          showSelectBox={showSelectBox}
-          setShowSelectBox={setShowSelectBox}
-        >
-          <InspectPopupClassList
-            key={getCssSelectorShort(target)}
-            target={target}
-            classes={classes}
-            setClasses={setClasses}
-            additionalClasses={additionalClasses}
-            setAdditionalClasses={setAdditionalClasses}
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        {showSelectBox && <SelectBox target={target} classes={combinedClasses} />}
+        <PopupPositioning target={target}>
+          <InspectPopup
+            targetSelectionActive={targetSelectionActive}
+            tagName={target.tagName}
+            showSelectBox={showSelectBox}
             setShowSelectBox={setShowSelectBox}
-          />
-          <InspectPopupAstroSection target={target} />
-          <InspectPopupResults target={target} classes={classes} additionalClasses={additionalClasses} />
-        </InspectPopup>
-      </PopupPositioning >
-    </QueryClientProvider >
+          >
+            <InspectPopupClassList
+              key={getCssSelectorShort(target)}
+              target={target}
+              classes={classes}
+              setClasses={setClasses}
+              additionalClasses={additionalClasses}
+              setAdditionalClasses={setAdditionalClasses}
+              setShowSelectBox={setShowSelectBox}
+            />
+            <InspectPopupAstroSection target={target} />
+            <InspectPopupResults
+              target={target}
+              classes={classes}
+              additionalClasses={additionalClasses}
+            />
+          </InspectPopup>
+        </PopupPositioning>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
@@ -74,10 +108,10 @@ export const initPopup = () => {
   const root = createRoot(popup);
 
   root.render(
-    <ShadowDom parentElement={document.body}>
+    <ShadowDomProvider parentElement={document.body}>
       <style>{styles}</style>
       <InspectView />
-    </ShadowDom>,
+    </ShadowDomProvider>,
   );
 
   return popup;

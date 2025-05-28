@@ -9,16 +9,16 @@ import (
 )
 
 func SaveChanges(message types.Message) types.Response {
-	fmt.Fprintln(os.Stderr, "SaveChanges called2")
+	message.Log.Log("SaveChanges called")
 
 	// Open the file with write permissions
 	content, err := os.ReadFile(message.Data.Path)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error reading file:", err)
+		message.Log.Log(fmt.Sprintf("Error reading file: %v", err))
 		return types.Response{Success: false, Message: fmt.Sprintf("Error reading file: %v", err)}
 	}
 
-	fmt.Fprintln(os.Stderr, "Content: ", string(content))
+	message.Log.Log("Content read successfully")
 
 	// replace the text
 	newContent := strings.Replace(string(content), message.Data.OriginalContent, message.Data.NewContent, -1)
@@ -26,10 +26,10 @@ func SaveChanges(message types.Message) types.Response {
 	// Write the new content to the file
 	err = os.WriteFile(message.Data.Path, []byte(newContent), 0644)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error writing to file:", err)
+		message.Log.Log(fmt.Sprintf("Error writing to file: %v", err))
 		return types.Response{Success: false, Message: fmt.Sprintf("Error writing to file: %v", err)}
 	}
-	fmt.Fprintln(os.Stderr, "File written successfully")
+	message.Log.Log("File written successfully")
 
 	return types.Response{Success: true, Message: ""}
 }

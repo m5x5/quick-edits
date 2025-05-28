@@ -1,11 +1,12 @@
-import React from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useCallback, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { openPathInEditor } from "./content_script/utils";
 import Button from "./core/Button";
-import Section, { SectionBody } from "./core/Section";
 import EditorSelection from "./core/ExtensionPopup/EditorSelection";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import NativeHostStatus from "./core/NativeHostStatus";
 import ProjectMappingConfiguration from "./core/ExtensionPopup/ProjectMappingConfiguration";
+import Section, { SectionBody } from "./core/Section";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,20 @@ export const Popup = () => {
 
 				<Section>Editor</Section>
 				<EditorSelection />
+
+				<Section>Native Search Module Status</Section>
+				<SectionBody>
+					<div className="flex flex-col gap-4">
+						<div className="flex flex-col">
+							<NativeHostStatus showRetryButton={true} />
+						</div>
+						<div className="text-sm text-gray-400 dark:text-gray-500">
+							The native search module is required for project folder
+							functionality. If you're experiencing issues, please check the
+							connection status above.
+						</div>
+					</div>
+				</SectionBody>
 
 				<Section className="hidden">Enhance extension</Section>
 				<SectionBody className="hidden">

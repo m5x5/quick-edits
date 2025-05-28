@@ -6,7 +6,11 @@ tmp/
 localhost-key.pem
 localhost.pem
 received_messages.txt
+folder-stats.json
+*storybook.log
+native-search
+native-messaging.log
 
 .idea/
 .vscode/
-*storybook.log
+.DS_Store

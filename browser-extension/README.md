@@ -73,3 +73,7 @@ Load `dist` directory
 ## Configure Native Messaging
 
 * <https://developer.chrome.com/docs/extensions/develop/concepts/native-messaging>
+
+## Structure
+
+The tailwind folder was downloaded from <https://github.com/tailwindlabs/tailwindcss/tree/515a9bdc5ff77291d6f41cd1d4c22e9d24ea91bc/packages/tailwindcss>

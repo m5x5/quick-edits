@@ -27,7 +27,7 @@ func nextJSHeuristicSorting(performSearchData struct {
 	types.PerformSearchData
 	types.OpenEditorData
 	types.SaveChangesData
-}, matches []Match) {
+}, matches []types.Match) {
 	browserUrl := performSearchData.BrowserURL
 	if !strings.Contains(browserUrl, "http://") {
 		return
