@@ -63,7 +63,7 @@ export default function InspectPopupResults({
           <div key={result.path + result.charNumber + result.lineNumber}>
             <button
               type="button"
-              className={`text-[#e8eaed] cursor-pointer hover:bg-[#292a2d] block text-left px-4 py-3 rounded-md transition-colors duration-200 ${result.isDirectMatch ? "border-l-4 border-[#8ab4f8] bg-[#1a73e8]/10" : ""}`}
+              className={`dark:text-[#e8eaed] text-[#292a2d] cursor-pointer hover:bg-[#292a2d] block text-left px-4 py-3 rounded-md transition-colors duration-200 ${result.isDirectMatch ? "border-l-4 border-[#8ab4f8] bg-[#1a73e8]/10" : ""}`}
               aria-keyshortcuts={
                 !props.astroResult && i === 0 ? "meta+enter" : undefined
               }

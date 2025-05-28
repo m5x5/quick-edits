@@ -45,9 +45,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // Test the native messaging host connection
     nativeMessageController
       .exec("perform_search", {
-        folder: "",
-        classes: "",
-        textContent: "",
+        // TODO: Add the folder from the settings page
+        folder: "/Users/michael/Software/quick-edits/",
+        classes: "test",
+        textContent: "test",
         browserUrl: "",
       })
       .then((response: NativeResponse<"perform_search">) => {

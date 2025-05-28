@@ -10,6 +10,7 @@ import { createRoot } from "react-dom/client";
 import ProjectMappingStorage from "./content_script/ProjectStorage";
 import Button from "./core/Button";
 import Input from "./core/Input";
+import NativeHostStatus from "./core/NativeHostStatus";
 import Section, { SectionBody } from "./core/Section";
 
 interface Editor {
@@ -31,45 +32,6 @@ const defaultEditors: Editor[] = [
 ];
 
 const Options = () => {
-  const [nativeHostError, setNativeHostError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Notify background script that settings are ready
-    chrome.runtime.sendMessage({ type: "settings_ready" }, (response) => {
-      if (!response?.success) {
-        setNativeHostError(true);
-        setErrorMessage(
-          "Failed to initialize native messaging host connection"
-        );
-      }
-    });
-
-    // Listen for native messaging host errors
-    const messageListener = (message: { type: string; message: string }) => {
-      if (message.type === "native_host_error") {
-        setNativeHostError(true);
-        setErrorMessage(message.message);
-      }
-    };
-
-    chrome.runtime.onMessage.addListener(messageListener);
-
-    // Test native messaging host connection
-    chrome.runtime.sendMessage({ action: "test_native_host" }, (response) => {
-      if (!response?.success) {
-        setNativeHostError(true);
-        setErrorMessage(
-          response?.message || "Native messaging host is not accessible"
-        );
-      }
-    });
-
-    return () => {
-      chrome.runtime.onMessage.removeListener(messageListener);
-    };
-  }, []);
-
   const { data } = useQuery<ProjectMapping[]>({
     queryKey: ["projectMappings"],
     queryFn: async () => {
@@ -166,28 +128,7 @@ const Options = () => {
 
   return (
     <div className="quick-edits flex flex-col pb-4 dark:bg-[#292929] bg-white font-sans dark:text-white text-black min-w-[500px] min-h-full">
-      {nativeHostError && (
-        <div
-          className="p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-500 text-red-700 dark:text-red-300 rounded relative"
-          role="alert"
-        >
-          <strong className="font-bold">Native Messaging Host Error</strong>
-          <span className="block sm:inline">
-            {" "}
-            {errorMessage ||
-              "The native messaging host is not accessible. Please follow the setup instructions at "}
-            <a
-              href="https://quick-edits.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-red-800 dark:hover:text-red-200"
-            >
-              quick-edits.dev
-            </a>{" "}
-            to configure the native messaging host.
-          </span>
-        </div>
-      )}
+      <NativeHostStatus />
       <Section>Display Settings</Section>
       <SectionBody>
         <div className="flex gap-2 items-center">
