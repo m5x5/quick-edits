@@ -12,8 +12,8 @@ const nextConfig = {
     config.resolve.symlinks = true;
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@/browser-extension': path.resolve(__dirname, './node_modules/@browser-extension/src'),
-      '@/browser-extension/core': path.resolve(__dirname, './node_modules/@browser-extension/src/core')
+      '@/browser-extension': path.resolve(__dirname, '../../browser-extension/src'),
+      '@/browser-extension/core': path.resolve(__dirname, '../../browser-extension/src/core')
     };
     return config;
   },
