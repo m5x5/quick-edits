@@ -47,7 +47,7 @@ export default function InspectPopupClassListInput({
   const copy = () => navigator.clipboard.writeText(debouncedInput);
 
   return (
-    <div className={"flex gap-2 py-1"}>
+    <div className={"flex gap-2 pb-3"}>
       <Input
         onChange={(e) => setInput(e.target.value)}
         onClick={(e) => {
@@ -58,14 +58,14 @@ export default function InspectPopupClassListInput({
           e.stopPropagation();
         }}
         className={
-          "w-full bg-white dark:bg-[#202124] border border-gray-200 dark:border-[#3c4043] rounded-md text-gray-700 dark:text-[#e8eaed] placeholder:text-gray-400 dark:placeholder:text-[#9ba0a5] px-3 py-1.5 text-[13px] font-mono focus:outline-none focus:ring-1 focus:ring-blue-400 dark:focus:ring-[#8ab4f8] focus:border-blue-400 dark:focus:border-[#8ab4f8] shadow-sm transition-all duration-200"
+          "w-full bg-blue-200 rounded-full dark:bg-[#202124] p-0 text-gray-700 dark:text-[#e8eaed] placeholder:text-gray-700 dark:placeholder:text-[#9ba0a5] px-2! py-1/2! text-[13px] font-mono focus:outline-none focus:ring-1 focus:ring-blue-400 dark:focus:ring-[#8ab4f8] focus:border-blue-400 dark:focus:border-[#8ab4f8] transition-all duration-200"
         }
         placeholder="Add classes"
       />
       <button
         onMouseDown={copy}
         type={"button"}
-        className={"inline text-gray-400 hover:text-gray-600 dark:text-[#9ba0a5] dark:hover:text-[#e8eaed] transition-colors"}
+        className={"inline text-gray-400 hover:text-gray-600 dark:text-[#9ba0a5] dark:hover:text-[#e8eaed] transition-colors bg-transparent border-0"}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();

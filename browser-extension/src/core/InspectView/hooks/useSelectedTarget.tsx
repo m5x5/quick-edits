@@ -13,6 +13,15 @@ export default function useSelectedTarget() {
   const [targetSelectionActive, setTargetSelectionActive] = useState(false);
   const [target, setTarget] = useState<HTMLElement | null>(null);
   const ref = useRef(null);
+  const mousePos = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const track = (e: MouseEvent) => {
+      mousePos.current = { x: e.clientX, y: e.clientY };
+    };
+    document.addEventListener("mousemove", track, { passive: true });
+    return () => document.removeEventListener("mousemove", track);
+  }, []);
 
   const up = useCallback(() => {
     if (!target) return;
@@ -80,6 +89,8 @@ export default function useSelectedTarget() {
       // Handle Alt key for target selection activation
       if (e.key === 'Alt' && noOtherKeyPressed && !targetSelectionActive) {
         setTargetSelectionActive(true);
+        const el = document.elementFromPoint(mousePos.current.x, mousePos.current.y);
+        if (el instanceof HTMLElement) setTarget(el);
         return;
       }
 

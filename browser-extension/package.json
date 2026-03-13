@@ -6,6 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "NODE_ENV=production WATCH=true vite build --watch",
+		"dev:page": "vite --config vite.dev.config.ts --open dev.html",
 		"build": "NODE_ENV=production vite build && node ./scripts/zip.js",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
@@ -20,7 +21,7 @@
 	"dependencies": {
 		"@floating-ui/react-dom": "^2.0.9",
 		"@storybook/addon-essentials": "^8.2.9",
-		"@tailwindcss/vite": "^4.0.0-alpha.15",
+		"@tailwindcss/vite": "^4.2.1",
 		"@tanstack/react-query": "^5.52.1",
 		"debug": "^4.4.0",
 		"keyux": "^0.10.0",

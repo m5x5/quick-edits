@@ -106,22 +106,32 @@ func main() {
 			native_messaging_setup.SetupNativeMessaging()
 			return
 		case "register-editor":
-			if len(args) != 4 {
-				log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
-				log.Log("Usage: native-search register-editor <editor-name> <editor-path>")
-				log.Close()
+			// Usage: native-search register-editor <name> <path> [arg1 arg2 ...]
+			if len(args) < 4 {
+				fmt.Fprintln(os.Stderr, "Usage: native-search register-editor <editor-name> <editor-path> [arg1 arg2 ...]")
+				fmt.Fprintln(os.Stderr, "")
+				fmt.Fprintln(os.Stderr, "Examples:")
+				fmt.Fprintln(os.Stderr, "  native-search register-editor phpstorm /usr/local/bin/pstorm")
+				fmt.Fprintln(os.Stderr, "  native-search register-editor vscode /usr/local/bin/code")
+				fmt.Fprintln(os.Stderr, "  native-search register-editor myeditor /usr/bin/myeditor --line {line} {file}")
+				fmt.Fprintln(os.Stderr, "")
+				fmt.Fprintln(os.Stderr, "Run 'native-search list-presets' to see supported editors and their default args.")
 				os.Exit(1)
 			}
-			err := editor_manager.ValidateAndRegisterEditor(args[2], args[3])
-			if err != nil {
-				log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
-				log.Log(fmt.Sprintf("Error registering editor: %v", err))
-				log.Close()
+			var customArgs []string
+			if len(args) > 4 {
+				customArgs = args[4:]
+			}
+			if err := editor_manager.ValidateAndRegisterEditor(args[2], args[3], customArgs); err != nil {
+				fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 				os.Exit(1)
 			}
-			log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))
-			log.Log("Editor registered successfully")
-			log.Close()
+			return
+		case "list-editors":
+			fmt.Print(editor_manager.ListEditors())
+			return
+		case "list-presets":
+			fmt.Print(editor_manager.ListPresets())
 			return
 		default:
 			log, _ := logging.NewLog(filepath.Join(executablePath, "native-messaging.log"))

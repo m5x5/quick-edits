@@ -3,6 +3,7 @@ package open_editor
 import (
 	"fmt"
 	"os/exec"
+	"strings"
 
 	editor_manager "quick_edits.com/native-search/editor"
 	"quick_edits.com/native-search/types"
@@ -30,16 +31,22 @@ func OpenEditor(match types.Match, editor string, editorPath string) types.Respo
 }
 
 func launchEditor(match types.Match, editor string) error {
-	path, err := editor_manager.GetEditorPath(editor)
-
+	config, err := editor_manager.GetEditorConfig(editor)
 	if err != nil {
 		return err
 	}
 
-	return exec.Command(
-		path,
-		"-g",
-		fmt.Sprintf("%s:%d:%d", match.Path, match.LineNumber, match.CharNumber),
-		"-r",
-	).Run()
+	args := buildArgs(config.Args, match)
+	return exec.Command(config.Path, args...).Run()
+}
+
+func buildArgs(template []string, match types.Match) []string {
+	args := make([]string, len(template))
+	for i, arg := range template {
+		arg = strings.ReplaceAll(arg, "{file}", match.Path)
+		arg = strings.ReplaceAll(arg, "{line}", fmt.Sprintf("%d", match.LineNumber))
+		arg = strings.ReplaceAll(arg, "{col}", fmt.Sprintf("%d", match.CharNumber))
+		args[i] = arg
+	}
+	return args
 }

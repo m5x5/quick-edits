@@ -283,9 +283,9 @@ const ClassItem = ({
   }, [elementClass, active, onVariantSelect]);
 
   return (
-    <div className="flex items-center gap-1 bg-white dark:bg-[#202124] text-gray-500 dark:text-[#9ba0a5] px-2 py-1 rounded-sm text-[13px] font-mono relative group hover:bg-gray-100 dark:hover:bg-[#292a2d] border border-gray-200 dark:border-[#3c4043]">
+    <div className="flex items-center gap-1 bg-white dark:bg-[#202124] text-gray-500 dark:text-[#9ba0a5] rounded-sm text-[13px] font-mono relative group hover:bg-gray-100 dark:hover:bg-[#292a2d] border border-gray-200 dark:border-[#3c4043]">
       <button
-        className="cursor-pointer relative hover:text-[#e8eaed] transition-colors focus-visible:outline-offset-2 focus-visible:outline-2 focus-visible:outline-blue-400 focus-visible:rounded-sm"
+        className="py-1 pl-2 cursor-pointer relative hover:text-gray-500 transition-colors focus-visible:outline-offset-2 focus-visible:outline-2 focus-visible:outline-blue-400 focus-visible:rounded-sm border-0 bg-transparent p-0"
         tabIndex={0}
         onMouseDown={(e) => {
           e.stopPropagation();
@@ -303,7 +303,7 @@ const ClassItem = ({
         {elementClass}
         {onVariantSelect && active && (
           <div
-            className={`absolute block top-full left-0 mt-1 bg-white dark:bg-[#202124] border border-gray-200 dark:border-[#3c4043] rounded-sm py-1 max-h-48 overflow-y-auto min-w-[140px] shadow-lg z-50`}
+            className={"absolute block top-full left-0 mt-1 bg-white dark:bg-[#202124] border border-gray-200 dark:border-[#3c4043] rounded-sm py-1 max-h-48 overflow-y-auto min-w-35 shadow-lg z-50"}
           >
             {isLoading ? (
               <div className="px-3 py-1.5 text-gray-500 dark:text-[#9ba0a5]">Loading...</div>
@@ -344,7 +344,7 @@ const ClassItem = ({
           onDelete();
         }}
         type="button"
-        className="text-[#9ba0a5] hover:text-[#f28b82] transition-colors relative z-10 opacity-100 group-hover:opacity-100  focus-visible:outline-offset-2 focus-visible:outline-2 focus-visible:outline-blue-400 focus-visible:rounded-sm"
+        className="text-[#9ba0a5] py-1 bg-transparent border-0 hover:text-[#f28b82] transition-colors relative z-10 opacity-100 group-hover:opacity-100  focus-visible:outline-offset-2 focus-visible:outline-2 focus-visible:outline-blue-400 focus-visible:rounded-sm"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
           <title>Delete</title>
