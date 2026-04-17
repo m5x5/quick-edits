@@ -21,6 +21,7 @@ export default defineConfig({
     tailwindcss(),
     webExtension({
       disableAutoLaunch: true,
+      additionalInputs: ["panel.html", "src/content_script.tsx"],
       transformManifest: (manifest) => {
         // this logic is for reload functionality during development
         if (process.env.WATCH === "true") {

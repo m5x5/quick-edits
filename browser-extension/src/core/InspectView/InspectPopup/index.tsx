@@ -1,12 +1,14 @@
 import React from "react";
+import type { DragHandlers } from "../PopupPositioning";
 import useSelectedTarget from "../hooks/useSelectedTarget";
 import InspectPopupContainer from "./InspectPopupContainer";
-import Button from "../../Button";
 
 export default function InspectPopup({
   children,
   targetSelectionActive,
   tagName,
+  dragHandlers,
+  onMoveToDevTools,
   ...props
 }: {
   targetSelectionActive: boolean;
@@ -14,88 +16,174 @@ export default function InspectPopup({
   children: React.ReactNode;
   setShowSelectBox: (param: boolean) => void;
   showSelectBox: boolean;
+  dragHandlers: DragHandlers;
+  onMoveToDevTools?: () => void;
 }) {
   const [showArrowControls, setShowArrowControls] = React.useState(false);
+  const [showThumbMenu, setShowThumbMenu] = React.useState(false);
+  const thumbMenuRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
       chrome.storage.local.get(['showArrowControls']).then(data => {
         setShowArrowControls(data.showArrowControls ?? true);
       }).catch(() => {
-        setShowArrowControls(true); // Fallback to default value
+        setShowArrowControls(true);
       });
     } else {
-      setShowArrowControls(true); // Default value when chrome.storage is not available
+      setShowArrowControls(true);
     }
   }, []);
+
+  // Close thumb menu on outside click
+  React.useEffect(() => {
+    if (!showThumbMenu) return;
+    const handler = (e: MouseEvent) => {
+      if (thumbMenuRef.current && !thumbMenuRef.current.contains(e.target as Node)) {
+        setShowThumbMenu(false);
+      }
+    };
+    // Use timeout to avoid catching the same click that opened the menu
+    const id = setTimeout(() => document.addEventListener('mousedown', handler), 0);
+    return () => {
+      clearTimeout(id);
+      document.removeEventListener('mousedown', handler);
+    };
+  }, [showThumbMenu]);
+
   const { left, up, down, right, ref } = useSelectedTarget();
   const handleRefresh = () => {
-    chrome.runtime.sendMessage(
-      { action: "reload_extension" },
-      () => {
-        window.location.reload();
-      },
-    );
+    if (typeof chrome !== "undefined" && chrome.runtime?.sendMessage) {
+      chrome.runtime.sendMessage(
+        { action: "reload_extension" },
+        () => {
+          window.location.reload();
+        },
+      );
+    } else {
+      window.location.reload();
+    }
   };
+
+  // Track if a drag happened so we can suppress the click
+  const wasDragging = React.useRef(false);
+  React.useEffect(() => {
+    if (dragHandlers.isDragging) {
+      wasDragging.current = true;
+    }
+  }, [dragHandlers.isDragging]);
+
+  const handleThumbClick = React.useCallback(() => {
+    // If we just finished dragging, don't open menu
+    if (wasDragging.current) {
+      wasDragging.current = false;
+      return;
+    }
+    setShowThumbMenu(prev => !prev);
+  }, []);
 
   return (
     <InspectPopupContainer targetSelectionActive={targetSelectionActive}>
       <div className="">
         <div className="border-b border-gray-200 black:border-[#3c4043] flex justify-between items-center">
-          <span className="dark:text-blue-200 text-blue-500 font-mono text-[13px] p-1 pl-2">{tagName?.toLowerCase()}</span>
+          {/* Drag thumb + tag name */}
+          <div className="flex items-center gap-0 min-w-0">
+            <div
+              className="relative"
+              ref={thumbMenuRef}
+            >
+              <div
+                onPointerDown={dragHandlers.onPointerDown}
+                onPointerMove={dragHandlers.onPointerMove}
+                onPointerUp={dragHandlers.onPointerUp}
+                onClick={handleThumbClick}
+                className="flex items-center justify-center px-1.5 py-2 cursor-grab active:cursor-grabbing touch-none shrink-0 text-gray-300 dark:text-[#5f6368] hover:text-gray-400 dark:hover:text-[#9ba0a5] transition-colors"
+                title="Drag to reposition, click for options"
+              >
+                <svg width="6" height="14" viewBox="0 0 6 14" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="1.5" cy="1.5" r="1" /><circle cx="4.5" cy="1.5" r="1" />
+                  <circle cx="1.5" cy="5" r="1" /><circle cx="4.5" cy="5" r="1" />
+                  <circle cx="1.5" cy="8.5" r="1" /><circle cx="4.5" cy="8.5" r="1" />
+                  <circle cx="1.5" cy="12" r="1" /><circle cx="4.5" cy="12" r="1" />
+                </svg>
+              </div>
+
+              {/* Thumb dropdown menu */}
+              {showThumbMenu && (
+                <div
+                  className="absolute left-0 bg-white dark:bg-[#202124] border border-gray-200 dark:border-[#3c4043] rounded shadow-lg min-w-[160px] py-1"
+                  style={{ top: '100%', zIndex: 9999 }}
+                >
+                  {onMoveToDevTools && (
+                    <button
+                      type="button"
+                      className="flex items-center gap-2 w-full text-left px-3 py-1.5 text-[12px] text-gray-600 dark:text-[#e8eaed] hover:bg-gray-100 dark:hover:bg-[#292a2d] bg-transparent border-0 cursor-pointer transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowThumbMenu(false);
+                        onMoveToDevTools();
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1" y="1" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                        <line x1="1" y1="3.5" x2="13" y2="3.5" stroke="currentColor" strokeWidth="1.2" />
+                        <path d="M4 6.5h6M4 8.5h4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
+                      </svg>
+                      Move to DevTools
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+            <span className="dark:text-blue-200 text-blue-500 font-mono text-[13px] p-1">{tagName?.toLowerCase()}</span>
+          </div>
 
           <div className="flex items-center justify-between bg-white dark:bg-[#202124] text-black dark:text-white">
             <button
               type="button"
               onClick={handleRefresh}
-              className="transition-colors dark:hover:bg-[#292a2d] p-0 bg-transparent border-0"
+              className="transition-colors dark:hover:bg-[#292a2d] p-1 bg-transparent border-0 rounded-sm text-gray-500 dark:text-[#9ba0a5] hover:text-gray-700 dark:hover:text-[#e8eaed]"
               title="Refresh extension"
             >
-              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_563_5227)">
-                  <path d="M15.5 5.6694V3H17V8H12V6.5H14.2428C13.234 5.2785 11.7079 4.5 10 4.5C6.96243 4.5 4.5 6.96243 4.5 10C4.5 13.0376 6.96243 15.5 10 15.5C13.0376 15.5 15.5 13.0376 15.5 10H17C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C12.231 3 14.2182 4.04367 15.5 5.6694Z" fill="currentColor" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_563_5227">
-                    <rect width="20" height="20" fill="white" />
-                  </clipPath>
-                </defs>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2a6 6 0 1 0 6 6h-1.5A4.5 4.5 0 1 1 8 3.5V6l3.5-3L8 0v2Z" fill="currentColor" />
               </svg>
             </button>
             {showArrowControls && (
-              <div className="flex gap-1 items-center *:bg-transparent *:border-0 *:py-1">
-                <button type="button" onClick={left} ref={ref} className="dark:hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <title>Left</title>
-                    <path d="M10 15L5 10L10 5L11.062 6.062L7.125 10L11.062 13.938L10 15Z" fill="black" />
-                    <circle cx="12.5" cy="10.125" r="1.25" fill="black" />
+              <div className="flex items-center">
+                <button type="button" onClick={left} ref={ref} className="dark:hover:bg-[#292a2d] p-1 bg-transparent border-0 rounded-sm transition-colors text-gray-500 dark:text-[#9ba0a5] hover:text-gray-700 dark:hover:text-[#e8eaed]" title="Previous sibling">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 3 5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                   </svg>
                 </button>
-                <button type="button" onClick={up} className="dark:hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
-                  <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <title>Out</title>
-                    <path d="M10 18a2.411 2.411 0 0 1-1.771-.729A2.411 2.411 0 0 1 7.5 15.5c0-.695.243-1.285.729-1.771A2.411 2.411 0 0 1 10 13c.695 0 1.285.243 1.771.729s.729 1.076.729 1.771c0 .695-.243 1.285-.729 1.771A2.411 2.411 0 0 1 10 18Zm-.75-6.5V4.875L7.062 7.062 6 6l4-4 4 4-1.062 1.062-2.188-2.187V11.5h-1.5Z" fill="#000" />
+                <button type="button" onClick={up} className="dark:hover:bg-[#292a2d] p-1 bg-transparent border-0 rounded-sm transition-colors text-gray-500 dark:text-[#9ba0a5] hover:text-gray-700 dark:hover:text-[#e8eaed]" title="Parent element">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 10l5-5 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                   </svg>
                 </button>
-                <button type="button" onClick={down} className="dark:hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
-                  <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <title>In</title>
-                    <path d="M10 18a2.411 2.411 0 0 1-1.771-.729A2.411 2.411 0 0 1 7.5 15.5c0-.695.243-1.285.729-1.771A2.411 2.411 0 0 1 10 13c.695 0 1.285.243 1.771.729s.729 1.076.729 1.771c0 .695-.243 1.285-.729 1.771A2.411 2.411 0 0 1 10 18Zm0-6.5-4-4 1.062-1.062L9.25 8.625V2h1.5v6.625l2.188-2.187L14 7.5l-4 4Z" fill="#000" />
+                <button type="button" onClick={down} className="dark:hover:bg-[#292a2d] p-1 bg-transparent border-0 rounded-sm transition-colors text-gray-500 dark:text-[#9ba0a5] hover:text-gray-700 dark:hover:text-[#e8eaed]" title="First child">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                   </svg>
                 </button>
-                <button type="button" onClick={right} className="dark:hover:bg-[#292a2d] p-1 rounded-sm transition-colors">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <title>Right</title>
-                    <path d="M7.99999 15L6.93799 13.938L10.875 10L6.93799 6.062L7.99999 5L13 10L7.99999 15Z" fill="black" />
+                <button type="button" onClick={right} className="dark:hover:bg-[#292a2d] p-1 bg-transparent border-0 rounded-sm transition-colors text-gray-500 dark:text-[#9ba0a5] hover:text-gray-700 dark:hover:text-[#e8eaed]" title="Next sibling">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                   </svg>
                 </button>
               </div>
             )}
-            <div className="flex gap-1 items-center">
-              <Button type={"button"} onClick={() => { props.setShowSelectBox(!props.showSelectBox); }}>
-                Toggle Select box
-              </Button>
-            </div>
+            <button
+              type="button"
+              onClick={() => { props.setShowSelectBox(!props.showSelectBox); }}
+              className={`transition-colors dark:hover:bg-[#292a2d] p-1 bg-transparent border-0 rounded-sm ${props.showSelectBox ? 'text-blue-500' : 'text-gray-400 dark:text-[#9ba0a5]'}`}
+              title={props.showSelectBox ? "Hide select box overlay" : "Show select box overlay"}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                <rect x="4" y="4" width="8" height="8" rx="1" fill="currentColor" opacity="0.25" />
+              </svg>
+            </button>
           </div>
         </div>
         <div className="p-3">{children}</div>

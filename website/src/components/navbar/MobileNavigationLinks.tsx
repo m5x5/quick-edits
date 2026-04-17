@@ -29,6 +29,12 @@ export default function MobileNavigationLinks() {
       >
         {t("navigation.blog")}
       </Link>
+      <Link
+        className="text-gray-600 hover:text-gray-900 px-9 py-3"
+        href="/token-tool"
+      >
+        Token Tool
+      </Link>
     </>
   )
 }

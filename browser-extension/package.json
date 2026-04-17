@@ -20,6 +20,7 @@
 	},
 	"dependencies": {
 		"@floating-ui/react-dom": "^2.0.9",
+		"@jason.today/webmcp": "^0.1.13",
 		"@storybook/addon-essentials": "^8.2.9",
 		"@tailwindcss/vite": "^4.2.1",
 		"@tanstack/react-query": "^5.52.1",

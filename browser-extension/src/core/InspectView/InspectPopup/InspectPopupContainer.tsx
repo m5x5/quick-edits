@@ -14,10 +14,6 @@ export default function InspectPopupContainer({
 				position: "relative",
 				zIndex: 1,
 			}}
-			onClick={(e) => {
-				e.preventDefault();
-				e.stopPropagation();
-			}}
 			onKeyDown={(e) => e.stopPropagation()}
 		>
 			{children}

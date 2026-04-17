@@ -15,17 +15,19 @@
 		},
 		"default_popup": "popup.html"
 	},
-	"content_scripts": [
-		{
-			"matches": ["<all_urls>"],
-			"js": ["src/content_script.tsx"],
-			"css": []
-		}
-	],
 	"background": {
 		"service_worker": "src/background.ts"
 	},
-	"permissions": ["storage", "nativeMessaging", "activeTab"],
+	"commands": {
+		"toggle-inspect": {
+			"suggested_key": {
+				"default": "Alt+J",
+				"mac": "Alt+J"
+			},
+			"description": "Toggle element inspection"
+		}
+	},
+	"permissions": ["storage", "nativeMessaging", "activeTab", "scripting"],
 	"web_accessible_resources": [
 		{
 			"resources": ["manifest.json"],

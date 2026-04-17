@@ -4,11 +4,72 @@ import { useDebounce } from "use-debounce";
 import Input from "../../Input";
 import defaultTheme from "./theme.css?inline";
 
-const css = `${defaultTheme} @tailwind base;@tailwind components;@tailwind utilities;`;
-const compiled = compile(css);
+const css = `${defaultTheme} @tailwind utilities;`;
+let compiledPromise: ReturnType<typeof compile> | null = null;
+const getCompiled = () => {
+  if (!compiledPromise) {
+    try {
+      compiledPromise = compile(css);
+    } catch {
+      // In non-extension contexts (e.g. Next.js website), the ?inline import
+      // may return a module hash instead of raw CSS, causing compile() to fail.
+      // Return a stub that produces empty CSS.
+      compiledPromise = Promise.resolve({ build: () => "" }) as ReturnType<typeof compile>;
+    }
+  }
+  return compiledPromise;
+};
+
+/** Strip font variables from :root to avoid overriding page fonts, keep everything else
+ * (spacing, colors, etc. are needed as fallbacks for pages without Tailwind v4) */
+const stripFontVars = (css: string) =>
+  css.replace(
+    /--font-sans:[^;]*;|--font-serif:[^;]*;|--font-mono:[^;]*;|--default-font-family:[^;]*;|--default-font-feature-settings:[^;]*;|--default-font-variation-settings:[^;]*;|--default-mono-font-family:[^;]*;|--default-mono-font-feature-settings:[^;]*;|--default-mono-font-variation-settings:[^;]*;/g,
+    ""
+  );
 
 const parseInput = async (input: string) => {
-  return (await compiled).build([...input.split(" ")]);
+  const css = (await getCompiled()).build([...input.split(" ")]);
+  return stripFontVars(css);
+};
+
+/** Compile a single class and return its CSS property and value */
+export const getClassInfo = async (className: string): Promise<{ property: string; value: string } | null> => {
+  const result = (await getCompiled()).build([className]);
+  // Find the specific class rule by name (not just any rule in the cumulative output)
+  const cssClassName = className.replace(/\./g, '\\.').replace(/\//g, '\\/').replace(/:/g, '\\:');
+  const ruleStart = result.indexOf(`.${cssClassName} {`);
+  if (ruleStart === -1) return null;
+  const ruleEnd = result.indexOf('}', ruleStart);
+  if (ruleEnd === -1) return null;
+  const ruleBody = result.slice(ruleStart, ruleEnd);
+  // Match standard CSS properties, skipping custom properties (--tw-*) and setup properties
+  const skipProps = new Set(['border-style']); // setup-only, not the meaningful property
+  const propRegex = /^\s*([a-z][a-z-]*)\s*:\s*([^;\n]+)/gm;
+  let match;
+  while ((match = propRegex.exec(ruleBody)) !== null) {
+    if (!skipProps.has(match[1])) {
+      return { property: match[1], value: match[2].trim() };
+    }
+  }
+  return null;
+};
+
+/** Generate and inject CSS for the given class names into the page */
+export const injectClassCSS = async (classNames: string[]) => {
+  const css = (await getCompiled()).build(classNames);
+  const stripped = stripFontVars(css);
+
+  let element = document.querySelector(
+    "[data-inspect-popup-class-style-list]",
+  ) as HTMLElement;
+
+  if (!element) {
+    element = document.createElement("style");
+    element.setAttribute("data-inspect-popup-class-style-list", "");
+    document.head.appendChild(element);
+  }
+  element.innerHTML = stripped;
 };
 
 export default function InspectPopupClassListInput({
@@ -22,10 +83,6 @@ export default function InspectPopupClassListInput({
   const [debouncedInput] = useDebounce(input, debounce);
 
   useEffect(() => {
-    /**
-     * Parse input and update the css snippet
-     * @param debouncedInput
-     */
     const updateCSS = async (debouncedInput: string) => {
       let element = document.querySelector(
         "[data-inspect-popup-class-style-list]",

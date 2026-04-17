@@ -76,7 +76,18 @@ export default function InspectionShowCase() {
                 <p>Test</p>
               </div>
               {ref.current && (
-                <InspectPopup targetSelectionActive={false} tagName={"div"}>
+                <InspectPopup
+                  targetSelectionActive={false}
+                  tagName={"div"}
+                  setShowSelectBox={() => {}}
+                  showSelectBox={false}
+                  dragHandlers={{
+                    onPointerDown: () => {},
+                    onPointerMove: () => {},
+                    onPointerUp: () => {},
+                    isDragging: false,
+                  }}
+                >
                   <InspectPopupClassList
                     key={"showcase"}
                     target={ref.current}

@@ -1,4 +1,4 @@
-const DEVELOPMENT = false;
+const DEVELOPMENT = true;
 export const initAutoReload = () => {
 
   if (DEVELOPMENT) {

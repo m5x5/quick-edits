@@ -1,6 +1,5 @@
 @import "tailwindcss";
-@source "../../../browser-extension/src/core";
-@plugin "@tailwindcss/typography";;
+@plugin "@tailwindcss/typography";
 
 @theme {
     --color-black: #000;
@@ -10,6 +9,7 @@
     --color-dark-700: #222;
     --font-sans: "Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif";
     --font-heading: "Manrope", "-apple-system", "BlinkMacSystemFont", "sans-serif";
+    --font-mono: "JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace";
     --grid-template-columns-full: var(--columns);
     --grid-template-columns-1-1: 1fr 2fr;
     
@@ -55,6 +55,14 @@
         font-display: swap;
         font-weight: 100 900;
         src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'JetBrains Mono';
+        font-style: normal;
+        font-display: swap;
+        font-weight: 100 800;
+        src: url('https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPVmUsaaDhw.woff2') format('woff2');
     }
 
     :root {

@@ -82,40 +82,56 @@ export default function useSelectedTarget() {
     }
   }, [target]);
 
+  // Listen for toggle-inspect command from the background script (triggered by keyboard shortcut)
+  useEffect(() => {
+    const handleToggle = () => {
+      setTargetSelectionActive(prev => {
+        const next = !prev;
+        if (next) {
+          const el = document.elementFromPoint(mousePos.current.x, mousePos.current.y);
+          if (el instanceof HTMLElement) {
+            setTarget(el);
+          } else {
+            const firstChild = document.body?.children[0] as HTMLElement;
+            if (firstChild) setTarget(firstChild);
+          }
+        } else {
+          setTarget(null);
+        }
+        return next;
+      });
+    };
+
+    const handleMessage = (message: { action: string }) => {
+      if (message.action === "toggle-inspect") handleToggle();
+    };
+
+    chrome.runtime.onMessage.addListener(handleMessage);
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
+
+  // Listen for inspect requests via postMessage (works across isolated worlds)
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      if (e.data?.type === "quick-edits:inspect" && e.data?.selector) {
+        const el = document.querySelector(e.data.selector);
+        if (el instanceof HTMLElement) {
+          scrollToElement(el);
+          setTarget(el);
+          setTargetSelectionActive(false);
+        }
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const noOtherKeyPressed = !e.ctrlKey && !e.shiftKey && !e.metaKey;
-
-      // Handle Alt key for target selection activation
-      if (e.key === 'Alt' && noOtherKeyPressed && !targetSelectionActive) {
-        setTargetSelectionActive(true);
-        const el = document.elementFromPoint(mousePos.current.x, mousePos.current.y);
-        if (el instanceof HTMLElement) setTarget(el);
-        return;
-      }
-
-      // Handle Ctrl+Cmd+Shift+L
-      if (e.ctrlKey && e.metaKey && e.shiftKey && e.key === "L") {
-        setTargetSelectionActive(true);
-        const firstChild = document.body?.children[0] as HTMLElement;
-        if (firstChild) {
-          setTarget(firstChild);
-        }
-        return;
-      }
-
-      // Handle vim-style navigation keys
+      // Handle vim-style navigation keys when inspection is active
       if (['h', 'j', 'k', 'l'].includes(e.key.toLowerCase())) {
-        if (!target && e.altKey) {
-          // If Alt is pressed but no target, select the first element
-          const firstChild = document.body?.children[0] as HTMLElement;
-          if (firstChild) {
-            setTarget(firstChild);
-            setTargetSelectionActive(true);
-          }
-          return;
-        }
-
         if (!target) return;
 
         e.stopImmediatePropagation();
@@ -128,33 +144,36 @@ export default function useSelectedTarget() {
           case 'j': right(); break;
         }
       }
-    };
 
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.key === "Alt") {
+      // Escape to deactivate inspection
+      if (e.key === 'Escape' && targetSelectionActive) {
         setTargetSelectionActive(false);
+        setTarget(null);
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyUp);
-    };
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [up, down, left, right, target, targetSelectionActive]);
 
   useEffect(() => {
-    const unsetTarget = (e: MouseEvent) => {
-      if (!e.altKey) setTarget(null);
+    const handleClick = (e: MouseEvent) => {
+      // Don't close if click is on the popup (shadow host retargets events)
+      if ((e.target as HTMLElement)?.closest?.('my-shadow-host[data-ws-developer-tools]')) return;
+
+      if (targetSelectionActive) {
+        // Lock in the current target and stop selection mode
+        setTargetSelectionActive(false);
+      } else if (target) {
+        // Click outside the modal dismisses it
+        setTarget(null);
+      }
     };
-    document.addEventListener("click", unsetTarget);
+    document.addEventListener("click", handleClick);
 
     const setTargetIfNeeded = (e: MouseEvent) => {
-      if (!e.altKey || !targetSelectionActive) return;
+      if (!targetSelectionActive) return;
       if (e.target === target) return;
-      e.stopImmediatePropagation();
 
       const newTarget = e.target as HTMLElement;
       setTarget(newTarget);
@@ -164,10 +183,12 @@ export default function useSelectedTarget() {
     });
 
     return () => {
-      document.removeEventListener("click", unsetTarget);
+      document.removeEventListener("click", handleClick);
       document.removeEventListener("mouseover", setTargetIfNeeded);
     };
   }, [target, targetSelectionActive]);
 
-  return { target, targetSelectionActive, left, right, up, down, ref };
+  const clearTarget = useCallback(() => setTarget(null), []);
+
+  return { target, targetSelectionActive, left, right, up, down, ref, clearTarget };
 }

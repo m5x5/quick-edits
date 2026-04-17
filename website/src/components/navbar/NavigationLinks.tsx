@@ -8,6 +8,7 @@ export default function NavigationLinks() {
 	return (
 		<>
 			<nav className="">
+				<LinkWithActiveState href="/token-tool">Token Tool</LinkWithActiveState>
 				<LinkWithActiveState href="/roadmap">Roadmap</LinkWithActiveState>
 				<LinkWithActiveState
 					href="/docs"
